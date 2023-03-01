@@ -1,9 +1,8 @@
 #ifndef _REROLL_HPP_
 #define _REROLL_HPP_
 #include "Ability.hpp"
-#include <iostream>
 
-class Reroll{
+class Reroll : public Ability{
     public:
         void getCardInfo();
         void callCard();
