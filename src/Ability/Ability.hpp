@@ -48,7 +48,7 @@ class Ability{
 
         /*
             calling card.
-            param@ {int} cardNumber The number of card.
+            @param {int} cardNumber The number of card.
         */
         void callCard(int cardNumber);
 };
