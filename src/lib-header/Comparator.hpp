@@ -8,7 +8,7 @@ public:
     void setIndex();
     void setCombinationType();
 
-    // TODO: complete methods args
+    // TODO: complete methods args (missing Deck type)
     /**
      * Get the strongest combination deck
      * @param Deck* arr_of_deck
