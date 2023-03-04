@@ -12,13 +12,13 @@ class player {
     int playerPoint;
 
     public:
-    //Ctor
+    // Constructor
     player();
 
-    void setPlayerAction(); //
-    
-    char getPlayerCard(); // 
-    int getPlayerPoint(); //
+    // Setter and Getter
+    void setPlayerAction();
+    char getPlayerCard();
+    int getPlayerPoint();
 };
 
 #endif
