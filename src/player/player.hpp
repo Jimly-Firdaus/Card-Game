@@ -17,6 +17,9 @@ class player {
 
     // Setter and Getter
     void setPlayerAction();
+    void setPlayerCard();
+    void setPlayerPoint();
+    
     char getPlayerCard();
     int getPlayerPoint();
 };
