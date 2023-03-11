@@ -1,56 +1,157 @@
 #include "Deck.hpp"
-#include <iostream>
-#include <utility>
 
 using namespace std;
 
 // Constructor
+// Default Constructor
 Deck::Deck()
 {
-    this->deckCard = new pair<int, char>[52];
-    this->tableCard = new pair<int, char>[5];
-    this->card = new pair<int, char>[52];
-    char color[4] = {'M', 'B', 'H', 'K'};
-    int itr = 0;
-    for (int i = 1; i < 53; i++)
-    {
-        for (int j = 0; j < 4; j++)
-        {
-            card[itr] = make_pair(i, color[j]);
-            itr++;
-        }
-    }
-}
+    vector<pair<int, char> > deckCards;
+    vector<pair<int, char> > tableCards;
 
-// Setter Deck Card
-void Deck::setDeckCard()
-{
-    int generateCard;
+    // Generate Deck Card
+    int generateCardOption;
     cout << "Opsi Generate Kartu Pada Deck : " << endl;
     cout << "   [1] Randomize Card" << endl;
     cout << "   [2] Read From File" << endl;
     cout << "Answer : ";
-    cin >> generateCard;
-    if (generateCard == 1)
-        deckCard = getRandomCard(card);
+    cin >> generateCardOption;
+
+    // Validasi input
+    while (1 < generateCardOption < 2)
+    {
+        cout << "Invalid Input! Try Again";
+        cout << "Answer : ";
+        cin >> generateCardOption;
+    };
+
+    if (generateCardOption == 1)
+    {
+        char color[4] = {'M', 'B', 'H', 'K'};
+        for (int i = 1; i < 14; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                deckCards.push_back(make_pair(i, color[j]));
+            }
+        }
+        Deck::shuffleCard(deckCards);
+    }
     else
     {
         string fileName;
         cout << "Masukkan nama file : ";
         cin >> fileName;
-        deckCard = getCardFromFile(fileName);
+        string filePath = "../test/" + fileName;
+        Deck::cardFromFile(filePath);
     }
+
+    // Generate Ability Cards
+    vector<string> abilityCards;
+    abilityCards.push_back("Re-Roll");
+    abilityCards.push_back("Quadruple");
+    abilityCards.push_back("Quarter");
+    abilityCards.push_back("Reverse");
+    abilityCards.push_back("Swap");
+    abilityCards.push_back("Switch");
+    abilityCards.push_back("Abilityless");
+    Deck::shuffleCard(abilityCards);
 }
 
-pair<int, char> *Deck::getRandomCard(pair<int, char> *card) {}
-
-pair<int, char> *Deck::getCardFromFile(string fileName) {}
-
-// Getter Deck Card
-pair<int, char> *Deck::getDeckCard()
+// User-defined Constructor
+Deck::Deck(vector<pair<int, char> > deckCards, vector<pair<int, char> > tableCards, vector<string> abilityCards)
 {
-    return deckCard;
+    this->deckCards = deckCards;
+    this->tableCards = tableCards;
+    this->abilityCards = abilityCards;
 }
+/* NOTE :
+    Boleh ga ya kalo Default Constructor buat Random Shuffle &&
+    User-defined Constructor untuk Read Deck Card Form File
+*/
+
+// Getter
+vector<pair<int, char> > Deck::getDeckCard()
+{
+    return deckCards;
+}
+vector<pair<int, char> > Deck::getTableCard()
+{
+    return tableCards;
+}
+vector<string> Deck::getAbilityCard()
+{
+    return abilityCards;
+}
+
+/* NOTE : Atau AbilityCard mau dibikin pair sama status : udah kepake/belum */
+
+// Setter
+void Deck::setDeckCard(vector<pair<int, char> > newDeckCards)
+{
+    deckCards = newDeckCards;
+}
+void Deck::setTableCard(vector<pair<int, char> > newTableCards)
+{
+    tableCards = newTableCards;
+}
+void Deck::setAbilityCard(vector<string> newAbilityCards)
+{
+    abilityCards = newAbilityCards;
+}
+
+// Generate Card From File
+void Deck::cardFromFile(string filePath)
+{
+    string textRead, cardColor, cardNumber;
+    // Read from the txt file
+    ifstream readFile("filePath");
+
+    // Use a while loop together with the getline() function to read the file line by line
+    while (getline(readFile, textRead))
+    {
+        if (textRead[2] == ' ')
+        {
+            deckCards.push_back(make_pair(textRead[0], textRead[2]));
+        }
+        else
+        {
+            abilityCards.push_back(textRead);
+        }
+    }
+
+    readFile.close();
+}
+
+// Validasi Card From File
+// NOTE : Atau ini mau pake exception?
+bool Deck::validDeckCard(vector<pair<int, char> > deckCards)
+{
+    bool valid = true;
+    // while (valid && cekPair in deckCards){}
+    return valid;
+}
+
+// Shuffle Card
+template <class T>
+void Deck::shuffleCard(T card) {}
+
+// Take A Deck Card
+pair<int, char> Deck::getADeckCard(vector<pair<int, char> > deckCards)
+{
+    pair<int, char> card = deckCards[0];
+    deckCards.erase(card);
+    return card;
+}
+
+// Return A Deck Card
+void Deck::retDeckCard(pair<int, char> card)
+{
+    deckCards.push_back(card);
+}
+
+// PrintCard
+void Deck::printCard() {}
 
 /*
 Class: Deck : 52 Kartu, bagiKartu
