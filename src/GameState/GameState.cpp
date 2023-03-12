@@ -7,7 +7,7 @@ GameState::GameState() {
 
     // Empty Table Card
     for (int i = 0; i < 5; i++) {
-        tableCard.push_back({0, ' '});
+        tableCard.getDeckCard().push_back({0, ' '});
     }
 
     // Initial Order (1,2,3,4,5,6,7) 
@@ -26,7 +26,7 @@ void GameState::setRewardPoint(int x) {
 
 void GameState::showTableCard() {
     for (int i = 0; i < 5; i++) {
-        cout << this->tableCard[i].first << this->tableCard[i].second << " ";
+        cout << this->tableCard.getDeckCard().first << this->tableCard.getDeckCard().second << " ";
         if (i == 4) {
             cout << endl;
         }

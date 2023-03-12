@@ -3,12 +3,13 @@
 
 #include <vector>
 #include <algorithm>
+#include "..\Deck\Deck.hpp"
 using namespace std;
 
 class GameState {
     private:
         int rewardPoint;
-        vector<pair<int, char>> tableCard;
+        Deck tableCard;
         int playerOrder[7];
 
     public:
@@ -18,8 +19,6 @@ class GameState {
         // Getter & Setter
         int getRewardPoint(); // Get game's current reward point
         void setRewardPoint(int); // Set game's current reward point with desired value
-        void setTableCard(char *arrayOfCard); // Set tableCard with values from arrayOfCard
-        void setPlayerOrder(int *arrayOfOrder); // Set playerOrder with values from arrayOfCard
 
         void showTableCard(); // Print Table Card
         void showPlayerOrder(); // Print Player Order
@@ -34,5 +33,4 @@ class GameState {
         // bool isWin();
         // Wait for Player
 };
-
 #endif
