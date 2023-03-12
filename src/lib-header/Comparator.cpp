@@ -16,7 +16,15 @@ Comparator::Comparator() {
     }
 }
 
+bool Comparator::isStraightFlush(Deck tableCard, Deck playerCard) {
 
+}
+bool Comparator::isFourKind(Deck tableCard, Deck playerCard) {
+
+}
+bool Comparator::isFullHouse(Deck tableCard, Deck playerCard) {
+
+}
 bool Comparator::isFlush(Deck tableCard, Deck playerCard) {
     // color count format = "Hijau", "Biru", "Kuning", "Merah"
     vector<int> v(4, 0);
@@ -48,7 +56,44 @@ bool Comparator::isFlush(Deck tableCard, Deck playerCard) {
     }
     return false;
 }
+pair<bool, float> Comparator::isStraight(Deck tableCard, Deck playerCard) {
+    int count = 0;
+    int highestCard = 0;
+    float totalValue = 0.0;
+    pair<bool, float> result = {false, 0.0};
+    vector<pair<int, char>> mergedCard = tableCard.getDeckCard();
+    for (int i = 0; i < playerCard.getDeckCard().size(); i++) {
+        mergedCard.push_back(playerCard.getDeckCard()[i]);
+    }
+    sort(mergedCard.begin(), mergedCard.end());
+    for (int i = MAX_PLAYER_CARD - 1; i > 0; i--) {
+        if (mergedCard[i].first - mergedCard[i-1].first == 1) {
+            count++;
+            if (count < 5) {
+                result.second += this->searchVal(mergedCard[i].first, mergedCard[i].second);
+            }
+            if (count == 4) {
+                result.second += this->searchVal(mergedCard[i-1].first, mergedCard[i-1].second);
+                result.first = true;
+                break;
+            }
+        }
+        else if (mergedCard[i].first - mergedCard[i-1].first != 1 && mergedCard[i].first - mergedCard[i-1].first != 0) { 
+            count = 0;
+            result.second = 0.0;
+        }
+    }
+    return result;
+}
+bool Comparator::isThreeKind(Deck tableCard, Deck playerCard) {
 
+}
+bool Comparator::isTwoPair(Deck tableCard, Deck playerCard) {
+
+}
+bool Comparator::isPair(Deck tableCard, Deck playerCard) {
+
+}
 
 
 float Comparator::getStrongestCombination(Deck gameCard, Deck playerCard) {
