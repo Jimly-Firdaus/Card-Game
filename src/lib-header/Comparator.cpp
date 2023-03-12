@@ -21,22 +21,23 @@ Comparator::Comparator()
 
 pair<bool, float> Comparator::isStraightFlush(Deck tableCard, Deck playerCard)
 {
-    if (isFlush(tableCard, playerCard).first) {    
+    if (isFlush(tableCard, playerCard).first)
+    {
         vector<pair<int, char>> mergedCard = tableCard.getDeckCard();
         for (int i = 0; i < playerCard.getDeckCard().size(); i++)
         {
             mergedCard.push_back(playerCard.getDeckCard()[i]);
         }
         vector<pair<int, char>> flushCard;
-            for (int i = 0; i < mergedCard.size(); i++)
+        for (int i = 0; i < mergedCard.size(); i++)
         {
-            if (mergedCard[i].second == isFlush(tableCard, playerCard).second) flushCard.push_back(mergedCard[i]); 
+            if (mergedCard[i].second == isFlush(tableCard, playerCard).second)
+                flushCard.push_back(mergedCard[i]);
         }
-        if (isStraight(flushCard).first) 
-        // if (isFlush(tableCard, playerCard) && isStraight(tableCard, playerCard).first)
-        // {
-        //     return {true, isStraight(tableCard, playerCard).second};
-        // }
+        if (isStraight(flushCard).first)
+        {
+            return {true, isStraight(flushCard).second};
+        }
     }
     return {false, 0.0};
 }
@@ -102,21 +103,22 @@ pair<bool, char> Comparator::isFlush(Deck tableCard, Deck playerCard)
         index++;
         if (ele >= 5)
         {
-            return {true, this->avail_chars[index]};
+            return {true, this->avail_chars[index - 1]};
         }
     }
-    return {false, -1};
+    return {false, ' '};
 }
 
 pair<bool, float> Comparator::isStraight(Deck tableCard, Deck playerCard)
 {
-    
+
     vector<pair<int, char>> mergedCard = tableCard.getDeckCard();
     for (int i = 0; i < playerCard.getDeckCard().size(); i++)
     {
         mergedCard.push_back(playerCard.getDeckCard()[i]);
     }
-    Deck mergedDeck (mergedCard);
+    Deck mergedDeck(mergedCard);
+
     return straightComparator(mergedDeck);
 }
 
@@ -125,29 +127,31 @@ pair<bool, float> Comparator::isStraight(Deck mergedCard)
     return straightComparator(mergedCard);
 }
 
-pair<bool, float> Comparator::straightComparator(Deck mergedCard) {
+pair<bool, float> Comparator::straightComparator(Deck mergedDeck)
+{
+
     pair<bool, float> result = {false, 0.0};
     int count = 0;
-    int highestCard = 0;
-    float totalValue = 0.0;
-    sort(mergedCard.getDeckCard().begin(), mergedCard.getDeckCard().end());
+    vector<pair<int, char>> mergedCard = mergedDeck.getDeckCard();
+    sort(mergedCard.begin(), mergedCard.end());
+
     for (int i = MAX_PLAYER_CARD - 1; i > 0; i--)
     {
-        if (mergedCard.getDeckCard()[i].first - mergedCard.getDeckCard()[i - 1].first == 1)
+        if (mergedCard[i].first - mergedCard[i - 1].first == 1)
         {
             count++;
             if (count < 5)
             {
-                result.second += this->searchVal(mergedCard.getDeckCard()[i].first, mergedCard.getDeckCard()[i].second);
+                result.second += this->searchVal(mergedCard[i].first, mergedCard[i].second);
             }
             if (count == 4)
             {
-                result.second += this->searchVal(mergedCard.getDeckCard()[i - 1].first, mergedCard.getDeckCard()[i - 1].second);
+                result.second += this->searchVal(mergedCard[i - 1].first, mergedCard[i - 1].second);
                 result.first = true;
                 break;
             }
         }
-        else if (mergedCard.getDeckCard()[i].first - mergedCard.getDeckCard()[i - 1].first != 1 && mergedCard.getDeckCard()[i].first - mergedCard.getDeckCard()[i - 1].first != 0)
+        else if (mergedCard[i].first - mergedCard[i - 1].first != 1 && mergedCard[i].first - mergedCard[i - 1].first != 0)
         {
             count = 0;
             result.second = 0.0;
