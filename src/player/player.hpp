@@ -8,6 +8,7 @@ Method: setPlayerAction,
 
 class player {
     protected:
+    int playerOrder[7];
     char ownedCard[2];
     int playerPoint;
 
