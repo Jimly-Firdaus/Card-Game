@@ -23,11 +23,7 @@ pair<bool, float> Comparator::isStraightFlush(Deck tableCard, Deck playerCard)
 {
     if (isFlush(tableCard, playerCard).first)
     {
-        vector<pair<int, char>> mergedCard = tableCard.getDeckCard();
-        for (int i = 0; i < playerCard.getDeckCard().size(); i++)
-        {
-            mergedCard.push_back(playerCard.getDeckCard()[i]);
-        }
+        vector<pair<int, char>> mergedCard = mergeDeck(tableCard, playerCard);
         vector<pair<int, char>> flushCard;
         for (int i = 0; i < mergedCard.size(); i++)
         {
@@ -45,11 +41,7 @@ pair<bool, float> Comparator::isStraightFlush(Deck tableCard, Deck playerCard)
 pair<bool, int> Comparator::isFourKind(Deck tableCard, Deck playerCard)
 {
     vector<int> v(13, 0);
-    vector<pair<int, char>> mergedCard = tableCard.getDeckCard();
-    for (int i = 0; i < playerCard.getDeckCard().size(); i++)
-    {
-        mergedCard.push_back(playerCard.getDeckCard()[i]);
-    }
+    vector<pair<int, char>> mergedCard = mergeDeck(tableCard, playerCard);
     for (const auto &pair : mergedCard)
     {
         v[pair.first - 1]++;
@@ -112,11 +104,7 @@ pair<bool, char> Comparator::isFlush(Deck tableCard, Deck playerCard)
 pair<bool, float> Comparator::isStraight(Deck tableCard, Deck playerCard)
 {
 
-    vector<pair<int, char>> mergedCard = tableCard.getDeckCard();
-    for (int i = 0; i < playerCard.getDeckCard().size(); i++)
-    {
-        mergedCard.push_back(playerCard.getDeckCard()[i]);
-    }
+    vector<pair<int, char>> mergedCard = mergeDeck(tableCard, playerCard);
     Deck mergedDeck(mergedCard);
 
     return straightComparator(mergedDeck);
@@ -129,7 +117,6 @@ pair<bool, float> Comparator::isStraight(Deck mergedCard)
 
 pair<bool, float> Comparator::straightComparator(Deck mergedDeck)
 {
-
     pair<bool, float> result = {false, 0.0};
     int count = 0;
     vector<pair<int, char>> mergedCard = mergedDeck.getDeckCard();
@@ -142,11 +129,13 @@ pair<bool, float> Comparator::straightComparator(Deck mergedDeck)
             count++;
             if (count < 5)
             {
-                result.second += this->searchVal(mergedCard[i].first, mergedCard[i].second);
+                pair<int, char> selectedPair = findBiggest(mergedCard, mergedCard[i].first);
+                result.second += this->searchVal(selectedPair.first, selectedPair.second);
             }
             if (count == 4)
             {
-                result.second += this->searchVal(mergedCard[i - 1].first, mergedCard[i - 1].second);
+                pair<int, char> selectedPair = findBiggest(mergedCard, mergedCard[i - 1].first);
+                result.second += this->searchVal(selectedPair.first, selectedPair.second);
                 result.first = true;
                 break;
             }
@@ -160,14 +149,43 @@ pair<bool, float> Comparator::straightComparator(Deck mergedDeck)
     return result;
 }
 
+// find biggest among the same numbers
+pair<int, char> Comparator::findBiggest(vector<pair<int, char>> v, int number)
+{
+    vector<pair<int, char>> filteredV;
+    copy_if(v.begin(), v.end(), back_inserter(filteredV), [number](pair<int, char> x)
+            { return x.first - number == 0; });
+    float maxVal = 0.0;
+    pair<int, char> resultPair = filteredV[0];
+    if (filteredV.size() > 1)
+    {
+        for (const pair<int, char> ele : filteredV)
+        {
+            if (maxVal < this->searchVal(ele.first, ele.second))
+            {
+                maxVal = this->searchVal(ele.first, ele.second);
+                resultPair = ele;
+            }
+        }
+    }
+    return resultPair;
+}
+
 bool Comparator::isThreeKind(Deck tableCard, Deck playerCard)
 {
 }
 bool Comparator::isTwoPair(Deck tableCard, Deck playerCard)
 {
 }
-bool Comparator::isPair(Deck tableCard, Deck playerCard)
+
+vector<pair<int, char>> Comparator::mergeDeck(Deck firstDeck, Deck secondDeck)
 {
+    vector<pair<int, char>> v = firstDeck.getDeckCard();
+    for (int i = 0; i < secondDeck.getDeckCard().size(); i++)
+    {
+        v.push_back(secondDeck.getDeckCard()[i]);
+    }
+    return v;
 }
 
 float Comparator::getStrongestCombination(Deck gameCard, Deck playerCard)

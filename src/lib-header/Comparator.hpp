@@ -53,6 +53,9 @@ public:
     pair<bool, float> isStraight(Deck tableCard, Deck playerCard);
     pair<bool, float> isStraight(Deck mergedCard);
     pair<bool, float> straightComparator(Deck mergedCard);
+    pair<int, char> findBiggest (vector<pair<int, char>> v, int number);
+    vector<pair<int, char>> mergeDeck (Deck firstDeck, Deck secondDeck);
+    vector<pair<int, char>> findPair (Deck tableCard, Deck playerCard);
     bool isThreeKind(Deck tableCard, Deck playerCard);
     bool isTwoPair(Deck tableCard, Deck playerCard);
     bool isPair(Deck tableCard, Deck playerCard);
