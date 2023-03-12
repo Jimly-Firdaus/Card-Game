@@ -15,6 +15,13 @@ Deck::Deck(vector<pair<int, char> > Cards)
     this->cards = Cards;
 }
 
+// Assignment Operator
+Deck &Deck::operator=(const Deck &otherCard)
+{
+    cards = otherCard.cards;
+    return *this;
+}
+
 // Getter
 vector<pair<int, char> > Deck::getCards()
 {

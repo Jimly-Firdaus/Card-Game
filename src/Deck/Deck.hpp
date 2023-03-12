@@ -20,6 +20,9 @@ public:
     Deck();                               // Default Constructor
     Deck(vector<pair<int, char> > cards); // User-defined Constructor
 
+    // Assignment Operator
+    Deck &operator=(const Deck &otherCard);
+
     // Getter
     vector<pair<int, char> > getCards();
 
