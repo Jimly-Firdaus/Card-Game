@@ -1,10 +1,14 @@
 #ifndef GAMESTATE_HPP
 #define GAMESTATE_HPP
 
+#include <vector>
+#include <algorithm>
+using namespace std;
+
 class GameState {
     private:
         int rewardPoint;
-        char tableCard[5];
+        vector<pair<int, char>> tableCard;
         int playerOrder[7];
 
     public:
