@@ -46,11 +46,13 @@ public:
 
     float searchVal(int number, char type);
 
-    bool isStraightFlush(Deck tableCard, Deck playerCard);
-    bool isFourKind(Deck tableCard, Deck playerCard);
+    pair<bool, float> isStraightFlush(Deck tableCard, Deck playerCard);
+    pair<bool, int> isFourKind(Deck tableCard, Deck playerCard);
     bool isFullHouse(Deck tableCard, Deck playerCard);
-    bool isFlush(Deck tableCard, Deck playerCard);
+    pair<bool, char> isFlush(Deck tableCard, Deck playerCard);
     pair<bool, float> isStraight(Deck tableCard, Deck playerCard);
+    pair<bool, float> isStraight(Deck mergedCard);
+    pair<bool, float> straightComparator(Deck mergedCard);
     bool isThreeKind(Deck tableCard, Deck playerCard);
     bool isTwoPair(Deck tableCard, Deck playerCard);
     bool isPair(Deck tableCard, Deck playerCard);
