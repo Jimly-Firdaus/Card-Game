@@ -5,6 +5,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <array>
 #include <algorithm>
 #include <random>
 #include <fstream>
@@ -38,7 +39,7 @@ public:
     void cardFromFile(string filePath);
 
     // Validasi Card From File
-    bool validDeckCard(vector<pair<int, char> > deckCards);
+    bool validDeckCard();
 
     // Shuffle Card
     template <class T>

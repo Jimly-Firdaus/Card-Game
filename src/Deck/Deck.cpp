@@ -41,9 +41,43 @@ Deck::Deck()
     {
         string fileName;
         cout << "Masukkan nama file : ";
-        cin >> fileName;
+        getline(cin, fileName);
         string filePath = "../test/" + fileName;
+
+        ifstream readFile;
+        readFile.open(filePath.c_str());
+
+        while (!readFile.is_open())
+        {
+            cout << "File not found. Try again!" << endl;
+
+            getline(cin, fileName);
+            readFile.open(filePath.c_str());
+        }
+
+        readFile.close();
         Deck::cardFromFile(filePath);
+
+        while (!validDeckCard())
+        {
+            cout << "Masukkan nama file : ";
+            getline(cin, fileName);
+            string filePath = "../test/" + fileName;
+
+            ifstream readFile;
+            readFile.open(filePath.c_str());
+
+            while (!readFile.is_open())
+            {
+                cout << "File not found. Try again!" << endl;
+
+                getline(cin, fileName);
+                readFile.open(filePath.c_str());
+            }
+
+            readFile.close();
+            Deck::cardFromFile(filePath);
+        }
     }
 
     // Generate Ability Cards
@@ -105,7 +139,8 @@ void Deck::cardFromFile(string filePath)
 {
     string textRead, cardColor, cardNumber;
     // Read from the txt file
-    ifstream readFile("filePath");
+    ifstream readFile;
+    readFile.open(filePath.c_str());
 
     // Use a while loop together with the getline() function to read the file line by line
     while (getline(readFile, textRead))
@@ -125,22 +160,73 @@ void Deck::cardFromFile(string filePath)
 
 // Validasi Card From File
 // NOTE : Atau ini mau pake exception?
-bool Deck::validDeckCard(vector<pair<int, char> > deckCards)
+
+bool Deck::validDeckCard()
 {
     bool valid = true;
-    // while (valid && cekPair in deckCards){}
+    char color[4] = {'M', 'B', 'H', 'K'};
+    int i, j;
+    for (i = 1; (i <= 13 && valid); i++)
+    {
+        for (j = 0; (j < 4 && valid); j++)
+        {
+            vector<pair<int, char> >::iterator itr = find(deckCards.begin(), deckCards.end(), make_pair(i, color[j]));
+            if (itr == deckCards.end())
+            {
+                valid = false;
+            }
+        }
+    }
+
+    if (valid)
+    {
+        string ability[7] = {"Re-Roll", "Quadruple", "Quarter", "Reverse", "Swap", "Switch", "Abilityless"};
+        for (i = 0; (i < 7 && valid); i++)
+        {
+            vector<string>::iterator itr = find(abilityCards.begin(), abilityCards.end(), ability[i]);
+            if (itr == abilityCards.end())
+            {
+                valid = false;
+            }
+        }
+
+        if (!valid)
+        {
+            cout << "Input ability card invalid!" << endl;
+            cout << "<" << ability[i] << "> not found!" << endl;
+        }
+    }
+    else
+    {
+        cout << "Input deck card invalid!" << endl;
+        cout << "<" << i << "," << color[j] << "> not found!" << endl;
+    }
+
     return valid;
 }
 
 // Shuffle Card
 template <class T>
-void Deck::shuffleCard(T card) {}
+void Deck::shuffleCard(T card)
+{
+    auto rng = default_random_engine{};
+    shuffle(card.begin(), card.end(), rng);
+}
 
 // Take A Deck Card
 pair<int, char> Deck::getADeckCard(vector<pair<int, char> > deckCards)
 {
     pair<int, char> card = deckCards[0];
-    deckCards.erase(card);
+    vector<pair<int, char> >::iterator itr = deckCards.begin();
+    while (itr != deckCards.end())
+    {
+        if (*itr == card)
+        {
+            deckCards.erase(itr);
+            break;
+        }
+        ++itr;
+    }
     return card;
 }
 
@@ -151,7 +237,19 @@ void Deck::retDeckCard(pair<int, char> card)
 }
 
 // PrintCard
-void Deck::printCard() {}
+void Deck::printCard()
+{
+    cout << "---------- Deck Card ----------" << endl;
+    for (int i = 0; i < deckCards.size(); i++)
+    {
+        cout << i + 1 << ". <" << deckCards[i].first << ", " << deckCards[i].second << ">" << endl;
+    }
+    cout << "\n---------- Ability Card ----------" << endl;
+    for (int i = 0; i < abilityCards.size(); i++)
+    {
+        cout << i + 1 << ". " << abilityCards[i] << endl;
+    }
+}
 
 /*
 Class: Deck : 52 Kartu, bagiKartu
