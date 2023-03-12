@@ -75,19 +75,25 @@ pair<bool, int> Comparator::isFullHouse(Deck tableCard, Deck playerCard)
     vector<pair<int, char>> filteredV = this->getNonSingle(v);
     vector<pair<int, char>> pair, triplet;
     map<int, int> freq;
-    for (const auto ele : filteredV) {
+    for (const auto ele : filteredV)
+    {
         freq[ele.first]++;
     }
-    for (int i = filteredV.size() - 1; i > 0; i--) {
-        if (freq[filteredV[i].first] == 3) {
+    for (int i = filteredV.size() - 1; i > 0; i--)
+    {
+        if (freq[filteredV[i].first] == 3)
+        {
             triplet.push_back(filteredV[i]);
         }
-        if (freq[filteredV[i].first] == 2) {
+        if (freq[filteredV[i].first] == 2)
+        {
             pair.push_back(filteredV[i]);
         }
     }
-    if (pair.size() != 0 && triplet.size() != 0) return {true, triplet[0].first};
-    if (pair.size() == 0 && triplet.size() > 1) return {true, triplet[0].first};
+    if (pair.size() != 0 && triplet.size() != 0)
+        return {true, triplet[0].first};
+    if (pair.size() == 0 && triplet.size() > 1)
+        return {true, triplet[0].first};
     return {false, -1};
 }
 
@@ -207,11 +213,14 @@ pair<bool, int> Comparator::isThreeKind(Deck tableCard, Deck playerCard)
     vector<pair<int, char>> v = mergeDeck(tableCard, playerCard);
     vector<pair<int, char>> filteredV = this->getNonSingle(v);
     map<int, int> freq;
-    for (const auto ele : filteredV) {
+    for (const auto ele : filteredV)
+    {
         freq[ele.first]++;
     }
-    for (int i = filteredV.size() - 1; i >= 0; i--) {
-        if (freq[filteredV[i].first] == 3) {
+    for (int i = filteredV.size() - 1; i >= 0; i--)
+    {
+        if (freq[filteredV[i].first] == 3)
+        {
             return {true, filteredV[i].first};
         }
     }
@@ -224,9 +233,11 @@ pair<bool, vector<pair<int, char>>> Comparator::isTwoPair(Deck tableCard, Deck p
     vector<pair<int, char>> allPairs = findPair(tableCard, playerCard);
     pair<bool, vector<pair<int, char>>> result = {false, {}};
 
-    if (allPairs.size() > 1) {
+    if (allPairs.size() > 1)
+    {
         result.first = true;
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 4; i++)
+        {
             result.second.push_back(allPairs[i]);
         }
     }
@@ -238,35 +249,44 @@ pair<bool, float> Comparator::isPair(Deck tableCard, Deck playerCard)
     vector<pair<int, char>> v = mergeDeck(tableCard, playerCard);
     vector<pair<int, char>> filteredV = this->getNonSingle(v);
     map<int, int> freq;
-    for (const auto ele : filteredV) {
+    for (const auto ele : filteredV)
+    {
         freq[ele.first]++;
     }
-    for (int i = filteredV.size() - 1; i > 0; i--) {
-        if (freq[filteredV[i].first] == 2) {
+    for (int i = filteredV.size() - 1; i > 0; i--)
+    {
+        if (freq[filteredV[i].first] == 2)
+        {
             return {true, searchVal(filteredV[i]) + searchVal(filteredV[i - 1])};
         }
     }
-    return {false, -1};  
+    return {false, -1};
 }
 
-vector<pair<int, char>> Comparator::findPair (Deck tableCard, Deck playerCard) {
-    if (isPair(tableCard, playerCard).first) {
+vector<pair<int, char>> Comparator::findPair(Deck tableCard, Deck playerCard)
+{
+    if (isPair(tableCard, playerCard).first)
+    {
         vector<pair<int, char>> pairV, temp;
         vector<pair<int, char>> v = mergeDeck(tableCard, playerCard);
         temp = this->getNonSingle(v);
         map<int, int> freq;
-        for (const auto ele : temp) {
+        for (const auto ele : temp)
+        {
             freq[ele.first]++;
         }
-        for (int i = temp.size() - 1; i >= 0; i--) {
-            if (freq[temp[i].first] == 2) {
+        for (int i = temp.size() - 1; i >= 0; i--)
+        {
+            if (freq[temp[i].first] == 2)
+            {
                 pairV.push_back(temp[i]);
             }
         }
-        
+
         return pairV;
     }
-    else {
+    else
+    {
         NoPairFound e;
         throw e;
     }
@@ -292,33 +312,36 @@ vector<pair<int, char>> Comparator::mergeDeck(vector<pair<int, char>> firstDeck,
     return v;
 }
 
-vector<pair<int, char>> Comparator::getNonSingle(Deck mergedDeck) {
+vector<pair<int, char>> Comparator::getNonSingle(Deck mergedDeck)
+{
     vector<pair<int, char>> multiVector;
     // map each of the element into frequencies map
     map<int, int> freqEle;
-    for (const auto pair : mergedDeck.getDeckCard()) {
+    for (const auto pair : mergedDeck.getDeckCard())
+    {
         freqEle[pair.first]++;
     }
     // copy all element that have freq > 1
-    for (const auto pair : mergedDeck.getDeckCard()) {
-        if (freqEle[pair.first] > 1) {
+    for (const auto pair : mergedDeck.getDeckCard())
+    {
+        if (freqEle[pair.first] > 1)
+        {
             multiVector.push_back(pair);
         }
     }
-    sort(multiVector.begin(), multiVector.end(), [&](const pair<int, char>& p1, const pair<int, char>& p2) {
-        return compare(p1, p2);
-    });
+    sort(multiVector.begin(), multiVector.end(), [&](const pair<int, char> &p1, const pair<int, char> &p2)
+         { return compare(p1, p2); });
 
     return multiVector;
 }
-
 
 float Comparator::getStrongestCombination(Deck gameCard, Deck playerCard)
 {
     // Cek dari tinggi
 }
 
-float Comparator::searchVal(pair<int,char> card) {
+float Comparator::searchVal(pair<int, char> card)
+{
     return searchVal(card.first, card.second);
 }
 
@@ -341,13 +364,16 @@ float Comparator::searchVal(int number, char type)
     }
 }
 
-bool Comparator::compare(const pair<int, char>& p1, const pair<int, char>& p2) {
+bool Comparator::compare(const pair<int, char> &p1, const pair<int, char> &p2)
+{
     // If the first elements are different, compare them
-    if (p1.first != p2.first) {
+    if (p1.first != p2.first)
+    {
         return p1.first < p2.first;
     }
     // If the first elements are equal, compare the second elements using the map values
-    else {
+    else
+    {
         return this->color.at(p1.second) < this->color.at(p2.second);
     }
 }
