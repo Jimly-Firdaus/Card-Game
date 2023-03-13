@@ -2,11 +2,10 @@
 #define _QUADRUPLE_HPP_
 #include "Ability.hpp"
 
-class Quadruple : public Ability
-{
-public:
-    void getCardInfo();
-    void callCard(GameState);
+class Quadruple : public Ability{
+    public:
+        void getCardInfo();
+        void callCard();
 };
 
 #endif

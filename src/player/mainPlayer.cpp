@@ -10,14 +10,24 @@ int main()
     {
         full.push_back(d1.getACard(i));
     }
-    Deck fullCard(full);
-    cout << "----- Before ------- \n";
-    d1.printCard();
+    vector<string> abilityList;
+    abilityList.push_back("AbilityLess");
+    abilityList.push_back("Quadruple");
+    abilityList.push_back("Quarter");
+    abilityList.push_back("Reroll");
+    abilityList.push_back("ReverseDirection");
+    abilityList.push_back("SwapCard");
+    abilityList.push_back("Switch");
 
-    Player p1(fullCard);
+    Deck fullCard(full);
+    // cout << "----- Before ------- \n";
+    // fullCard.printCard();
+
+    Player p1(fullCard, abilityList);
+    p1.setPlayerCard(p1.getPlayerCard());
     p1.printPlayerCard();
-    cout << "----- After ------- \n";
-    d1.printCard();
+    // cout << "----- After ------- \n";
+    // fullCard.printCard();
 
     return 0;
 }

@@ -3,37 +3,27 @@
 #include "lib-header/Exception.hpp"
 using namespace std;
 
-void SwapCard::getCardInfo()
-{
+void SwapCard::getCardInfo(){
     cout << "Swap Card, menukar 1 kartu main deck milik pemain lain dengan 1 kartu main deck milik pemain lain. Tidak boleh ditukar dengan kartu main deck diri sendiri." << endl;
 }
 
-int SwapCard::getCard(string choice)
-{
-    if (choice == "left")
-    {
+int SwapCard::getCard(string choice){
+    if(choice == "left"){
         return 0;
-    }
-    else if (choice == "right")
-    {
+    }else if(choice == "right"){
         return 1;
     }
 }
 
-int SwapCard::getInput()
-{
+int SwapCard::getInput(){
     int idx;
     bool validChoice = false;
-    while (!validChoice)
-    {
-        try
-        {
-            string currentChoice = getChoice();
+    while(!validChoice){
+        try{
+            string currentChoice= getChoice();
             validChoice = true;
             idx = getCard(currentChoice);
-        }
-        catch (WrongChoice e)
-        {
+        }catch(WrongChoice e){
             e.what();
             cout << endl;
         }
@@ -41,13 +31,15 @@ int SwapCard::getInput()
     return idx;
 }
 
-// void SwapCard::swap(Player& target, Player& current, int idxTarget, int idxCurrent){
-//     target.setPlayerCard(current.getPlayerCard()., idxTarget);
-//     current.setPlayerCard(temp, idxCurrent);
-// }
+template <class T>
+void SwapCard::swap(player<T>& target, player<T>& current, int idxTarget, int idxCurrent){
+    T temp = target.getPlayerCard()[idxTarget];
+    target.setPlayerCard(current.getPlayerCard()[idxCurrent], idxTarget);
+    current.setPlayerCard(temp, idxCurrent);
+}
 
-void SwapCard::callCard(Player &target, Player &current)
-{
+template <class T>
+void SwapCard::callCard(player<T>& target, player<T>& current){
     int idxCurrent;
     int idxTarget;
     cout << "Please choose your card, input left or right (LOWERCASE MATTER)" << endl;
@@ -57,13 +49,11 @@ void SwapCard::callCard(Player &target, Player &current)
     swap(target, current, idxTarget, idxCurrent);
 }
 
-string SwapCard::getChoice()
-{
+string SwapCard::getChoice(){
     cout << "Please include your choice: " << endl;
     string choice;
     cin >> choice;
-    if (choice != "left" && choice != "right")
-    {
+    if(choice != "left" && choice != "right"){
         WrongChoice e;
         throw e;
     }
