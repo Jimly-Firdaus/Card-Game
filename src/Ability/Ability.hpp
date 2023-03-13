@@ -2,8 +2,7 @@
 #define _ABILITY_HPP_
 #include <iostream>
 #include "../player/player.hpp"
-#include "../lib-header/Exception.hpp"
-#include "../Deck/Deck.hpp"
+#include "../Exception/Exception.hpp"
 #include "../GameState/GameState.hpp"
 
 class Ability{
