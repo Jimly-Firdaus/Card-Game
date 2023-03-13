@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <algorithm>
-#include "..\Deck\Deck.hpp"
+#include "../Deck/Deck.hpp"
 using namespace std;
 
 class GameState {
