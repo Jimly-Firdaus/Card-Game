@@ -31,6 +31,7 @@ PlayerAction::PlayerAction(bool abilityUsed) : Player(Deck & fullCard, vector<st
 // Menampilkan kombinasi yang mungkin dari kartu yang dimiliki oleh pemain
 int PlayerAction::getCombination()
 {
+    Combinatiion::Combination (tableCard, this->playerCard);
 }
 
 // Aksi (next/double/half) yang dilakukan oleh pemain
@@ -67,7 +68,7 @@ void PlayerAction::setPlayerAction()
 // Aksi dimana tidak terjadi perubahan poin game dan langsung menuju pemain selanjutnya
 void PlayerAction::nextAction()
 {
-    // Next Turn
+    Gamestate::nextPlayerOrder();
 }
 
 // Aksi dimana poin game menjadi dua kali lipat dari sebelumnya
