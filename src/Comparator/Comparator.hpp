@@ -2,6 +2,7 @@
 #define COMPARATOR_HPP
 
 #include "../Combination/Combination.hpp"
+#include "../Exception/Exception.hpp"
 
 class Comparator
 {
