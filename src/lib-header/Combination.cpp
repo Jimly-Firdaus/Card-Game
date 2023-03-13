@@ -156,7 +156,7 @@ pair<bool, float> Combination::straightCombination(Deck mergedDeck)
 {
     pair<bool, float> result = {false, 0.0};
     int count = 0;
-    vector<pair<int, char>> mergedCard = sortDeck(mergedDeck.getDeckCard());
+    vector<pair<int, char>> mergedCard = sortDeck(mergedDeck.getCards());
     for (int i = MAX_PLAYER_CARD - 1; i > 0; i--)
     {
         if (mergedCard[i].first - mergedCard[i - 1].first == 1)
@@ -293,7 +293,7 @@ vector<pair<int, char>> Combination::findPair()
 
 vector<pair<int, char>> Combination::mergeDeck(Deck firstDeck, Deck secondDeck)
 {
-    return mergeDeck(firstDeck.getDeckCard(), secondDeck.getDeckCard());
+    return mergeDeck(firstDeck.getCards(), secondDeck.getCards());
 }
 
 vector<pair<int, char>> Combination::mergeDeck(vector<pair<int, char>> firstDeck, vector<pair<int, char>> secondDeck)
@@ -311,12 +311,12 @@ vector<pair<int, char>> Combination::getNonSingle(Deck mergedDeck)
     vector<pair<int, char>> multiVector;
     // map each of the element into frequencies map
     map<int, int> freqEle;
-    for (const auto pair : mergedDeck.getDeckCard())
+    for (const auto pair : mergedDeck.getCards())
     {
         freqEle[pair.first]++;
     }
     // copy all element that have freq > 1
-    for (const auto pair : mergedDeck.getDeckCard())
+    for (const auto pair : mergedDeck.getCards())
     {
         if (freqEle[pair.first] > 1)
         {
@@ -330,7 +330,7 @@ vector<pair<int, char>> Combination::getNonSingle(Deck mergedDeck)
 
 vector<pair<int, char>> Combination::sortDeck(Deck mergedDeck)
 {
-    return sortDeck(mergedDeck.getDeckCard());
+    return sortDeck(mergedDeck.getCards());
 }
 
 vector<pair<int, char>> Combination::sortDeck(vector<pair<int, char>> mergedDeck)
