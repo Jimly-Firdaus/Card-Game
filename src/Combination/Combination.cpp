@@ -1,8 +1,9 @@
 #include "Combination.hpp"
 
 // Default Ctor
-Combination::Combination(Deck tableCard, Deck playerCard) : tableCard(tableCard), playerCard(playerCard)
+Combination::Combination(Deck tableCard, Deck playerCard, string nickname) : tableCard(tableCard), playerCard(playerCard)
 {
+    this->cardOwner = nickname;
     // construct look up constant table
     this->avail_chars[0] = 'H';
     this->avail_chars[1] = 'B';
@@ -460,4 +461,8 @@ Deck Combination::getPlayerCard() const {
 
 Deck Combination::getTableCard() const {
     return this->tableCard;
+}
+
+string Combination::getOwnerCard() const {
+    return this->cardOwner;
 }

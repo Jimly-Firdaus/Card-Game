@@ -25,10 +25,11 @@ class Combination
 {
 public:
     // Constructor
-    Combination(Deck tableCard, Deck playerCard);
+    Combination(Deck tableCard, Deck playerCard, string nickname);
     // Getter
     Deck getPlayerCard() const; // return current player card
     Deck getTableCard() const; // return table card
+    string getOwnerCard() const;
     /**
      * Get the strongest combination deck
      * @return float value of the strongest combination in playerCards
@@ -158,6 +159,7 @@ public:
     bool operator==(Combination &other);
 
 private:
+    string cardOwner;
     Deck tableCard, playerCard;
     // look up table for constants
     map<pair<int, char>, float> valueTable;
