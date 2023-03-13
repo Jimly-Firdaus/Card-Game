@@ -7,6 +7,7 @@
 #include "../Ability/ReverseDirection.hpp"
 #include "../Ability/SwapCard.hpp"
 #include "../Ability/Switch.hpp"
+#include
 // #include "GameState.hpp"
 
 using namespace std;
@@ -18,27 +19,24 @@ Method: getCombination, (double, next, half, useAbility (pure virtual))
 */
 
 // Constructor
-PlayerAction::PlayerAction()
+PlayerAction::PlayerAction() : Player()
 {
-    enum abilityCard
-    {
-        AbilityLess,
-        Quadruple,
-        Quarter,
-        Reroll,
-        ReverseDirection,
-        SwapCard,
-        Switch
-    } used = false;
+    abilityUsed = false;
+}
+PlayerAction(bool abilityUsed)
+{
+    this->abilityUsed = abilityUsed;
 }
 
 // Getter
-int PlayerAction::getCombination() // Menampilkan kombinasi yang mungkin dari kartu yang dimiliki oleh pemain
+// Menampilkan kombinasi yang mungkin dari kartu yang dimiliki oleh pemain
+int PlayerAction::getCombination()
 {
 }
 
+// Aksi (next/double/half) yang dilakukan oleh pemain
 void PlayerAction::setPlayerAction()
-{ // Aksi (next/double/half) yang dilakukan oleh pemain
+{
     string actionOption;
     cout << "Opsi Action Player : " << endl;
     cout << "   [NEXT] Randomize Card" << endl;
@@ -66,22 +64,46 @@ void PlayerAction::setPlayerAction()
         }
     }
 }
-void PlayerAction::nextAction() // Aksi dimana tidak terjadi perubahan poin game dan langsung menuju pemain selanjutnya
+
+// Aksi dimana tidak terjadi perubahan poin game dan langsung menuju pemain selanjutnya
+void PlayerAction::nextAction()
 {
-    Gamestate::nextPlayerOrder();
+    // Next Turn
 }
 
-void PlayerAction::doubleAction() // Aksi dimana poin game menjadi dua kali lipat dari sebelumnya
+// Aksi dimana poin game menjadi dua kali lipat dari sebelumnya
+void PlayerAction::doubleAction()
 {
     Gamestate::doubleRewardPoint();
 }
 
-void PlayerAction::halfAction() // Aksi dimana poin game menjadi setengahnya
+// Aksi dimana poin game menjadi setengahnya
+void PlayerAction::halfAction()
 {
     GameState::halfRewardPoint();
 }
 
-void PlayerAction::useAbility() // Aksi dimana pemain menggunakan kartu ability yang dimilikinya
+// Aksi dimana pemain menggunakan kartu ability yang dimilikinya
+void PlayerAction::useAbility()
 {
-
+    if (!abilityUsed)
+    {
+        /*
+        switch(myAbility) {
+            case "AbilityLess":
+                AbilityLess::callCard()
+            case "Quadruple" :
+            case "Quarter" :
+            case "Reroll" :
+            case "ReverseDirection" :
+            case "SwapCard" :
+            case "Switch" :
+        }
+        */
+        abilityUsed = true;
+    }
+    else
+    {
+        throw "Your Ability Already Used\n" // EXCEPTION
+    }
 }
