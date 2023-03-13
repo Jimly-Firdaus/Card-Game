@@ -1,7 +1,7 @@
 #include "Combination.hpp"
 
 // Default Ctor
-Combination::Combination(Deck tableCard) : tableCard(tableCard)
+Combination::Combination(Deck tableCard, Deck playerCard) : tableCard(tableCard), playerCard(playerCard)
 {
     // construct look up constant table
     this->avail_chars[0] = 'H';
@@ -25,17 +25,17 @@ Combination::Combination(Deck tableCard) : tableCard(tableCard)
     }
 }
 
-pair<bool, float> Combination::isStraightFlush(Deck playerCard)
+pair<bool, float> Combination::isStraightFlush()
 {
     // check whether flush or not to continue check straight
-    if (isFlush(playerCard).first)
+    if (isFlush().first)
     {
         vector<pair<int, char>> mergedCard = mergeDeck(this->tableCard, playerCard);
         vector<pair<int, char>> flushCard;
         // filter out the non-flush type
         for (int i = 0; i < mergedCard.size(); i++)
         {
-            if (mergedCard[i].second == isFlush(playerCard).second.second)
+            if (mergedCard[i].second == isFlush().second.second)
                 flushCard.push_back(mergedCard[i]);
         }
         // check straight for the filtered cards
@@ -47,7 +47,7 @@ pair<bool, float> Combination::isStraightFlush(Deck playerCard)
     return {false, 0.0};
 }
 
-pair<bool, int> Combination::isFourKind(Deck playerCard)
+pair<bool, int> Combination::isFourKind()
 {
     vector<int> v(13, 0);
     vector<pair<int, char>> mergedCard = mergeDeck(this->tableCard, playerCard);
@@ -69,7 +69,7 @@ pair<bool, int> Combination::isFourKind(Deck playerCard)
     return {false, -1};
 }
 
-pair<bool, int> Combination::isFullHouse(Deck playerCard)
+pair<bool, int> Combination::isFullHouse()
 {
     vector<pair<int, char>> v = mergeDeck(this->tableCard, playerCard);
     vector<pair<int, char>> filteredV = this->getNonSingle(v);
@@ -97,7 +97,7 @@ pair<bool, int> Combination::isFullHouse(Deck playerCard)
     return {false, -1};
 }
 
-pair<bool, pair<int, char>> Combination::isFlush(Deck playerCard)
+pair<bool, pair<int, char>> Combination::isFlush()
 {
     // color count format = "Hijau", "Biru", "Kuning", "Merah"
     vector<int> v(4, 0);
@@ -144,7 +144,7 @@ pair<bool, pair<int, char>> Combination::isFlush(Deck playerCard)
     return result;
 }
 
-pair<bool, float> Combination::isStraight(Deck playerCard)
+pair<bool, float> Combination::isStraight()
 {
     vector<pair<int, char>> mergedCard = mergeDeck(this->tableCard, playerCard);
     Deck mergedDeck(mergedCard);
@@ -211,7 +211,7 @@ pair<int, char> Combination::findBiggest(vector<pair<int, char>> v, int number)
     return resultPair;
 }
 
-pair<bool, int> Combination::isThreeKind(Deck playerCard)
+pair<bool, int> Combination::isThreeKind()
 {
     vector<pair<int, char>> v = mergeDeck(this->tableCard, playerCard);
     vector<pair<int, char>> filteredV = this->getNonSingle(v);
@@ -230,10 +230,10 @@ pair<bool, int> Combination::isThreeKind(Deck playerCard)
     return {false, -1};
 }
 
-pair<bool, vector<pair<int, char>>> Combination::isTwoPair(Deck playerCard)
+pair<bool, vector<pair<int, char>>> Combination::isTwoPair()
 {
     vector<pair<int, char>> mergedCard = mergeDeck(this->tableCard, playerCard);
-    vector<pair<int, char>> allPairs = findPair(playerCard);
+    vector<pair<int, char>> allPairs = findPair();
     pair<bool, vector<pair<int, char>>> result = {false, {}};
 
     if (allPairs.size() > 2)
@@ -247,7 +247,7 @@ pair<bool, vector<pair<int, char>>> Combination::isTwoPair(Deck playerCard)
     return result;
 }
 
-pair<bool, float> Combination::isPair(Deck playerCard)
+pair<bool, float> Combination::isPair()
 {
     vector<pair<int, char>> v = mergeDeck(this->tableCard, playerCard);
     vector<pair<int, char>> filteredV = this->getNonSingle(v);
@@ -266,10 +266,10 @@ pair<bool, float> Combination::isPair(Deck playerCard)
     return {false, -1};
 }
 
-vector<pair<int, char>> Combination::findPair(Deck playerCard)
+vector<pair<int, char>> Combination::findPair()
 {
     vector<pair<int, char>> pairV, temp;
-    if (isPair(playerCard).first)
+    if (isPair().first)
     {
         // Deck copyTable(this->tableCard);
         vector<pair<int, char>> v = mergeDeck(this->tableCard, playerCard);
@@ -379,7 +379,7 @@ bool Combination::compare(const pair<int, char> &p1, const pair<int, char> &p2)
     }
 }
 
-pair<int, char> Combination::getHighCard(Deck playerCard)
+pair<int, char> Combination::getHighCard()
 {
     Deck copyTable(this->tableCard);
     vector<pair<int, char>> v = mergeDeck(copyTable, playerCard);
@@ -388,18 +388,18 @@ pair<int, char> Combination::getHighCard(Deck playerCard)
     return v[MAX_PLAYER_CARD - 1];
 }
 
-pair<float, string> Combination::getStrongestCombination(Deck playerCard)
+pair<float, string> Combination::getStrongestCombination()
 {
     // Cek dari rendah -> paling bawah paling kuat override result
-    pair<float, string> result = {searchVal(getHighCard(playerCard)), "High Card"}; // defaults to high card
-    auto pair = isPair(playerCard);
-    auto twoPair = isTwoPair(playerCard);
-    auto threeKind = isThreeKind(playerCard);
-    auto straight = isStraight(playerCard);
-    auto flush = isFlush(playerCard);
-    auto fullHouse = isFullHouse(playerCard);
-    auto fourKind = isFourKind(playerCard);
-    auto straightFlush = isStraightFlush(playerCard);
+    pair<float, string> result = {searchVal(getHighCard()), "High Card"}; // defaults to high card
+    auto pair = isPair();
+    auto twoPair = isTwoPair();
+    auto threeKind = isThreeKind();
+    auto straight = isStraight();
+    auto flush = isFlush();
+    auto fullHouse = isFullHouse();
+    auto fourKind = isFourKind();
+    auto straightFlush = isStraightFlush();
 
     // Check each condition and update the result accordingly
     if (pair.first)
@@ -437,4 +437,19 @@ pair<float, string> Combination::getStrongestCombination(Deck playerCard)
      */
 
     return result;
+}
+
+bool Combination::operator<(Combination &other)
+{
+    return this->getStrongestCombination() < other.getStrongestCombination();
+}
+
+bool Combination::operator>(Combination &other)
+{
+    return this->getStrongestCombination() > other.getStrongestCombination();
+}
+
+bool Combination::operator==(Combination &other)
+{
+    return this->getStrongestCombination() == other.getStrongestCombination();
 }
