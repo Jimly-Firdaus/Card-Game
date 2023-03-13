@@ -4,10 +4,7 @@ using namespace std;
 
 // Constructor
 // Default Constructor
-Deck::Deck()
-{
-    vector<pair<int, char> > cards;
-}
+Deck::Deck() {}
 
 // User-defined Constructor
 Deck::Deck(vector<pair<int, char> > Cards)
@@ -32,6 +29,12 @@ vector<pair<int, char> > Deck::getCards()
 void Deck::setCards(vector<pair<int, char> > newCards)
 {
     cards = newCards;
+}
+
+// Getter A Card
+pair<int, char> Deck::getACard(int idx)
+{
+    return cards[idx];
 }
 
 // Generate Card From File
@@ -116,9 +119,16 @@ Deck &Deck::operator-(const pair<int, char> &otherCard)
 // PrintCard
 void Deck::printCard()
 {
-    for (int i = 0; i < cards.size(); i++)
+    if (cards.size() == 0)
     {
-        cout << i + 1 << ". <" << cards[i].first << ", " << cards[i].second << ">" << endl;
+        cout << "There is no card\n";
+    }
+    else
+    {
+        for (int i = 0; i < cards.size(); i++)
+        {
+            cout << i + 1 << ". <" << cards[i].first << ", " << cards[i].second << ">" << endl;
+        }
     }
 }
 
