@@ -10,7 +10,14 @@ Method: getCombination, (double, next, half, useAbility (pure virtual))
 */
 
 class PlayerAction : public player {
+    private:
+    enum abilityCard;
+
     public:
+    // Constructor
+    PlayerAction();
+    PlayerAction(enum abilityCard);
+    
     // Getter
     int getCombination(); // Menampilkan kombinasi yang mungkin dari kartu yang dimiliki oleh pemain
 
