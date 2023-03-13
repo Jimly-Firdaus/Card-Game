@@ -18,18 +18,12 @@ Method: getCombination, (double, next, half, useAbility (pure virtual))
 */
 
 // Constructor
-PlayerAction::PlayerAction()
+PlayerAction::PlayerAction() : Player()
 {
-    enum abilityCard
-    {
-        AbilityLess,
-        Quadruple,
-        Quarter,
-        Reroll,
-        ReverseDirection,
-        SwapCard,
-        Switch
-    } used = false;
+    abilityUsed = false;
+}
+PlayerAction(bool abilityUsed){
+    this->abilityUsed = abilityUsed;
 }
 
 // Getter
@@ -68,6 +62,7 @@ void PlayerAction::setPlayerAction()
 }
 void PlayerAction::nextAction(string action) // Aksi dimana tidak terjadi perubahan poin game dan langsung menuju pemain selanjutnya
 {
+    // Next Turn
 }
 
 void PlayerAction::doubleAction() // Aksi dimana poin game menjadi dua kali lipat dari sebelumnya
@@ -82,4 +77,21 @@ void PlayerAction::halfAction() // Aksi dimana poin game menjadi setengahnya
 
 void PlayerAction::useAbility() // Aksi dimana pemain menggunakan kartu ability yang dimilikinya
 {
+    if (!abilityUsed){
+        /*
+        switch(myAbility) {
+            case "AbilityLess":
+                AbilityLess::callCard()
+            case "Quadruple" : 
+            case "Quarter" : 
+            case "Reroll" : 
+            case "ReverseDirection" : 
+            case "SwapCard" : 
+            case "Switch" :
+        }
+        */
+       abilityUsed = true;
+    } else {
+        throw "Your Ability Already Used\n" // EXCEPTION
+    }
 }
