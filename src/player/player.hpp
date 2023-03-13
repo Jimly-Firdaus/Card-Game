@@ -8,16 +8,15 @@ Attr: ownedCard, playerPoint,
 Method: setPlayerAction,
 */
 
-class player
-{
-protected:
-    Deck ownedCard; // hand card yang dimiliki oleh hsetiap pemain
+class Player {
+    protected:
+    Deck ownedCard; // Hand card yang dimiliki oleh setiap pemain (termasuk ability card)
     int playerPoint;
 
 public:
     // Constructor
-    player(); // Default constructor
-    player(Deck ownedCard);
+    Player(); // Default constructor
+    Player(Deck ownedCard); // User-Defined constructor
     // Setiap instantiate, menerima deck owned card yang dirandom secara langsung
     // Round 1 player didefine semua, round selanjutnya dapet ability card
 
