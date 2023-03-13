@@ -85,7 +85,7 @@ vector<pair<int, char> > Deck::cardFromFile(string fileName)
 // Shuffle Card
 void Deck::shuffleCard()
 {
-    random_shuffle(cards.begin(), cards.end());
+    // random_shuffle(cards.begin(), cards.end());
 }
 
 // Get Top of Card
