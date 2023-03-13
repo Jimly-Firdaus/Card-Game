@@ -10,19 +10,15 @@ Method: getCombination, (double, next, half, useAbility (pure virtual))
 */
 
 class playerAction : public player {
-    private:
-    char abilityCard;
-
     public:
     // Getter
-    int getCombination();
-    
+    int getCombination(); 
 
-    void nextAction();
+    void nextAction(); // 
     void doubleAction();
     void halfAction();
 
-    virtual void useAbility() = 0; //
+    virtual void useAbility() = 0;
 };
 
 #endif
