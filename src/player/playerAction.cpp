@@ -7,7 +7,6 @@
 #include "../Ability/ReverseDirection.hpp"
 #include "../Ability/SwapCard.hpp"
 #include "../Ability/Switch.hpp"
-#include
 // #include "GameState.hpp"
 
 using namespace std;
@@ -19,11 +18,11 @@ Method: getCombination, (double, next, half, useAbility (pure virtual))
 */
 
 // Constructor
-PlayerAction::PlayerAction() : Player()
+PlayerAction::PlayerAction() : Player(Deck & fullCard, vector<string> & abilityCards)
 {
     abilityUsed = false;
 }
-PlayerAction(bool abilityUsed)
+PlayerAction::PlayerAction(bool abilityUsed) : Player(Deck & fullCard, vector<string> & abilityCards)
 {
     this->abilityUsed = abilityUsed;
 }
