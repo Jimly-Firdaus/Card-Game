@@ -1,30 +1,30 @@
-#include "Combination/Combination.hpp"
-#include "Ability/Ability.hpp"
-#include "GameState/GameState.hpp"
+#include <iostream>
+#include "GameState.hpp"
 
 int main()
 {
-    bool terminateGame = false;
+    GameState x;
+    cout << x.getRewardPoint() << endl;
+    // x.showTableCard();
+    cout << x.getCurrentTurn() << endl;
 
-    while(!terminateGame) {
-        // Player + game state instantiation here 
-
-        // Game loop
-        bool foundWinner = false;
-        while (!foundWinner) {
-            int currentRound = 0;
-
-            // Round loop
-            while (currentRound != 7) {
-                
-
-
-                currentRound++;
-            }
-
-        }
-
+    for (int i = 0; i < 10; i++) {
+        x.nextPlayerOrder();
+        cout << x.getCurrentTurn() << endl;
+    }
+    
+    x.setReverseStatus(true);
+    x.setReverseStatusChange(true);
+    
+    for (int i = 0; i < 10; i++) {
+        x.nextPlayerOrder();
+        cout << x.getCurrentTurn() << endl;
     }
 
-    return 0;
+    x.setReverseStatus(false);
+    x.setReverseStatusChange(true);
+    for (int i = 0; i < 10; i++) {
+        x.nextPlayerOrder();
+        cout << x.getCurrentTurn() << endl;
+    }
 }
