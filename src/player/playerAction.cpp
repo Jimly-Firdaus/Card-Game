@@ -1,5 +1,14 @@
 #include <iostream>
 #include "Player.hpp"
+#include "../Ability/AbilityLess.hpp"
+#include "../Ability/Quadruple.hpp"
+#include "../Ability/Quarter.hpp"
+#include "../Ability/Reroll.hpp"
+#include "../Ability/ReverseDirection.hpp"
+#include "../Ability/SwapCard.hpp"
+#include "../Ability/Switch.hpp"
+// #include "GameState.hpp"
+
 using namespace std;
 
 /*Function overriding here
@@ -11,7 +20,7 @@ Method: getCombination, (double, next, half, useAbility (pure virtual))
 // Constructor
 PlayerAction::PlayerAction()
 {
-    enum AbilityCard
+    enum abilityCard
     {
         AbilityLess,
         Quadruple,
@@ -20,7 +29,7 @@ PlayerAction::PlayerAction()
         ReverseDirection,
         SwapCard,
         Switch
-    }
+    } used = false;
 }
 
 // Getter
@@ -59,12 +68,16 @@ void PlayerAction::nextAction(string action) // Aksi dimana tidak terjadi peruba
 {
 }
 
-void PlayerAction::doubleAction(string action) // Aksi dimana poin game menjadi dua kali lipat dari sebelumnya
+void PlayerAction::doubleAction() // Aksi dimana poin game menjadi dua kali lipat dari sebelumnya
 {
+    Gamestate::doubleRewardPoint();
 }
 
-void PlayerAction::halfAction(string action) // Aksi dimana poin game menjadi setengahnya
+void PlayerAction::halfAction() // Aksi dimana poin game menjadi setengahnya
 {
+    GameState::halfRewardPoint();
 }
 
-virtual void PlayerAction::useAbility() = 0; // Aksi dimana pemain menggunakan kartu ability yang dimilikinya
+void PlayerAction::useAbility() // Aksi dimana pemain menggunakan kartu ability yang dimilikinya
+{
+}
