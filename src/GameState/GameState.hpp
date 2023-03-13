@@ -4,7 +4,7 @@
 #include <vector>
 #include <algorithm>
 #include "..\Deck\Deck.hpp"
-// #include "..\Player\Player.hpp"
+#include "..\Player\Player.hpp"
 using namespace std;
 
 class GameState {
@@ -43,6 +43,6 @@ class GameState {
 
         void nextPlayerOrder(); // Current Turn Rotation
         
-        // bool isWin(vector<Player>); // Check if there is a player whose point is >= 2^32
+        bool isWin(vector<Player>); // Check if there is a player whose point is >= 2^32
 };
 #endif

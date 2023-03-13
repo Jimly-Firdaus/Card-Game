@@ -113,14 +113,14 @@ void GameState::nextPlayerOrder() {
     }
 }
 
-// bool GameState::isWin(vector<Player P>) {
-//     bool result = false;
-//     int i = 0;
-//     while (!result && i < P.size()) {
-//         if (P[i].getPlayerPoint >= pow(2, 32)) {
-//             result = true;
-//         }
-//         i++;
-//     }
-//     return result;
-// }
+bool GameState::isWin(vector<Player> P) {
+    bool result = false;
+    int i = 0;
+    while (!result && i < P.size()) {
+        if (P[i].getPlayerPoint() >= pow(2, 32)) {
+            result = true;
+        }
+        i++;
+    }
+    return result;
+}
