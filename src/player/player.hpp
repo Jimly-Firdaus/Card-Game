@@ -18,7 +18,7 @@ class Player {
     player(); //
     player(Deck ownedCard); 
     // Setiap instantiate, menerima deck owned card yang dirandom secara langsung 
-    // Round 1 player didefine semua, round selanjutnya dapet ability card
+    // Round 1 player didefine semua, round selanjutnya mendapatkan ability card
 
     // Setter and Getter
     void setPlayerAction(); // Aksi (next/double/half) yang dilakukan oleh pemain
