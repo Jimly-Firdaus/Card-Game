@@ -2,12 +2,11 @@
 #define _REROLL_HPP_
 #include "Ability.hpp"
 
-template <class T>
 class Reroll : public Ability
 {
 public:
     void getCardInfo();
-    void callCard(player<T> &, Deck &);
+    void callCard(Player&, Deck);
 };
 
 #endif

@@ -1,6 +1,6 @@
 #include "SwapCard.hpp"
 #include <bits/stdc++.h>
-#include "lib-header/Exception.hpp"
+#include "Exception/Exception.hpp"
 using namespace std;
 
 void SwapCard::getCardInfo()
@@ -41,10 +41,11 @@ int SwapCard::getInput()
     return idx;
 }
 
-// void SwapCard::swap(Player& target, Player& current, int idxTarget, int idxCurrent){
-//     target.setPlayerCard(current.getPlayerCard()., idxTarget);
-//     current.setPlayerCard(temp, idxCurrent);
-// }
+void SwapCard::swap(Player& target, Player& current, int idxTarget, int idxCurrent){
+    pair<int, char> temp = target.getPlayerCard().getACard(idxTarget);
+    target.setAPlayerCard(idxTarget, current.getPlayerCard().getACard(idxCurrent));
+    current.setPlayerCard(idxCurrent, temp);
+}
 
 void SwapCard::callCard(Player &target, Player &current)
 {

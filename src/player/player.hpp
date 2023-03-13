@@ -1,7 +1,7 @@
 #ifndef PLAYER_HPP
 #define PLAYER_HPP
 
-#include "../Deck/../Deck/Deck.hpp"
+#include "../Deck/Deck.hpp"
 
 /*Class: Player : Kartu yang dimiliki, Poin Player, Action (Double, Next, Half, Ability)
 Attr: ownedCard, playerPoint,
