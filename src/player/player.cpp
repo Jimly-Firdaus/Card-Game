@@ -12,7 +12,6 @@ Method: setPlayerAction,
 // Default Constructor
 Player::Player(Deck &fullCard)
 {
-    Deck ownedCard;
     int idx;
     pair<int, char> card;
     for (int i = 0; i < 2; i++)
@@ -21,7 +20,12 @@ Player::Player(Deck &fullCard)
         card = fullCard.getACard(idx);
         cout << "--- " << card.first << ", " << card.second << " ----\n";
         ownedCard = ownedCard + card;
+        cout << "OwnedCard\n";
+        ownedCard.printCard();
+        cout << "FullCard\n";
         fullCard = fullCard - card;
+        fullCard.printCard();
+        cout << "END" << endl;
     }
     playerPoint = 0;
 }
@@ -69,6 +73,5 @@ void Player::setAPlayerCard(int idx, pair<int, char> newCard)
 void Player::printPlayerCard()
 {
     cout << "Kartu milik player" << endl;
-    cout << "1. <" << ownedCard.getCards()[0].first << ", " << ownedCard.getCards()[0].second << ">" << endl;
-    cout << "2. <" << ownedCard.getCards()[1].first << ", " << ownedCard.getCards()[1].second << ">" << endl;
+    ownedCard.printCard();
 }

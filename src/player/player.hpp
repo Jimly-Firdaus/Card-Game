@@ -13,6 +13,7 @@ class Player
 protected:
     Deck ownedCard; // Hand card yang dimiliki oleh setiap pemain (termasuk ability card)
     int playerPoint;
+    enum abilityCard
 
 public:
     // Constructor
