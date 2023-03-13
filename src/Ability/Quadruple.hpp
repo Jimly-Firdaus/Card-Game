@@ -5,7 +5,7 @@
 class Quadruple : public Ability{
     public:
         void getCardInfo();
-        void callCard();
+        void callCard(GameState);
 };
 
 #endif

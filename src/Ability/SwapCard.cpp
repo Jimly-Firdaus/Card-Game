@@ -31,15 +31,12 @@ int SwapCard::getInput(){
     return idx;
 }
 
-template <class T>
-void SwapCard::swap(player<T>& target, player<T>& current, int idxTarget, int idxCurrent){
-    T temp = target.getPlayerCard()[idxTarget];
-    target.setPlayerCard(current.getPlayerCard()[idxCurrent], idxTarget);
-    current.setPlayerCard(temp, idxCurrent);
-}
+// void SwapCard::swap(Player& target, Player& current, int idxTarget, int idxCurrent){
+//     target.setPlayerCard(current.getPlayerCard()., idxTarget);
+//     current.setPlayerCard(temp, idxCurrent);
+// }
 
-template <class T>
-void SwapCard::callCard(player<T>& target, player<T>& current){
+void SwapCard::callCard(Player& target, Player& current){
     int idxCurrent;
     int idxTarget;
     cout << "Please choose your card, input left or right (LOWERCASE MATTER)" << endl;

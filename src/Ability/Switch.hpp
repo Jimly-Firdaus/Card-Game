@@ -5,7 +5,7 @@
 class Switch : public Ability{
     public:
         void getCardInfo();
-        void callCard(player&, player&);
+        void callCard(Player&, Player&);
 };
 
 #endif
