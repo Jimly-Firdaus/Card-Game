@@ -1,8 +1,8 @@
 #ifndef COMBINATION_HPP
 #define COMBINATION_HPP
 
-#include "Deck.hpp"
-#include "Exception.hpp"
+#include "../Deck/Deck.hpp"
+#include "../Exception/Exception.hpp"
 #include <map>
 using namespace std;
 
