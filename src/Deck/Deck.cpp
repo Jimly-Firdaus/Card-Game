@@ -1,5 +1,5 @@
 #include "Deck.hpp"
-#include "./lib-header/Exception.hpp"
+#include "../Exception/Exception.hpp"
 
 using namespace std;
 
