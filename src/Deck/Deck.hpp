@@ -3,7 +3,7 @@
 
 #define vector Vector
 #include <iostream>
-#include <string>
+#include <cstring>
 #include <vector>
 #include <array>
 #include <algorithm>
@@ -33,7 +33,8 @@ public:
     pair<int, char> getACard(int idx);
 
     // Generate Card From File
-    vector<pair<int, char> > cardFromFile(string filePath);
+    pair<vector<pair<int, char> >, vector<string> > Deck::cardFromFile(string fileName);
+
     /*
     52 baris pertama pada deck card berisi DeckCard dengan format :
     C<space>N
@@ -49,7 +50,7 @@ public:
     */
 
     // Validasi Card From File
-    // bool validDeckCard(); Ini di state:Input Validation?
+    bool validDeckCard(pair<vector<pair<int, char> >, vector<string> > result);
 
     // Shuffle Card
     void shuffleCard();

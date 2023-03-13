@@ -1,4 +1,5 @@
 #include "Deck.hpp"
+#include "./lib-header/Exception.hpp"
 
 using namespace std;
 
@@ -38,51 +39,98 @@ pair<int, char> Deck::getACard(int idx)
 }
 
 // Generate Card From File
-vector<pair<int, char> > Deck::cardFromFile(string fileName)
+pair<vector<pair<int, char> >, vector<string> > Deck::cardFromFile(string fileName)
 {
     string textRead, cardColor, cardNumber;
-    vector<pair<int, char> > result;
-    // Read from the txt file
-    ifstream readFile;
-    string filePath = "../../test/" + fileName + ".txt";
-    readFile.open(filePath.c_str(), ios::in);
-
-    // Read the file line by line
-    while (getline(readFile, textRead))
+    pair<vector<pair<int, char> >, vector<string> > result;
+    vector<pair<int, char> > deck;
+    vector<string> ability;
+    int idx = 0;
+    do
     {
-        string el1 = "";
-        string el2 = "";
-        size_t itr = textRead.find(' ');
-        pair<int, char> newElement;
-        if (itr != string::npos)
-        {
-            for (int i = 0; i < itr; i++)
-            {
-                el1 += textRead[i];
-            }
-            for (int i = itr + 1; i < textRead.length(); i++)
-            {
-                el2 += textRead[i];
-            }
+        // Read from the txt file
+        ifstream readFile;
+        string filePath = "../../test/" + fileName + ".txt";
+        readFile.open(filePath.c_str(), ios::in);
 
-            int number = 0;
-            for (int k = 0; k < el1.length(); k++)
-            {
-                number *= 10;
-                number += (el1[k] - '0');
-            }
-            newElement = make_pair(number, el2[0]);
-            result.push_back(newElement);
-        }
-        else
+        // Read the file line by line
+        while (getline(readFile, textRead))
         {
-            newElement = make_pair(0, textRead[0]);
-            result.push_back(newElement);
+            if (idx < 52)
+            {
+                string el1 = "";
+                string el2 = "";
+                size_t itr = textRead.find(' ');
+                pair<int, char> newElement;
+                if (itr != string::npos)
+                {
+                    for (int i = 0; i < itr; i++)
+                    {
+                        el1 += textRead[i];
+                    }
+                    for (int i = itr + 1; i < textRead.length(); i++)
+                    {
+                        el2 += textRead[i];
+                    }
+
+                    int number = 0;
+                    for (int k = 0; k < el1.length(); k++)
+                    {
+                        number *= 10;
+                        number += (el1[k] - '0');
+                    }
+                    newElement = make_pair(number, el2[0]);
+                    deck.push_back(newElement);
+                }
+            }
+            else
+            {
+                ability.push_back(textRead);
+            }
+            idx++;
+        }
+        readFile.close();
+
+        result = make_pair(deck, ability);
+    } while (!validDeckCard(result));
+
+    return result;
+}
+
+// Validasi Card From File
+bool Deck::validDeckCard(pair<vector<pair<int, char> >, vector<string> > result)
+{
+    vector<pair<int, char> > deck = result.first;
+    vector<string> ability = result.second;
+
+    bool valid = true;
+    char color[4] = {'M', 'B', 'K', 'H'};
+    for (int i = 1; i < 14 && valid; i++)
+    {
+        for (int j = 0; j < 4 && valid; j++)
+        {
+            vector<pair<int, char> >::iterator itr = find(deck.begin(), deck.end(), make_pair(i, color[j]));
+            if (itr == deck.end())
+            {
+                valid = false;
+            }
         }
     }
 
-    readFile.close();
-    return result;
+    string abilityList[7] = {"Re-Roll", "Quadruple", "Quarter", "Reverse", "Swap", "Switch", "Abilityless"};
+    for (int i = 0; i < 7 && valid; i++)
+    {
+        vector<string>::iterator itr = find(ability.begin(), ability.end(), abilityList[i]);
+        if (itr == ability.end())
+        {
+            valid = false;
+        }
+    }
+
+    if (!valid)
+        throw "Invalid Input!"; // Tambahin input yang ga ketemu
+
+    return valid;
 }
 
 // Shuffle Card
