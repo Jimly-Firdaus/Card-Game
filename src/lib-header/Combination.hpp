@@ -25,14 +25,14 @@ class Combination
 {
 public:
     // Constructor
-    Combination();
+    Combination(Deck tableCard);
     /**
      * Get the strongest combination deck
      * @param gameCard game cards
      * @param playerCard corresponding player cards
      * @return float value of the strongest combination in playerCards
      */
-    float getStrongestCombination(Deck gameCard, Deck playerCard);
+    pair<float, string> getStrongestCombination(Deck playerCard);
     /**
      * Compare function for sorting lambda function
      * @param p1
@@ -60,41 +60,35 @@ public:
      * @param playerCard player hand (2 total)
      * @return pair<bool, float> bool for Straight Flush. If true returns the valuation, else returns 0.0
      */
-    pair<bool, float> isStraightFlush(Deck tableCard, Deck playerCard);
+    pair<bool, float> isStraightFlush(Deck playerCard);
     /**
      * Check whether if current hand + table card is Four of Kind
      * @param tableCard table card (5 total)
      * @param playerCard player hand (2 total)
      * @return pair<bool, int> bool for Four of Kind. If true returns the card number, else returns -1
      */
-    pair<bool, int> isFourKind(Deck tableCard, Deck playerCard);
+    pair<bool, int> isFourKind(Deck playerCard);
     /**
      * Check whether if current hand + table card is Full House
      * @param tableCard table card (5 total)
      * @param playerCard player hand (2 total)
      * @return * pair<bool, int> bool for Full House. If true returns the card number, else returns -1
      */
-    pair<bool, int> isFullHouse(Deck tableCard, Deck playerCard);
+    pair<bool, int> isFullHouse(Deck playerCard);
     /**
      * Check whether if current hand + table card is Flush
      * @param tableCard table card (5 total)
      * @param playerCard player hand (2 total)
      * @return pair<bool, pair<int, char>> bool for Flush. If true returns card, else returns empty card (0, ' ')
      */
-    pair<bool, pair<int, char>> isFlush(Deck tableCard, Deck playerCard);
+    pair<bool, pair<int, char>> isFlush(Deck playerCard);
     /**
      * Check whether if current hand + table card is Straight
      * @param tableCard table card (5 total)
      * @param playerCard player hand (2 total)
      * @return pair<bool, float> bool for Straight. If true returns the valuation, else returns 0.0
      */
-    pair<bool, float> isStraight(Deck tableCard, Deck playerCard);
-    /**
-     * Check whether if current hand + table card is Straight
-     * @param mergedCard merged card (7 total)
-     * @return pair<bool, float> bool for Straight. If true returns the valuation, else returns 0.0
-     */
-    pair<bool, float> isStraight(Deck mergedCard);
+    pair<bool, float> isStraight(Deck playerCard);
     /**
      * Give current hand combination value if current hand + table card is Straight
      * @param mergedCard merged card (7 total)
@@ -128,7 +122,7 @@ public:
      * @param playerCard
      * @return * vector<pair<int, char>> vector containing all pairs from given decks
      */
-    vector<pair<int, char>> findPair(Deck tableCard, Deck playerCard);
+    vector<pair<int, char>> findPair(Deck playerCard);
     /**
      * Receive sorted merged deck and find all numbers that appear more than once
      * @param mergedDeck
@@ -141,30 +135,43 @@ public:
      * @param playerCard
      * @return * pair<bool, int> bool for Three of Kind. If true returns the card number, else returns -1
      */
-    pair<bool, int> isThreeKind(Deck tableCard, Deck playerCard);
+    pair<bool, int> isThreeKind(Deck playerCard);
     /**
      * Check whether if current hand + table card is Two Pair
      * @param tableCard
      * @param playerCard
      * @return * pair<bool, int> bool for Two Pair. If true returns the Two Pair, else returns empty array
      */
-    pair<bool, vector<pair<int, char>>> isTwoPair(Deck tableCard, Deck playerCard);
+    pair<bool, vector<pair<int, char>>> isTwoPair(Deck playerCard);
     /**
      * Check whether if current hand + table card is Pair
      * @param tableCard
      * @param playerCard
      * @return * pair<bool, int> bool for Pair. If true returns the valuation, else returns -1
      */
-    pair<bool, float> isPair(Deck tableCard, Deck playerCard);
+    pair<bool, float> isPair(Deck playerCard);
     /**
      * Get the highest card from given decks
      * @param tableCard
      * @param playerCard
      * @return pair<int, char> highest card
      */
-    pair<int, char> getHighCard(Deck tableCard, Deck playerCard);
+    pair<int, char> getHighCard(Deck playerCard);
+    /**
+     * Sort the given deck in ascending order
+     * @param mergedDeck
+     * @return * vector<pair<int, char>> sorted deck
+     */
+    vector<pair<int, char>> sortDeck(Deck mergedDeck);
+    /**
+     * Sort the given deck in ascending order
+     * @param mergedDeck
+     * @return * vector<pair<int, char>> sorted deck
+     */
+    vector<pair<int, char>> sortDeck(vector<pair<int, char>> mergedDeck);
     // Just in case this class needs to be extends
 protected:
+    Deck tableCard;
     // look up table for constants
     map<pair<int, char>, float> valueTable;
     map<char, int> color;

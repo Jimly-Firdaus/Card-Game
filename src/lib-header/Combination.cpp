@@ -1,7 +1,7 @@
 #include "Combination.hpp"
 
 // Default Ctor
-Combination::Combination()
+Combination::Combination(Deck tableCard) : tableCard(tableCard)
 {
     // construct look up constant table
     this->avail_chars[0] = 'H';
@@ -25,32 +25,32 @@ Combination::Combination()
     }
 }
 
-pair<bool, float> Combination::isStraightFlush(Deck tableCard, Deck playerCard)
+pair<bool, float> Combination::isStraightFlush(Deck playerCard)
 {
     // check whether flush or not to continue check straight
-    if (isFlush(tableCard, playerCard).first)
+    if (isFlush(playerCard).first)
     {
-        vector<pair<int, char>> mergedCard = mergeDeck(tableCard, playerCard);
+        vector<pair<int, char>> mergedCard = mergeDeck(this->tableCard, playerCard);
         vector<pair<int, char>> flushCard;
         // filter out the non-flush type
         for (int i = 0; i < mergedCard.size(); i++)
         {
-            if (mergedCard[i].second == isFlush(tableCard, playerCard).second.second)
+            if (mergedCard[i].second == isFlush(playerCard).second.second)
                 flushCard.push_back(mergedCard[i]);
         }
         // check straight for the filtered cards
-        if (isStraight(flushCard).first)
+        if (straightCombination(flushCard).first)
         {
-            return {true, isStraight(flushCard).second};
+            return {true, straightCombination(flushCard).second};
         }
     }
     return {false, 0.0};
 }
 
-pair<bool, int> Combination::isFourKind(Deck tableCard, Deck playerCard)
+pair<bool, int> Combination::isFourKind(Deck playerCard)
 {
     vector<int> v(13, 0);
-    vector<pair<int, char>> mergedCard = mergeDeck(tableCard, playerCard);
+    vector<pair<int, char>> mergedCard = mergeDeck(this->tableCard, playerCard);
     // increment each of card if avail in table card + hand
     for (const auto &pair : mergedCard)
     {
@@ -69,9 +69,9 @@ pair<bool, int> Combination::isFourKind(Deck tableCard, Deck playerCard)
     return {false, -1};
 }
 
-pair<bool, int> Combination::isFullHouse(Deck tableCard, Deck playerCard)
+pair<bool, int> Combination::isFullHouse(Deck playerCard)
 {
-    vector<pair<int, char>> v = mergeDeck(tableCard, playerCard);
+    vector<pair<int, char>> v = mergeDeck(this->tableCard, playerCard);
     vector<pair<int, char>> filteredV = this->getNonSingle(v);
     vector<pair<int, char>> pair, triplet;
     map<int, int> freq;
@@ -79,7 +79,7 @@ pair<bool, int> Combination::isFullHouse(Deck tableCard, Deck playerCard)
     {
         freq[ele.first]++;
     }
-    for (int i = filteredV.size() - 1; i > 0; i--)
+    for (int i = filteredV.size() - 1; i >= 0; i--)
     {
         if (freq[filteredV[i].first] == 3)
         {
@@ -92,16 +92,16 @@ pair<bool, int> Combination::isFullHouse(Deck tableCard, Deck playerCard)
     }
     if (pair.size() != 0 && triplet.size() != 0)
         return {true, triplet[0].first};
-    if (pair.size() == 0 && triplet.size() > 1)
+    if (pair.size() == 0 && triplet.size() > 3)
         return {true, triplet[0].first};
     return {false, -1};
 }
 
-pair<bool, pair<int, char>> Combination::isFlush(Deck tableCard, Deck playerCard)
+pair<bool, pair<int, char>> Combination::isFlush(Deck playerCard)
 {
     // color count format = "Hijau", "Biru", "Kuning", "Merah"
     vector<int> v(4, 0);
-    vector<pair<int, char>> mergedCard = mergeDeck(tableCard, playerCard);
+    vector<pair<int, char>> mergedCard = mergeDeck(this->tableCard, playerCard);
     pair<bool, pair<int, char>> result = {false, {0, ' '}};
     // check each color count
     for (const auto &pair : mergedCard)
@@ -123,6 +123,8 @@ pair<bool, pair<int, char>> Combination::isFlush(Deck tableCard, Deck playerCard
         }
     }
     int index = 0;
+    // sort to get the max flush number
+    mergedCard = sortDeck(mergedCard);
     // find flush color
     for (auto &ele : v)
     {
@@ -142,26 +144,19 @@ pair<bool, pair<int, char>> Combination::isFlush(Deck tableCard, Deck playerCard
     return result;
 }
 
-pair<bool, float> Combination::isStraight(Deck tableCard, Deck playerCard)
+pair<bool, float> Combination::isStraight(Deck playerCard)
 {
-    vector<pair<int, char>> mergedCard = mergeDeck(tableCard, playerCard);
+    vector<pair<int, char>> mergedCard = mergeDeck(this->tableCard, playerCard);
     Deck mergedDeck(mergedCard);
 
     return straightCombination(mergedDeck);
-}
-
-pair<bool, float> Combination::isStraight(Deck mergedCard)
-{
-    return straightCombination(mergedCard);
 }
 
 pair<bool, float> Combination::straightCombination(Deck mergedDeck)
 {
     pair<bool, float> result = {false, 0.0};
     int count = 0;
-    vector<pair<int, char>> mergedCard = mergedDeck.getDeckCard();
-    sort(mergedCard.begin(), mergedCard.end());
-    // loop all cards
+    vector<pair<int, char>> mergedCard = sortDeck(mergedDeck.getDeckCard());
     for (int i = MAX_PLAYER_CARD - 1; i > 0; i--)
     {
         if (mergedCard[i].first - mergedCard[i - 1].first == 1)
@@ -216,9 +211,9 @@ pair<int, char> Combination::findBiggest(vector<pair<int, char>> v, int number)
     return resultPair;
 }
 
-pair<bool, int> Combination::isThreeKind(Deck tableCard, Deck playerCard)
+pair<bool, int> Combination::isThreeKind(Deck playerCard)
 {
-    vector<pair<int, char>> v = mergeDeck(tableCard, playerCard);
+    vector<pair<int, char>> v = mergeDeck(this->tableCard, playerCard);
     vector<pair<int, char>> filteredV = this->getNonSingle(v);
     map<int, int> freq;
     for (const auto ele : filteredV)
@@ -235,13 +230,13 @@ pair<bool, int> Combination::isThreeKind(Deck tableCard, Deck playerCard)
     return {false, -1};
 }
 
-pair<bool, vector<pair<int, char>>> Combination::isTwoPair(Deck tableCard, Deck playerCard)
+pair<bool, vector<pair<int, char>>> Combination::isTwoPair(Deck playerCard)
 {
-    vector<pair<int, char>> v = mergeDeck(tableCard, playerCard);
-    vector<pair<int, char>> allPairs = findPair(tableCard, playerCard);
+    vector<pair<int, char>> mergedCard = mergeDeck(this->tableCard, playerCard);
+    vector<pair<int, char>> allPairs = findPair(playerCard);
     pair<bool, vector<pair<int, char>>> result = {false, {}};
 
-    if (allPairs.size() > 1)
+    if (allPairs.size() > 2)
     {
         result.first = true;
         for (int i = 0; i < 4; i++)
@@ -252,9 +247,9 @@ pair<bool, vector<pair<int, char>>> Combination::isTwoPair(Deck tableCard, Deck 
     return result;
 }
 
-pair<bool, float> Combination::isPair(Deck tableCard, Deck playerCard)
+pair<bool, float> Combination::isPair(Deck playerCard)
 {
-    vector<pair<int, char>> v = mergeDeck(tableCard, playerCard);
+    vector<pair<int, char>> v = mergeDeck(this->tableCard, playerCard);
     vector<pair<int, char>> filteredV = this->getNonSingle(v);
     map<int, int> freq;
     for (const auto ele : filteredV)
@@ -271,12 +266,13 @@ pair<bool, float> Combination::isPair(Deck tableCard, Deck playerCard)
     return {false, -1};
 }
 
-vector<pair<int, char>> Combination::findPair(Deck tableCard, Deck playerCard)
+vector<pair<int, char>> Combination::findPair(Deck playerCard)
 {
-    if (isPair(tableCard, playerCard).first)
+    vector<pair<int, char>> pairV, temp;
+    if (isPair(playerCard).first)
     {
-        vector<pair<int, char>> pairV, temp;
-        vector<pair<int, char>> v = mergeDeck(tableCard, playerCard);
+        // Deck copyTable(this->tableCard);
+        vector<pair<int, char>> v = mergeDeck(this->tableCard, playerCard);
         temp = this->getNonSingle(v);
         map<int, int> freq;
         for (const auto ele : temp)
@@ -290,14 +286,9 @@ vector<pair<int, char>> Combination::findPair(Deck tableCard, Deck playerCard)
                 pairV.push_back(temp[i]);
             }
         }
+    }
 
-        return pairV;
-    }
-    else
-    {
-        NoPairFound e;
-        throw e;
-    }
+    return pairV;
 }
 
 vector<pair<int, char>> Combination::mergeDeck(Deck firstDeck, Deck secondDeck)
@@ -332,9 +323,21 @@ vector<pair<int, char>> Combination::getNonSingle(Deck mergedDeck)
             multiVector.push_back(pair);
         }
     }
+    multiVector = sortDeck(multiVector);
+
+    return multiVector;
+}
+
+vector<pair<int, char>> Combination::sortDeck(Deck mergedDeck)
+{
+    return sortDeck(mergedDeck.getDeckCard());
+}
+
+vector<pair<int, char>> Combination::sortDeck(vector<pair<int, char>> mergedDeck)
+{
+    vector<pair<int, char>> multiVector = mergedDeck;
     sort(multiVector.begin(), multiVector.end(), [&](const pair<int, char> &p1, const pair<int, char> &p2)
          { return compare(p1, p2); });
-
     return multiVector;
 }
 
@@ -376,45 +379,45 @@ bool Combination::compare(const pair<int, char> &p1, const pair<int, char> &p2)
     }
 }
 
-pair<int, char> Combination::getHighCard(Deck tableCard, Deck playerCard)
+pair<int, char> Combination::getHighCard(Deck playerCard)
 {
-    vector<pair<int, char>> v = mergeDeck(tableCard, playerCard);
+    Deck copyTable(this->tableCard);
+    vector<pair<int, char>> v = mergeDeck(copyTable, playerCard);
     sort(v.begin(), v.end(), [&](const pair<int, char> &p1, const pair<int, char> &p2)
          { return compare(p1, p2); });
     return v[MAX_PLAYER_CARD - 1];
 }
 
-float Combination::getStrongestCombination(Deck gameCard, Deck playerCard)
+pair<float, string> Combination::getStrongestCombination(Deck playerCard)
 {
     // Cek dari rendah -> paling bawah paling kuat override result
-    double result = searchVal(getHighCard(gameCard, playerCard)); // defaults to high card
-
-    auto pair = isPair(gameCard, playerCard);
-    auto twoPair = isTwoPair(gameCard, playerCard);
-    auto threeKind = isThreeKind(gameCard, playerCard);
-    auto straight = isStraight(gameCard, playerCard);
-    auto flush = isFlush(gameCard, playerCard);
-    auto fullHouse = isFullHouse(gameCard, playerCard);
-    auto fourKind = isFourKind(gameCard, playerCard);
-    auto straightFlush = isStraightFlush(gameCard, playerCard);
+    pair<float, string> result = {searchVal(getHighCard(playerCard)), "High Card"}; // defaults to high card
+    auto pair = isPair(playerCard);
+    auto twoPair = isTwoPair(playerCard);
+    auto threeKind = isThreeKind(playerCard);
+    auto straight = isStraight(playerCard);
+    auto flush = isFlush(playerCard);
+    auto fullHouse = isFullHouse(playerCard);
+    auto fourKind = isFourKind(playerCard);
+    auto straightFlush = isStraightFlush(playerCard);
 
     // Check each condition and update the result accordingly
     if (pair.first)
-        result = pair.second + PAIR_POINT;
+        result = {pair.second + PAIR_POINT, "Pair"};
     if (twoPair.first)
-        result = searchVal(twoPair.second[0]) + searchVal(twoPair.second[1]) + TWO_PAIR_POINT;
+        result = {searchVal(twoPair.second[0]) + searchVal(twoPair.second[1]) + TWO_PAIR_POINT, "Two Pair"};
     if (threeKind.first)
-        result = searchVal(threeKind.second, 'M') + THREEKIND_POINT;
+        result = {searchVal(threeKind.second, 'M') + THREEKIND_POINT, "Three Of Kind"};
     if (straight.first)
-        result = straight.second + STRAIGHT_POINT;
+        result = {straight.second + STRAIGHT_POINT, "Straight"};
     if (flush.first)
-        result = searchVal(flush.second.first, flush.second.second) + FLUSH_POINT;
+        result = {searchVal(flush.second.first, flush.second.second) + FLUSH_POINT, "Flush"};
     if (fullHouse.first)
-        result = searchVal(fullHouse.second, 'M') + FULLHOUSE_POINT;
+        result = {searchVal(fullHouse.second, 'M') + FULLHOUSE_POINT, "Full House"};
     if (fourKind.first)
-        result = searchVal(fourKind.second, 'M') + FOURKIND_POINT;
+        result = {searchVal(fourKind.second, 'M') + FOURKIND_POINT, "Four of Kind"};
     if (straightFlush.first)
-        result = straightFlush.second + STRAIGHTFLUSH_POINT;
+        result = {straightFlush.second + STRAIGHTFLUSH_POINT, "Straight Flush"};
 
     /**
      * case waktu ngebandingin sama player lain
