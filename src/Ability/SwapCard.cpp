@@ -3,13 +3,11 @@
 #include "lib-header/Exception.hpp"
 using namespace std;
 
-template <class T>
-void SwapCard<T>::getCardInfo(){
+void SwapCard::getCardInfo(){
     cout << "Swap Card, menukar 1 kartu main deck milik pemain lain dengan 1 kartu main deck milik pemain lain. Tidak boleh ditukar dengan kartu main deck diri sendiri." << endl;
 }
 
-template <class T>
-int SwapCard<T>::getCard(string choice){
+int SwapCard::getCard(string choice){
     if(choice == "left"){
         return 0;
     }else if(choice == "right"){
@@ -17,8 +15,7 @@ int SwapCard<T>::getCard(string choice){
     }
 }
 
-template <class T>
-int SwapCard<T>::getInput(){
+int SwapCard::getInput(){
     int idx;
     bool validChoice = false;
     while(!validChoice){
@@ -35,14 +32,14 @@ int SwapCard<T>::getInput(){
 }
 
 template <class T>
-void SwapCard<T>::swap(player<T>& target, player<T>& current, int idxTarget, int idxCurrent){
+void SwapCard::swap(player<T>& target, player<T>& current, int idxTarget, int idxCurrent){
     T temp = target.getPlayerCard()[idxTarget];
     target.setPlayerCard(current.getPlayerCard()[idxCurrent], idxTarget);
     current.setPlayerCard(temp, idxCurrent);
 }
 
 template <class T>
-void SwapCard<T>::callCard(player<T>& target, player<T>& current){
+void SwapCard::callCard(player<T>& target, player<T>& current){
     int idxCurrent;
     int idxTarget;
     cout << "Please choose your card, input left or right (LOWERCASE MATTER)" << endl;
@@ -52,8 +49,7 @@ void SwapCard<T>::callCard(player<T>& target, player<T>& current){
     swap(target, current, idxTarget, idxCurrent);
 }
 
-template <class T>
-string SwapCard<T>::getChoice(){
+string SwapCard::getChoice(){
     cout << "Please include your choice: " << endl;
     string choice;
     cin >> choice;

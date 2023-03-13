@@ -2,7 +2,6 @@
 #define _SWAPCARD_HPP_
 #include "Ability.hpp"
 
-template<class T>
 class SwapCard : public Ability{
     public:
         void getCardInfo();

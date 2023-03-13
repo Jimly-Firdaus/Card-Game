@@ -6,7 +6,7 @@ template <class T>
 class Reroll : public Ability{
     public:
         void getCardInfo();
-        void callCard();
+        void callCard(player<T>&, Deck&);
 };
 
 #endif

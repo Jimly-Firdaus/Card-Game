@@ -3,7 +3,6 @@
 #include "Ability.hpp"
 #include "GameState/GameState.hpp"
 
-template <class T>
 class ReverseDirection : public Ability{
     public:
         void getCardInfo();

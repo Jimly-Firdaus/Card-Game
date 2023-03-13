@@ -12,7 +12,7 @@ class GameState {
         Deck tableCard;
         int playerOrder[7];
         int nTurn;
-        int next;
+        int next; // if clockwise 1, if counterclockwise -1
         int currentTurn;
 
     public:
@@ -31,10 +31,8 @@ class GameState {
         void halfRewardPoint(); // Halve game's current reward point
         void quarterRewardPoint(); // Quarter game's current reward point
 
-        void nextPlayerOrder(); // Player Order Rotation
-
-        void setPlayerOrder(int[]);
-        int* getOrder();
+        void nextPlayerOrder(); // Player Order Rotation 
+        // Problem: make it loop linked list
         
         int getNTurn();
         void setNTurn(int);

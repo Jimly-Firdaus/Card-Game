@@ -1,17 +1,14 @@
 #ifndef PLAYER_HPP
 #define PLAYER_HPP
-#include <vector>
 
 /*Class: Player : Kartu yang dimiliki, Poin Player, Action (Double, Next, Half, Ability) 
 Attr: ownedCard, playerPoint, 
 Method: setPlayerAction, 
 */
 
-template <class T>
 class player {
     protected:
-    int playerOrder[7];
-    T ownedCard[2];
+    Deck ownedCard;
     int playerPoint;
 
     public:
@@ -20,10 +17,10 @@ class player {
 
     // Setter and Getter
     void setPlayerAction();
-    void setPlayerCard(T, int);
+    void setPlayerCard(Deck);
     void setPlayerPoint();
     
-    char getPlayerCard();
+    Deck getPlayerCard();
     int getPlayerPoint();
 };
 

@@ -3,9 +3,9 @@
 #include <iostream>
 #include "player/player.hpp"
 #include "lib-header/Exception.hpp"
+#include "Deck/Deck.hpp"
 
-template<class T>
-class Ability : public player{
+class Ability{
     public:
         /**
         * Call card ability. (pure virtual)
