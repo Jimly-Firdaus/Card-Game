@@ -3,10 +3,11 @@
 #include "Ability.hpp"
 
 template <class T>
-class Reroll : public Ability{
-    public:
-        void getCardInfo();
-        void callCard(player<T>&, Deck&);
+class Reroll : public Ability
+{
+public:
+    void getCardInfo();
+    void callCard(player<T> &, Deck &);
 };
 
 #endif

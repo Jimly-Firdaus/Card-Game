@@ -17,23 +17,23 @@ class Deck
 {
 public:
     // Constructor
-    Deck();                               // Default Constructor
-    Deck(vector<pair<int, char> > cards); // User-defined Constructor
+    Deck();                              // Default Constructor
+    Deck(vector<pair<int, char>> cards); // User-defined Constructor
 
     // Assignment Operator
     Deck &operator=(const Deck &otherCard);
 
     // Getter
-    vector<pair<int, char> > getCards();
+    vector<pair<int, char>> getCards();
 
     // Setter
-    void setCards(vector<pair<int, char> > newCards);
+    void setCards(vector<pair<int, char>> newCards);
 
     // Getter A Card
     pair<int, char> getACard(int idx);
 
     // Generate Card From File
-    vector<pair<int, char> > cardFromFile(string filePath);
+    vector<pair<int, char>> cardFromFile(string filePath);
     /*
     52 baris pertama pada deck card berisi DeckCard dengan format :
     C<space>N
@@ -67,6 +67,6 @@ public:
     void printCard();
 
 private:
-    vector<pair<int, char> > cards;
+    vector<pair<int, char>> cards;
 };
 #endif

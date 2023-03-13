@@ -1,8 +1,7 @@
 #ifndef PLAYER_HPP
 #define PLAYER_HPP
 
-#include "../Deck/Deck.hpp"
-#include "../Deck/Deck.hpp"
+#include "../Deck/../Deck/Deck.hpp"
 
 /*Class: Player : Kartu yang dimiliki, Poin Player, Action (Double, Next, Half, Ability)
 Attr: ownedCard, playerPoint,
@@ -18,10 +17,6 @@ protected:
 
 public:
     // Constructor
-    Player(); //
-    Player(Deck ownedCard); 
-    // Setiap instantiate, menerima deck owned card yang dirandom secara langsung 
-    // Round 1 player didefine semua, round selanjutnya dapet ability card
     Player(Deck &fullCard);                  // Default Constructor
     Player(Deck ownedCard, int playerPoint); // User-defined Constructor
     // Setiap instantiate, menerima deck owned card yang dirandom secara langsung
