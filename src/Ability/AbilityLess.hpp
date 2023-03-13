@@ -2,10 +2,11 @@
 #define _ABILITYLESS_HPP_
 #include "Ability.hpp"
 
-class AbilityLess : public Ability{
-    public:
-        void callCard();
-        void getCardInfo();
+class AbilityLess : public Ability
+{
+public:
+    void callCard();
+    void getCardInfo();
 };
 
 #endif

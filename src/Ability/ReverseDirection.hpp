@@ -3,10 +3,11 @@
 #include "Ability.hpp"
 #include "GameState/GameState.hpp"
 
-class ReverseDirection : public Ability{
-    public:
-        void getCardInfo();
-        void callCard(GameState&);
+class ReverseDirection : public Ability
+{
+public:
+    void getCardInfo();
+    void callCard(GameState &);
 };
 
 #endif
