@@ -28,6 +28,14 @@ struct NoPairFound : public exception
 	}
 };
 
+struct UncounterCombo : public exception
+{
+	const char *what() const throw()
+	{
+		return "Found uncountered combo!";
+	}
+};
+
 // Add your own exception here
 struct WrongChoice : public exception
 {
