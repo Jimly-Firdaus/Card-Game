@@ -27,14 +27,18 @@ Player::Player(Deck &fullCard, vector<string> &abilityCards)
     cout << abilityCards.size() << "-" << idx << endl;
     myAbility = abilityCards[idx];
     // abilityCards.erase(idx);
+    nickName = "NoName";
+    idPlayer = 0;
 }
 
 // User-defined Constructor
-Player::Player(Deck ownedCard, int playerPoint, string ability)
+Player::Player(Deck ownedCard, int playerPoint, string ability, string nickName, int idPlayer)
 {
     this->ownedCard = ownedCard;
     this->playerPoint = playerPoint;
     this->myAbility = ability;
+    this->nickName = nickName;
+    this->idPlayer = idPlayer;
 }
 // Setiap instantiate, menerima deck owned card yang dirandom secara langsung
 // Round 1 player didefine semua, round selanjutnya mendapatkan ability card
