@@ -61,7 +61,9 @@ void PlayerAction::setPlayerAction()
         else if (actionOption == "DOUBLE")
             doubleAction();
         else
+        {
             useAbility();
+        }
     }
 }
 void PlayerAction::nextAction(string action) // Aksi dimana tidak terjadi perubahan poin game dan langsung menuju pemain selanjutnya

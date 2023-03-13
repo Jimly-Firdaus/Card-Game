@@ -10,7 +10,7 @@ Method: setPlayerAction,
 
 // Constructor
 // Default Constructor
-Player::Player(Deck &fullCard) : Deck()
+Player::Player(Deck &fullCard)
 {
     Deck ownedCard;
     int idx;
@@ -26,7 +26,7 @@ Player::Player(Deck &fullCard) : Deck()
     playerPoint = 0;
 }
 // User-defined Constructor
-Player::Player(Deck ownedCard, int playerPoint) : Deck()
+Player::Player(Deck ownedCard, int playerPoint)
 {
     this->ownedCard = ownedCard;
     this->playerPoint = playerPoint;
