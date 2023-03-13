@@ -10,6 +10,18 @@ struct MapElementNotFound : public exception {
 	}
 };
 
+struct PairVectorOutOfBound : public exception {
+    const char* what() const throw() {
+		return "Cannot access more than 2 element!";
+	}
+};
+
+struct NoPairFound : public exception {
+    const char* what() const throw() {
+		return "No pair found!";
+	}
+};
+
 // Add your own exception here
 struct WrongChoice : public exception{
 	const char* what() const throw(){
