@@ -11,5 +11,10 @@ struct MapElementNotFound : public exception {
 };
 
 // Add your own exception here
+struct WrongChoice : public exception{
+	const char* what() const throw(){
+		return "Your choice is wrong!";
+	}
+};
 
 #endif

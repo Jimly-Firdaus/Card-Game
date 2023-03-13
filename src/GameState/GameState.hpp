@@ -11,6 +11,9 @@ class GameState {
         int rewardPoint;
         Deck tableCard;
         int playerOrder[7];
+        int nTurn;
+        int next;
+        int currentTurn;
 
     public:
         // Ctor
@@ -29,7 +32,18 @@ class GameState {
         void quarterRewardPoint(); // Quarter game's current reward point
 
         void nextPlayerOrder(); // Player Order Rotation
+
+        void setPlayerOrder(int[]);
+        int* getOrder();
         
+        int getNTurn();
+        void setNTurn(int);
+
+        int getNext();
+        void setNext(int);
+
+        int getCurrentTurn();
+        void setCurrentTurn(int);
         // bool isWin();
         // Wait for Player
 };

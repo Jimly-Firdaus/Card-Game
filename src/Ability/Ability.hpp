@@ -1,8 +1,11 @@
 #ifndef _ABILITY_HPP_
 #define _ABILITY_HPP_
 #include <iostream>
+#include "player/player.hpp"
+#include "lib-header/Exception.hpp"
 
-class Ability{
+template<class T>
+class Ability : public player{
     public:
         /**
         * Call card ability. (pure virtual)
@@ -16,7 +19,7 @@ class Ability{
         /**
          * Getting card information. (pure virtual)
          */
-        virtual void cardInfo() = 0;
+        virtual void getCardInfo() = 0;
 };
 
 #endif
