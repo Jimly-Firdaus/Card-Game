@@ -22,9 +22,8 @@ public:
     // Round 1 player didefine semua, round selanjutnya mendapatkan ability card
 
     // Setter and Getter
-    void setPlayerAction();            // Aksi (next/double/half) yang dilakukan oleh pemain
-    void setPlayerCard(Deck newCard);  // Membagikan kartu secara random kepada pemain
-    void setPlayerPoint(int newPoint); // Memperbarui poin pemain berdasarkan hasil kombinasi terbesar pada suatu ronde
+    void setPlayerCard(Deck newCard);       // Membagikan kartu secara random kepada pemain
+    void setPlayerPoint(int newPoint);      // Memperbarui poin pemain berdasarkan hasil kombinasi terbesar pada suatu ronde
 
     Deck getPlayerCard(); // Mengembalikan hasil random kartu yang dimiliki oleh setiap pemain
     int getPlayerPoint(); // Mengembalikan poin yang dimiliki oleh pemain
