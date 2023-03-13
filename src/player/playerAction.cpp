@@ -8,28 +8,32 @@ Attr: abilityCard
 Method: getCombination, (double, next, half, useAbility (pure virtual)) 
 */
 
+// Constructor    
+PlayerAction::PlayerAction()
+{
+    enum AbilityCard{AbilityLess, Quadruple, Quarter, Reroll, ReverseDirection, SwapCard, Switch}
+}
+
+
 // Getter
-int getCombination() // Menampilkan kombinasi yang mungkin dari kartu yang dimiliki oleh pemain
+int PlayerAction::getCombination() // Menampilkan kombinasi yang mungkin dari kartu yang dimiliki oleh pemain
 {
 
 }
 
-void nextAction(string action) // Aksi dimana tidak terjadi perubahan poin game dan langsung menuju pemain selanjutnya
+void PlayerAction::nextAction(string action) // Aksi dimana tidak terjadi perubahan poin game dan langsung menuju pemain selanjutnya
 {
 
 }
 
-void doubleAction(string action) // Aksi dimana poin game menjadi dua kali lipat dari sebelumnya
+void PlayerAction::doubleAction(string action) // Aksi dimana poin game menjadi dua kali lipat dari sebelumnya
 {
 
 }
 
-void halfAction(string action) // Aksi dimana poin game menjadi setengahnya
+void PlayerAction::halfAction(string action) // Aksi dimana poin game menjadi setengahnya
 {
 
 }
 
-virtual void useAbility() // Aksi dimana pemain menggunakan kartu ability yang dimilikinya
-{
-    
-}
+virtual void PlayerAction::useAbility() = 0; // Aksi dimana pemain menggunakan kartu ability yang dimilikinya
