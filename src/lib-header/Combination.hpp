@@ -35,8 +35,8 @@ public:
     float getStrongestCombination(Deck gameCard, Deck playerCard);
     /**
      * Compare function for sorting lambda function
-     * @param p1 
-     * @param p2 
+     * @param p1
+     * @param p2
      * @return true if comparison right
      * @return false otherwise
      */
@@ -158,9 +158,9 @@ public:
     pair<bool, float> isPair(Deck tableCard, Deck playerCard);
     /**
      * Get the highest card from given decks
-     * @param tableCard 
-     * @param playerCard 
-     * @return pair<int, char> highest card 
+     * @param tableCard
+     * @param playerCard
+     * @return pair<int, char> highest card
      */
     pair<int, char> getHighCard(Deck tableCard, Deck playerCard);
     // Just in case this class needs to be extends

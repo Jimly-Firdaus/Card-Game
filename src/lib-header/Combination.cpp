@@ -129,8 +129,10 @@ pair<bool, pair<int, char>> Combination::isFlush(Deck tableCard, Deck playerCard
         index++;
         if (ele >= 5)
         {
-            for (int i = mergedCard.size() - 1; i >= 0; i++) {
-                if (mergedCard[i].second == this->avail_chars[index - 1]) {
+            for (int i = mergedCard.size() - 1; i >= 0; i++)
+            {
+                if (mergedCard[i].second == this->avail_chars[index - 1])
+                {
                     result = {true, {mergedCard[i].first, mergedCard[i].second}};
                     return result;
                 }
@@ -374,10 +376,11 @@ bool Combination::compare(const pair<int, char> &p1, const pair<int, char> &p2)
     }
 }
 
-pair<int, char> Combination::getHighCard(Deck tableCard, Deck playerCard) {
+pair<int, char> Combination::getHighCard(Deck tableCard, Deck playerCard)
+{
     vector<pair<int, char>> v = mergeDeck(tableCard, playerCard);
     sort(v.begin(), v.end(), [&](const pair<int, char> &p1, const pair<int, char> &p2)
-        { return compare(p1, p2); });
+         { return compare(p1, p2); });
     return v[MAX_PLAYER_CARD - 1];
 }
 
@@ -396,14 +399,22 @@ float Combination::getStrongestCombination(Deck gameCard, Deck playerCard)
     auto straightFlush = isStraightFlush(gameCard, playerCard);
 
     // Check each condition and update the result accordingly
-    if (pair.first) result = pair.second + PAIR_POINT;
-    if (twoPair.first) result = searchVal(twoPair.second[0]) + searchVal(twoPair.second[1]) + TWO_PAIR_POINT;
-    if (threeKind.first) result = searchVal(threeKind.second, 'M') + THREEKIND_POINT;
-    if (straight.first) result = straight.second + STRAIGHT_POINT;
-    if (flush.first) result = searchVal(flush.second.first, flush.second.second) + FLUSH_POINT;
-    if (fullHouse.first) result = searchVal(fullHouse.second, 'M') + FULLHOUSE_POINT;
-    if (fourKind.first) result = searchVal(fourKind.second, 'M') + FOURKIND_POINT; 
-    if (straightFlush.first) result = straightFlush.second + STRAIGHTFLUSH_POINT;
+    if (pair.first)
+        result = pair.second + PAIR_POINT;
+    if (twoPair.first)
+        result = searchVal(twoPair.second[0]) + searchVal(twoPair.second[1]) + TWO_PAIR_POINT;
+    if (threeKind.first)
+        result = searchVal(threeKind.second, 'M') + THREEKIND_POINT;
+    if (straight.first)
+        result = straight.second + STRAIGHT_POINT;
+    if (flush.first)
+        result = searchVal(flush.second.first, flush.second.second) + FLUSH_POINT;
+    if (fullHouse.first)
+        result = searchVal(fullHouse.second, 'M') + FULLHOUSE_POINT;
+    if (fourKind.first)
+        result = searchVal(fourKind.second, 'M') + FOURKIND_POINT;
+    if (straightFlush.first)
+        result = straightFlush.second + STRAIGHTFLUSH_POINT;
 
     /**
      * case waktu ngebandingin sama player lain
