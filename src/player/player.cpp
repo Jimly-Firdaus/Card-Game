@@ -1,4 +1,3 @@
-
 #include "player.hpp"
 #include "../Deck/Deck.hpp"
 #include <iostream>
@@ -11,7 +10,7 @@ Method: setPlayerAction,
 
 // Constructor
 // Default Constructor
-Player(Deck &fullCard){
+Player::Player(Deck &fullCard){
     Deck ownedCard;
     int idx;
     pair<int, char> card;
@@ -24,7 +23,7 @@ Player(Deck &fullCard){
     playerPoint = 0;
 }
 // User-defined Constructor
-Player(Deck ownedCard, int playerPoint){
+Player::Player(Deck ownedCard, int playerPoint){
     this->ownedCard = ownedCard;
     this->playerPoint = playerPoint;
 }
@@ -33,7 +32,7 @@ Player(Deck ownedCard, int playerPoint){
 
 // Setter and Getter
 // Aksi (next/double/half) yang dilakukan oleh pemain
-void Player::setPlayerAction(){}          
+void Player::Player::setPlayerAction(){}          
 // Membagikan kartu secara random kepada pemain
 void Player::setPlayerCard(Deck newCard){
     ownedCard = newCard;

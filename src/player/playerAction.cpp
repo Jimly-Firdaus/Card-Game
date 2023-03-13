@@ -1,5 +1,14 @@
 #include <iostream>
 #include "Player.hpp"
+#include "AbilityLess.hpp"
+#include "Quadruple.hpp"
+#include "Quarter.hpp"
+#include "Reroll.hpp"
+#include "ReverseDirection.hpp"
+#include "SwapCard.hpp"
+#include "Switch.hpp"
+#include "GameState.hpp"
+
 using namespace std;
 
 /*Function overriding here
@@ -9,11 +18,16 @@ Method: getCombination, (double, next, half, useAbility (pure virtual))
 */
 
 // Constructor    
-PlayerAction::PlayerAction()
+PlayerAction::PlayerAction(enum abilityCardList)
 {
-    enum AbilityCard{AbilityLess, Quadruple, Quarter, Reroll, ReverseDirection, SwapCard, Switch}
+    enum abilityCard{AbilityLess, Quadruple, Quarter, Reroll, ReverseDirection, SwapCard, Switch}
+    used = false;
 }
 
+PlayerAction::PlayerAction(enum abilityCard)
+{
+    
+}
 
 // Getter
 int PlayerAction::getCombination() // Menampilkan kombinasi yang mungkin dari kartu yang dimiliki oleh pemain
@@ -21,19 +35,22 @@ int PlayerAction::getCombination() // Menampilkan kombinasi yang mungkin dari ka
 
 }
 
-void PlayerAction::nextAction(string action) // Aksi dimana tidak terjadi perubahan poin game dan langsung menuju pemain selanjutnya
+int PlayerAction::nextAction() // Aksi dimana tidak terjadi perubahan poin game dan langsung menuju pemain selanjutnya
 {
-
+    
 }
 
-void PlayerAction::doubleAction(string action) // Aksi dimana poin game menjadi dua kali lipat dari sebelumnya
+void PlayerAction::doubleAction() // Aksi dimana poin game menjadi dua kali lipat dari sebelumnya
 {
-
+    Gamestate::doubleRewardPoint();
 }
 
-void PlayerAction::halfAction(string action) // Aksi dimana poin game menjadi setengahnya
+void PlayerAction::halfAction() // Aksi dimana poin game menjadi setengahnya
 {
-
+    GameState::halfRewardPoint();
 }
 
-virtual void PlayerAction::useAbility() = 0; // Aksi dimana pemain menggunakan kartu ability yang dimilikinya
+void PlayerAction::useAbility() // Aksi dimana pemain menggunakan kartu ability yang dimilikinya
+{
+    
+}
