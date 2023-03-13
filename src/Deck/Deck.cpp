@@ -34,6 +34,12 @@ void Deck::setCards(vector<pair<int, char>> newCards)
     cards = newCards;
 }
 
+// Getter A Card
+pair<int, char> Deck::getACard(int idx)
+{
+    return cards[idx];
+}
+
 // Generate Card From File
 vector<pair<int, char>> Deck::cardFromFile(string fileName)
 {

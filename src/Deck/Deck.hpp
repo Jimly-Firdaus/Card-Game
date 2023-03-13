@@ -29,6 +29,9 @@ public:
     // Setter
     void setCards(vector<pair<int, char>> newCards);
 
+    // Getter A Card
+    pair<int, char> getACard(int idx);
+
     // Generate Card From File
     vector<pair<int, char>> cardFromFile(string filePath);
     /*
