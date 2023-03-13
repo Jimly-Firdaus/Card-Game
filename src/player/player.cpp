@@ -26,7 +26,9 @@ Player::Player(Deck &fullCard, vector<string> &abilityCards)
     idx = rand() % (abilityCards.size());
     cout << abilityCards.size() << "-" << idx << endl;
     myAbility = abilityCards[idx];
-    // abilityCards.erase(idx);
+    vector<string>::iterator itr = abilityCards.begin();
+    itr = find(abilityCards.begin(), abilityCards.end(), myAbility);
+    abilityCards.erase(itr);
     nickName = "NoName";
     idPlayer = 0;
 }
