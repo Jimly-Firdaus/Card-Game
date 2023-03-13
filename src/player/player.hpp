@@ -14,11 +14,13 @@ protected:
     Deck ownedCard; // Hand card yang dimiliki oleh setiap pemain (termasuk ability card)
     int playerPoint;
     string myAbility;
+    string nickName;
+    int idPlayer;
 
 public:
     // Constructor
     Player(Deck &fullCard, vector<string> &abilityCards);        // Default Constructor
-    Player(Deck ownedCard, int playerPoint, string ability);            // User-defined Constructor
+    Player(Deck ownedCard, int playerPoint, string ability, string nickName, int idPlayer); // User-defined Constructor
     // Setiap instantiate, menerima deck owned card yang dirandom secara langsung
     // Round 1 player didefine semua, round selanjutnya mendapatkan ability card
 
