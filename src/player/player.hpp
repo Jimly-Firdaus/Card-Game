@@ -10,6 +10,7 @@ Method: setPlayerAction,
 template <class T>
 class player {
     protected:
+    int playerOrder[7];
     T ownedCard[2];
     int playerPoint;
 
