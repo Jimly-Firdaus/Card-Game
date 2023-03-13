@@ -453,3 +453,11 @@ bool Combination::operator==(Combination &other)
 {
     return this->getStrongestCombination() == other.getStrongestCombination();
 }
+
+Deck Combination::getPlayerCard() const {
+    return this->playerCard;
+}
+
+Deck Combination::getTableCard() const {
+    return this->tableCard;
+}

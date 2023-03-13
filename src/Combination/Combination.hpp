@@ -26,6 +26,9 @@ class Combination
 public:
     // Constructor
     Combination(Deck tableCard, Deck playerCard);
+    // Getter
+    Deck getPlayerCard() const; // return current player card
+    Deck getTableCard() const; // return table card
     /**
      * Get the strongest combination deck
      * @return float value of the strongest combination in playerCards
@@ -38,7 +41,7 @@ public:
      * @return true if comparison right
      * @return false otherwise
      */
-    bool compare(const pair<int, char> &p1, const pair<int, char> &p2);
+    virtual bool compare(const pair<int, char> &p1, const pair<int, char> &p2);
     /**
      * Give the constant valuation of given number & type (color)
      * @param number
