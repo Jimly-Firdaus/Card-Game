@@ -20,7 +20,7 @@ public:
     PlayerAction(bool abilityUsed);
 
     // Getter
-    int getCombination(); // Menampilkan kombinasi yang mungkin dari kartu yang dimiliki oleh pemain
+    int getCombination(Deck tableCard); // Menampilkan kombinasi yang mungkin dari kartu yang dimiliki oleh pemain
 
     virtual void setPlayerAction(); // Aksi (next/double/half) yang dilakukan oleh pemain
     void nextAction();              // Aksi dimana tidak terjadi perubahan poin game dan langsung menuju pemain selanjutnya
