@@ -26,6 +26,33 @@ Combination::Combination(Deck tableCard, Deck playerCard, string nickname) : tab
     }
 }
 
+Combination::Combination(const Combination& other) {
+    this->cardOwner = other.cardOwner;
+    this->tableCard = other.tableCard;
+    this->playerCard = other.playerCard;
+    this->valueTable = other.valueTable;
+    this->color = other.color;
+    this->baseValue = other.baseValue;
+    for (int i = 0; i < 4; i++) {
+        this->avail_chars[i] = other.avail_chars[i];
+    }
+}
+
+Combination& Combination::operator=(const Combination& other) {
+    if (this != &other) {
+        this->cardOwner = other.cardOwner;
+        this->tableCard = other.tableCard;
+        this->playerCard = other.playerCard;
+        this->valueTable = other.valueTable;
+        this->color = other.color;
+        this->baseValue = other.baseValue;
+        for (int i = 0; i < 4; i++) {
+            this->avail_chars[i] = other.avail_chars[i];
+        }
+    }
+    return *this;
+}
+
 pair<bool, float> Combination::isStraightFlush()
 {
     // check whether flush or not to continue check straight
@@ -132,7 +159,7 @@ pair<bool, pair<int, char>> Combination::isFlush()
         index++;
         if (ele >= 5)
         {
-            for (int i = mergedCard.size() - 1; i >= 0; i++)
+            for (int i = mergedCard.size() - 1; i >= 0; i--)
             {
                 if (mergedCard[i].second == this->avail_chars[index - 1])
                 {
@@ -236,8 +263,7 @@ pair<bool, vector<pair<int, char>>> Combination::isTwoPair()
     vector<pair<int, char>> mergedCard = mergeDeck(this->tableCard, playerCard);
     vector<pair<int, char>> allPairs = findPair();
     pair<bool, vector<pair<int, char>>> result = {false, {}};
-
-    if (allPairs.size() > 2)
+    if (allPairs.size() > 3)
     {
         result.first = true;
         for (int i = 0; i < 4; i++)
@@ -342,15 +368,14 @@ vector<pair<int, char>> Combination::sortDeck(vector<pair<int, char>> mergedDeck
     return multiVector;
 }
 
-float Combination::searchVal(pair<int, char> card)
+float Combination::searchVal(pair<int, char> card) const
 {
     return searchVal(card.first, card.second);
 }
 
-float Combination::searchVal(int number, char type)
+float Combination::searchVal(int number, char type) const
 {
     float result = 0.0;
-
     auto it = this->valueTable.find(make_pair(number, type));
     if (it != this->valueTable.end())
     {
@@ -362,6 +387,7 @@ float Combination::searchVal(int number, char type)
     {
         // key not found
         MapElementNotFound e;
+        cout << "cant find: {" << number << "," << type << "}" << endl;
         throw e;
     }
 }

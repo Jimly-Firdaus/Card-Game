@@ -26,6 +26,8 @@ class Combination
 public:
     // Constructor
     Combination(Deck tableCard, Deck playerCard, string nickname);
+    Combination(const Combination& other);
+    Combination& operator=(const Combination& other);
     // Getter
     Deck getPlayerCard() const; // return current player card
     Deck getTableCard() const; // return table card
@@ -49,13 +51,13 @@ public:
      * @param type
      * @return float constant
      */
-    float searchVal(int number, char type);
+    float searchVal(int number, char type) const;
     /**
      * Give the constant valuation of given number & type (color)
      * @param card card in vector
      * @return float constant
      */
-    float searchVal(pair<int, char> card);
+    float searchVal(pair<int, char> card) const;
     /**
      * Check whether if current hand + table card is Straight Flush
      * @return pair<bool, float> bool for Straight Flush. If true returns the valuation, else returns 0.0
