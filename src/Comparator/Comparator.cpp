@@ -8,7 +8,7 @@ pair<string, string> Comparator::compare(vector<Combination> arrOfPlayerCombinat
     if (type == "Full House") return fullHouseHandler(arrOfPlayerCombination);
     if (type == "Flush") return flushHandler(arrOfPlayerCombination);
     if (type == "Three of Kind") return threeKindHandler(arrOfPlayerCombination);
-    if (type == "Two Pair");
+    if (type == "Two Pair") return twoPairHandler(arrOfPlayerCombination);
     if (type == "Pair") return pairHandler(arrOfPlayerCombination);
     // if (type == "High Card") return highCardHandler(arrOfPlayerCombination);
     else {
@@ -105,8 +105,47 @@ pair<string, string> Comparator::fourKindHandler(vector<Combination> arrOfPlayer
 }
 
 pair<string, string> Comparator::twoPairHandler(vector<Combination> arrOfPlayerCombination) {
-    // TODO: implement
-    
+    // case 3 kalau two pairnya di meja
+    vector<pair<int, char>> tableCard = arrOfPlayerCombination[0].getTableCard().getCards();
+    map<int, int> freq;
+    // find the card without pair
+    for (auto card : tableCard) {
+        freq[card.first]++;
+    }
+    pair<int, char> singleCard;
+    for (auto card : tableCard) {
+        if (freq[card.first] == 1) {
+            singleCard = card;
+            break;
+        }
+    }
+    // check wether the hand can make a pair with singleCard
+    bool pairable = arrOfPlayerCombination[0].getPlayerCard().getCards()[0].first == singleCard.first 
+        ? true
+        : arrOfPlayerCombination[0].getPlayerCard().getCards()[1].first == singleCard.first;
+    float max = 0;
+    int index = 0;
+    int winIndex = 0;
+    for (auto combination : arrOfPlayerCombination) {
+        pair<int, char> firstCard = combination.getPlayerCard().getCards()[0];
+        pair<int, char> secondCard = combination.getPlayerCard().getCards()[1];
+        float max2;
+        if (pairable) {
+            max2 = firstCard.first == singleCard.first
+                ? combination.searchVal(firstCard)
+                : combination.searchVal(secondCard);
+        } else {
+            max2 = combination.searchVal(firstCard) > combination.searchVal(secondCard)
+                ? combination.searchVal(firstCard)
+                : combination.searchVal(secondCard);
+        }
+        if (max < max2) {
+            max = max2;
+            winIndex = index;
+        }
+        index++;
+    }
+    return {arrOfPlayerCombination[winIndex].getOwnerCard(), "Two Pair"};
 }
 
 pair<string, string> Comparator::pairHandler(vector<Combination> arrOfPlayerCombination) {
@@ -137,7 +176,6 @@ pair<string, string> Comparator::pairHandler(vector<Combination> arrOfPlayerComb
         }
         index++;
     }
-    cout << "Index: " << containPair << endl;
     return {arrOfPlayerCombination[winIndex].getOwnerCard(), "Pair"};
 }
 
@@ -167,3 +205,14 @@ pair<string, string> Comparator::pairHandler(vector<Combination> arrOfPlayerComb
 // p2 : 1 3
 // p3 : 1 4
 
+// atau
+// table : 1 2 1 9 2
+// p1 : 8 7
+// p2 : 8 7
+// p3 : 8 7
+
+// atau
+// table : 5 5 3 3 2
+// p1 : 2 7
+// p2 : 2 7
+// p3 : 2 7
