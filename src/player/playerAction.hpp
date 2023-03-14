@@ -9,7 +9,6 @@ Attr: abilityCard
 Method: getCombination, (double, next, half, useAbility (pure virtual))
 */
 
-<<<<<<< HEAD
 class PlayerAction : public Player {
     private:
     enum abilityCard
@@ -23,12 +22,6 @@ class PlayerAction : public Player {
         Switch
     };
     bool used;
-=======
-class PlayerAction : public Player
-{
-private:
-    bool abilityUsed;
->>>>>>> c3533a0fd79f605c581b5eb8c95784aa8e607232
 
 public:
     // Constructor

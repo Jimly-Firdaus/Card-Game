@@ -19,17 +19,13 @@ Method: getCombination, (double, next, half, useAbility (pure virtual))
 */
 
 // Constructor
-PlayerAction::PlayerAction() : Player(Deck & fullCard, vector<string> & abilityCards)
+PlayerAction::PlayerAction(Deck & fullCard, vector<string> & abilityCards) : Player()
 {
-<<<<<<< HEAD
-    this->used = false;
-=======
     abilityUsed = false;
 }
 PlayerAction::PlayerAction(bool abilityUsed) : Player(Deck & fullCard, vector<string> & abilityCards)
 {
     this->abilityUsed = abilityUsed;
->>>>>>> c3533a0fd79f605c581b5eb8c95784aa8e607232
 }
 
 // Getter
@@ -92,16 +88,6 @@ void PlayerAction::halfAction()
 // Aksi dimana pemain menggunakan kartu ability yang dimilikinya
 void PlayerAction::useAbility()
 {
-<<<<<<< HEAD
-}
-
-void PlayerAction::setUsed(){
-    if(this->used){
-        this->used = false;
-    }else{
-        HaveBeenUsed e;
-        throw e;
-=======
     if (!abilityUsed)
     {
         /*
@@ -127,6 +113,5 @@ void PlayerAction::setUsed(){
     else
     {
         throw "Your Ability Already Used\n" // EXCEPTION
->>>>>>> c3533a0fd79f605c581b5eb8c95784aa8e607232
     }
 }

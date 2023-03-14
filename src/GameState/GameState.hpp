@@ -1,10 +1,10 @@
 #ifndef GAMESTATE_HPP
 #define GAMESTATE_HPP
 
-#include <vector>
+// #include <vector>
 #include <algorithm>
 #include "..\Deck\Deck.hpp"
-#include "..\Player\Player.hpp"
+#include "..\player\Player.hpp"
 using namespace std;
 
 class GameState {
