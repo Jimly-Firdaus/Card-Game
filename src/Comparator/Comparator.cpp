@@ -26,30 +26,73 @@ pair<string, string> Comparator::straightFlushHandler(vector<Combination> arrOfP
     // cari max point -> save index
     // pake index buat cari nickname terkuat
     // return
-    pair<string, string> result;
-    vector<bool> possibleThreeKind(arrOfPlayerCombination.size(), false);
-    vector<bool> possibleTwoPair(arrOfPlayerCombination.size(), false);
-    vector<bool> possiblePair(arrOfPlayerCombination.size(), false);
-    int i = 0;
+    vector<pair<int, char>> sortedTableDeck = arrOfPlayerCombination[0].sortDeck(arrOfPlayerCombination[0].getTableCard());
+    char color = sortedTableDeck[0].second;
+    int index = 0;
+    // search for three kind
+    int max = 0, indexWin = 0;
+    index = 0;
     for (auto combination : arrOfPlayerCombination) {
-        if (combination.isThreeKind().first) possibleThreeKind[i] = true;
-        i++;
-    }
-    if (count(possibleThreeKind.begin(), possibleThreeKind.end(), true) > 1) {
-        int j = 0, max = 0;
-        for (auto combination : arrOfPlayerCombination) {
-            int currentCard = combination.isThreeKind().second;
-            if (possibleThreeKind[j]) {
-                if (max < currentCard) {
-                    max = currentCard;
-                    result.first = combination.getOwnerCard();
-                    result.second = "Three of Kind";    
+        vector<pair<int, char>> mergedCard = combination.mergeDeck(combination.getTableCard(), combination.getPlayerCard());
+        map<int,int> freq;
+        for (auto ele : mergedCard) {
+            freq[ele.first]++;
+        }
+        for (auto ele : mergedCard) {
+            if (freq[ele.first] == 3) {
+                if (max < ele.first) {
+                    max = ele.first;
+                    indexWin = index;
                 }
             }
         }
+        index++;
     }
+    if (max != 0) return {arrOfPlayerCombination[indexWin].getOwnerCard(), "Straight Flush"};
+    else {
+        // search for pair
+        int max = 0;
+        index = 0;
+        for (auto combination : arrOfPlayerCombination) {
+            float pairValue = 0;
+            int counter = 0;
+            vector<pair<int, char>> mergedCard = combination.mergeDeck(combination.getTableCard(), combination.getPlayerCard());
+            map<int,int> freq;
+            for (auto ele : mergedCard) {
+                freq[ele.first]++;
+            }
 
+            for (auto ele : mergedCard) {
+                if (freq[ele.first] == 2) {
+                    counter++;
+                    pairValue += combination.searchVal(ele);
+                    if (max < pairValue && counter == 2) {
+                        max = pairValue;
+                        indexWin = index;
+                    }
+                }
+            }
+            index++;
+        }
+        if (max != 0) {
+            return {arrOfPlayerCombination[indexWin].getOwnerCard(), "Straight Flush"};
+        } else {
+            // search for high card
+            int max = 0, indexWin = 0;
+            index = 0;
+            for (auto combination : arrOfPlayerCombination) {
+                float playerHighCardVal = combination.getStrongestSelf();
+                if (max < playerHighCardVal) {
+                    max = playerHighCardVal;
+                    indexWin = index;
+                }
+                index++;
+            }
+            return {arrOfPlayerCombination[indexWin].getOwnerCard(), "Straight Flush"};
+        }
+    }
 }
+
 
 pair<string, string> Comparator::fullHouseHandler(vector<Combination> arrOfPlayerCombination) {
     // TODO: pseudo code
