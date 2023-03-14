@@ -39,63 +39,63 @@ pair<int, char> Deck::getACard(int idx)
 }
 
 // Generate Card From File
-pair<vector<pair<int, char> >, vector<string> > Deck::cardFromFile(string fileName)
-{
-    string textRead, cardColor, cardNumber;
-    pair<vector<pair<int, char> >, vector<string> > result;
-    vector<pair<int, char> > deck;
-    vector<string> ability;
-    int idx = 0;
-    do
-    {
-        // Read from the txt file
-        ifstream readFile;
-        string filePath = "../../test/" + fileName + ".txt";
-        readFile.open(filePath.c_str(), ios::in);
+// pair<vector<pair<int, char> >, vector<string> > Deck::cardFromFile(string fileName)
+// {
+//     string textRead, cardColor, cardNumber;
+//     pair<vector<pair<int, char> >, vector<string> > result;
+//     vector<pair<int, char> > deck;
+//     vector<string> ability;
+//     int idx = 0;
+//     do
+//     {
+//         // Read from the txt file
+//         ifstream readFile;
+//         string filePath = "../../test/" + fileName + ".txt";
+//         readFile.open(filePath.c_str(), ios::in);
 
-        // Read the file line by line
-        while (getline(readFile, textRead))
-        {
-            if (idx < 52)
-            {
-                string el1 = "";
-                string el2 = "";
-                size_t itr = textRead.find(' ');
-                pair<int, char> newElement;
-                if (itr != string::npos)
-                {
-                    for (int i = 0; i < itr; i++)
-                    {
-                        el1 += textRead[i];
-                    }
-                    for (int i = itr + 1; i < textRead.length(); i++)
-                    {
-                        el2 += textRead[i];
-                    }
+//         // Read the file line by line
+//         while (getline(readFile, textRead))
+//         {
+//             if (idx < 52)
+//             {
+//                 string el1 = "";
+//                 string el2 = "";
+//                 size_t itr = textRead.find(' ');
+//                 pair<int, char> newElement;
+//                 if (itr != string::npos)
+//                 {
+//                     for (int i = 0; i < itr; i++)
+//                     {
+//                         el1 += textRead[i];
+//                     }
+//                     for (int i = itr + 1; i < textRead.length(); i++)
+//                     {
+//                         el2 += textRead[i];
+//                     }
 
-                    int number = 0;
-                    for (int k = 0; k < el1.length(); k++)
-                    {
-                        number *= 10;
-                        number += (el1[k] - '0');
-                    }
-                    newElement = make_pair(number, el2[0]);
-                    deck.push_back(newElement);
-                }
-            }
-            else
-            {
-                ability.push_back(textRead);
-            }
-            idx++;
-        }
-        readFile.close();
+//                     int number = 0;
+//                     for (int k = 0; k < el1.length(); k++)
+//                     {
+//                         number *= 10;
+//                         number += (el1[k] - '0');
+//                     }
+//                     newElement = make_pair(number, el2[0]);
+//                     deck.push_back(newElement);
+//                 }
+//             }
+//             else
+//             {
+//                 ability.push_back(textRead);
+//             }
+//             idx++;
+//         }
+//         readFile.close();
 
-        result = make_pair(deck, ability);
-    } while (!validDeckCard(result));
+//         result = make_pair(deck, ability);
+//     } while (!validDeckCard(result));
 
-    return result;
-}
+//     return result;
+// }
 
 // Validasi Card From File
 bool Deck::validDeckCard(pair<vector<pair<int, char> >, vector<string> > result)
@@ -146,7 +146,7 @@ pair<int, char> Deck::getTopCard()
 }
 
 // Add A Card
-Deck &Deck::operator+(const pair<int, char> &otherCard)
+Deck& Deck::operator+(const pair<int, char> &otherCard)
 {
     cards.push_back(otherCard);
     return *this;
