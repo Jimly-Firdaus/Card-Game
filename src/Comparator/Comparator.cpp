@@ -3,14 +3,20 @@
 pair<string, string> Comparator::compare(vector<Combination> arrOfPlayerCombination) {
     string type = arrOfPlayerCombination[0].getStrongestCombination().second;
     if (type == "Straight Flush") return straightFlushHandler(arrOfPlayerCombination);
+    if (type == "Four Kind");
     if (type == "Full House") return fullHouseHandler(arrOfPlayerCombination);
     if (type == "Flush") return flushHandler(arrOfPlayerCombination);
     if (type == "Three of Kind") return threeKindHandler(arrOfPlayerCombination);
+    if (type == "Two Pair");
+    if (type == "Pair");
+    if (type == "High Card");
     else {
         UncounterCombo e;
         throw e;
     }
 }
+
+
 
 pair<string, string> Comparator::straightFlushHandler(vector<Combination> arrOfPlayerCombination) {
     // TODO: implement
@@ -19,7 +25,28 @@ pair<string, string> Comparator::straightFlushHandler(vector<Combination> arrOfP
     // cari max point -> save index
     // pake index buat cari nickname terkuat
     // return
-    
+    pair<string, string> result;
+    vector<bool> possibleThreeKind(arrOfPlayerCombination.size(), false);
+    vector<bool> possibleTwoPair(arrOfPlayerCombination.size(), false);
+    vector<bool> possiblePair(arrOfPlayerCombination.size(), false);
+    int i = 0;
+    for (auto combination : arrOfPlayerCombination) {
+        if (combination.isThreeKind().first) possibleThreeKind[i] = true;
+        i++;
+    }
+    if (count(possibleThreeKind.begin(), possibleThreeKind.end(), true) > 1) {
+        int j = 0, max = 0;
+        for (auto combination : arrOfPlayerCombination) {
+            int currentCard = combination.isThreeKind().second;
+            if (possibleThreeKind[j]) {
+                if (max < currentCard) {
+                    max = currentCard;
+                    result.first = combination.getOwnerCard();
+                    result.second = "Three of Kind";    
+                }
+            }
+        }
+    }
 
 }
 
@@ -70,3 +97,61 @@ pair<string, string> Comparator::threeKindHandler(vector<Combination> arrOfPlaye
     // sisa 1 card itu jadi kicker buat pembanding pke high card
     // cari max, return
 }
+
+pair<string, string> Comparator::fourKindHandler(vector<Combination> arrOfPlayerCombination) {
+    // TODO: implement
+    
+}
+
+pair<string, string> Comparator::twoPairHandler(vector<Combination> arrOfPlayerCombination) {
+    // TODO: implement
+    
+}
+
+pair<string, string> Comparator::pairHandler(vector<Combination> arrOfPlayerCombination) {
+    // TODO: implement
+    
+}
+
+pair<string, string> Comparator::highCardHandler(vector<Combination> arrOfPlayerCombination) {
+    // TODO: implement
+    // high card ada di meja, jadinya bandingin high card di semua player yang bersangkutan
+    float max = 0;
+    int index = 0;
+    int winIndex = 0;
+    for (auto combination : arrOfPlayerCombination) {
+        pair<int, char> firstCard = combination.getTableCard().getCards()[0];
+        pair<int, char> secondCard = combination.getTableCard().getCards()[1];
+        float max2 = combination.searchVal(firstCard) > combination.searchVal(secondCard)
+            ? combination.searchVal(firstCard)
+            : combination.searchVal(secondCard);
+        if (max < max2) {
+            max = max2;
+            winIndex = index;
+        }
+        index++;
+    }
+    return {arrOfPlayerCombination[winIndex].getOwnerCard(), "High Card"};
+}
+
+
+// PAIR CASE: 
+// table : 6 2 1 3 5
+// p1 : 6 8
+// p2 : 6 8
+// p3 : 6 8
+// ini cari dlu pairnya apa, trus bandingin playerCard yang bukan card pair
+
+
+// TWO PAIR CASE:
+// table : 1 2 8 9 5
+// p1 : 1 2
+// p2 : 1 2
+// p3 : 1 2
+
+// atau
+// table : 1 2 7 9 2
+// p1 : 1 8
+// p2 : 1 3
+// p3 : 1 4
+
