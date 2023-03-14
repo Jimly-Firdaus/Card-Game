@@ -10,6 +10,7 @@ using namespace std;
 const int MAX_AVAIL_NUMBER = 13;
 const int MAX_AVAIL_CHAR = 4;
 const int MAX_PLAYER_CARD = 7;
+const int MAX_HAND_CARD = 2;
 
 // COMBO CARD EXTRA POINTS
 const double PAIR_POINT = 1.39;
