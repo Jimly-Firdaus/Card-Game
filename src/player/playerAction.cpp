@@ -7,6 +7,7 @@
 #include "../Ability/ReverseDirection.hpp"
 #include "../Ability/SwapCard.hpp"
 #include "../Ability/Switch.hpp"
+#include "Combination.hpp"
 // #include "GameState.hpp"
 
 using namespace std;
@@ -29,9 +30,10 @@ PlayerAction::PlayerAction(bool abilityUsed) : Player(Deck & fullCard, vector<st
 
 // Getter
 // Menampilkan kombinasi yang mungkin dari kartu yang dimiliki oleh pemain
-int PlayerAction::getCombination()
+int PlayerAction::getCombination(Deck tableCard)
 {
-    Combinatiion::Combination (tableCard, this->playerCard);
+    Combination::Combination(tableCard, this->ownedCard);
+    return Combination::getStrongestCombination();
 }
 
 // Aksi (next/double/half) yang dilakukan oleh pemain
@@ -93,13 +95,19 @@ void PlayerAction::useAbility()
             case "AbilityLess":
                 AbilityLess::callCard()
             case "Quadruple" :
+                Quadruple::callCard();
             case "Quarter" :
+                Quarter::callCard();
             case "Reroll" :
+                Reroll::callCard();
             case "ReverseDirection" :
+                ReverseDirection::callCard();
             case "SwapCard" :
+                SwapCard::callCard();
             case "Switch" :
+                Switch::callCard();
+                */
         }
-        */
         abilityUsed = true;
     }
     else
