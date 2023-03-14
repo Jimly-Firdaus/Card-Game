@@ -8,7 +8,7 @@
 #include "../Ability/SwapCard.hpp"
 #include "../Ability/Switch.hpp"
 #include "../Combination/Combination.hpp"
-// #include "GameState.hpp"
+#include "../GameState/GameState.hpp"
 
 using namespace std;
 
@@ -29,11 +29,11 @@ PlayerAction::PlayerAction(bool abilityUsed) : Player(Deck & fullCard, vector<st
 }
 
 // Getter
-// Menampilkan kombinasi yang mungkin dari kartu yang dimiliki oleh pemain
-int PlayerAction::getCombination(Deck tableCard)
+// Menampilkan kombinasi yang paling kuat dari kartu yang dimiliki oleh pemain
+float PlayerAction::getCombination(Deck tableCard)
 {
-    Combination::Combination(tableCard, this->ownedCard);
-    return Combination::getStrongestCombination();
+    Combination c(tableCard, this->ownedCard);
+    return c.getStrongestCombination().first;
 }
 
 // Aksi (next/double/half) yang dilakukan oleh pemain
