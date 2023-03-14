@@ -45,7 +45,8 @@ public:
      * @return true if comparison right
      * @return false otherwise
      */
-    virtual bool compare(const pair<int, char> &p1, const pair<int, char> &p2);
+    template <class T, class U>
+    bool compare(const pair<T, U> &p1, const pair<T, U> &p2);
     /**
      * Give the constant valuation of given number & type (color)
      * @param number

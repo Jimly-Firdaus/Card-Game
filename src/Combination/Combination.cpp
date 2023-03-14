@@ -391,8 +391,8 @@ float Combination::searchVal(int number, char type) const
         throw e;
     }
 }
-
-bool Combination::compare(const pair<int, char> &p1, const pair<int, char> &p2)
+template <class T, class U>
+bool Combination::compare(const pair<T, U> &p1, const pair<T, U> &p2)
 {
     // If the first elements are different, compare them
     if (p1.first != p2.first)
@@ -431,7 +431,7 @@ pair<float, string> Combination::getStrongestCombination()
     if (pair.first)
         result = {pair.second + PAIR_POINT, "Pair"};
     if (twoPair.first)
-        result = {searchVal(twoPair.second[0]) + searchVal(twoPair.second[1]) + TWO_PAIR_POINT, "Two Pair"};
+        result = {searchVal(twoPair.second[0]) + searchVal(twoPair.second[1]) + searchVal(twoPair.second[2]) + searchVal(twoPair.second[3]) + TWO_PAIR_POINT, "Two Pair"};
     if (threeKind.first)
         result = {searchVal(threeKind.second, 'M') + THREEKIND_POINT, "Three Of Kind"};
     if (straight.first)
