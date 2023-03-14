@@ -4,7 +4,7 @@
 // #include <vector>
 #include <algorithm>
 #include "..\Deck\Deck.hpp"
-#include "..\player\Player.hpp"
+#include "..\player\playerAction.hpp"
 using namespace std;
 
 const int PLAYERORDER_LENGTH = 7;
@@ -47,6 +47,6 @@ class GameState {
         void nextPlayerOrder(); // Player Change In One Round
         void showPlayerOrder(); // Print PlayerOrder in OneRound
 
-        bool isWin(vector<Player>); // Check if there is a player whose point is >= 2^32
+        bool isWin(vector<PlayerAction>); // Check if there is a player whose point is >= 2^32
 };
 #endif

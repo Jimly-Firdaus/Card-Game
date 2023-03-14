@@ -22,38 +22,48 @@ int main()
         vector<PlayerAction> player(7);
         // initiate ability list
         vector<string> ability = {"Re-Roll", "Quadruple", "Quarter", "ReverseDirection", "SwapCard", "Switch", "AbilityLess"};
-        // initiate state
-        GameState state;
 
         bool foundWinner = false;
         // game loop
         while (!foundWinner)
         {
+            // initiate state
+            GameState state;
+            // initiate deck
             Deck totalDeck;
+            // fill deck
             for(int i= 0; i< 4; i++){
                 for(int j= 1; j<=13; j++){
                     pair<int, char> card= make_pair(j, color[i]);
                     totalDeck + card;
                 }
             }
-            int currentRound = 0;
+            // distribute card to player
             for(int i= 0; i< 7; i++){
                 player[i].getRandomCard(totalDeck);
             }
             // Round loop
+            int currentRound = 0;
             while (currentRound != 7)
             {
+                // if round 2 then distribute ability card
                 if(currentRound == 2){
                     for(int i= 0; i< 7; i++){
                         player[i].getAbilityCard(ability);
                     }
                 }
+                // play loop
                 int nExecute= 0;
                 while(nExecute != player.size()){
-
+                    int turnPlayer = state.getCurrentTurn();
+                    PlayerAction currentPlayer = player[turnPlayer];
+                    currentPlayer.playerPlay(state, currentRound);
+                    state.nextPlayerOrder();
+                    nExecute++;
                 }
                 currentRound++;
             }
+            
         }
     }
     return 0;

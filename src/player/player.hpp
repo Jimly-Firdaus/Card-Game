@@ -21,6 +21,9 @@ public:
     Player();
     void getRandomCard(Deck& Deck);
     void getAbilityCard(vector<string>& AbilityCard);
+    void printPlayerOption();
+    void playerPlay(GameState& state, int currentRound);
+    int getPlayerPoint();
     // Player(Deck &fullCard);        // Default Constructor
     // Player(Deck ownedCard, int playerPoint, string ability, string nickName, int idPlayer); // User-defined Constructor
     // // Setiap instantiate, menerima deck owned card yang dirandom secara langsung
