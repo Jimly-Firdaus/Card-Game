@@ -57,12 +57,6 @@ public:
      * @return pair<string, string> <nickname, combo>
      */
     pair<string, string> pairHandler(vector<Combination> arrOfPlayerCombination);
-    /**
-     * takes in filtered arr of player card combination if case is high card
-     * @param arrOfPlayerCombination
-     * @return pair<string, string> <nickname, combo>
-     */
-    pair<string, string> highCardHandler(vector<Combination> arrOfPlayerCombination);
 };
 
 #endif
