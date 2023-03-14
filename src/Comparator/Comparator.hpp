@@ -22,6 +22,12 @@ public:
      */
     pair<string, string> straightFlushHandler(vector<Combination> arrOfPlayerCombination); // returns <nickname, combo> that win straight flush table
     /**
+     * takes in filtered arr of player card combination if case is four of kind
+     * @param arrOfPlayerCombination
+     * @return pair<string, string> <nickname, combo>
+     */
+    pair<string, string> fourKindHandler(vector<Combination> arrOfPlayerCombination);
+    /**
      * takes in filtered arr of player card combination if case is full house
      * @param arrOfPlayerCombination
      * @return pair<string, string> <nickname, combo>
