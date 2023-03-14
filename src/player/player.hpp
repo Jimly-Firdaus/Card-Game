@@ -13,12 +13,12 @@ class Player
 protected:
     Deck ownedCard; // Hand card yang dimiliki oleh setiap pemain (termasuk ability card)
     int playerPoint;
-    enum abilityCard
+    string myAbility;
 
 public:
     // Constructor
-    Player(Deck &fullCard);                  // Default Constructor
-    Player(Deck ownedCard, int playerPoint); // User-defined Constructor
+    Player(Deck &fullCard, vector<string> &abilityCards);        // Default Constructor
+    Player(Deck ownedCard, int playerPoint, string ability);            // User-defined Constructor
     // Setiap instantiate, menerima deck owned card yang dirandom secara langsung
     // Round 1 player didefine semua, round selanjutnya mendapatkan ability card
 

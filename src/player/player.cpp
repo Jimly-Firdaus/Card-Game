@@ -10,7 +10,7 @@ Method: setPlayerAction,
 
 // Constructor
 // Default Constructor
-Player::Player(Deck &fullCard)
+Player::Player(Deck &fullCard, vector<string> &abilityCards)
 {
     int idx;
     pair<int, char> card;
@@ -18,22 +18,23 @@ Player::Player(Deck &fullCard)
     {
         idx = rand() % (fullCard.getCards().size());
         card = fullCard.getACard(idx);
-        cout << "--- " << card.first << ", " << card.second << " ----\n";
         ownedCard = ownedCard + card;
-        cout << "OwnedCard\n";
-        ownedCard.printCard();
-        cout << "FullCard\n";
         fullCard = fullCard - card;
-        fullCard.printCard();
-        cout << "END" << endl;
     }
     playerPoint = 0;
+
+    idx = rand() % (abilityCards.size());
+    cout << abilityCards.size() << "-" << idx << endl;
+    myAbility = abilityCards[idx];
+    // abilityCards.erase(idx);
 }
+
 // User-defined Constructor
-Player::Player(Deck ownedCard, int playerPoint)
+Player::Player(Deck ownedCard, int playerPoint, string ability)
 {
     this->ownedCard = ownedCard;
     this->playerPoint = playerPoint;
+    this->myAbility = ability;
 }
 // Setiap instantiate, menerima deck owned card yang dirandom secara langsung
 // Round 1 player didefine semua, round selanjutnya mendapatkan ability card
@@ -74,4 +75,5 @@ void Player::printPlayerCard()
 {
     cout << "Kartu milik player" << endl;
     ownedCard.printCard();
+    cout << "Ability Player : " << myAbility << endl;
 }
