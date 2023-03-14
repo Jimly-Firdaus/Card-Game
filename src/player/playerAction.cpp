@@ -19,7 +19,7 @@ Method: getCombination, (double, next, half, useAbility (pure virtual))
 */
 
 // Constructor
-PlayerAction::PlayerAction() : Player(Deck & fullCard, vector<string> & abilityCards)
+PlayerAction::PlayerAction(Deck & fullCard, vector<string> & abilityCards) : Player()
 {
     abilityUsed = false;
 }
