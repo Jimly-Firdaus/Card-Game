@@ -4,7 +4,7 @@ pair<string, string> Comparator::compare(vector<Combination> arrOfPlayerCombinat
     string type = arrOfPlayerCombination[0].getStrongestCombination().second;
     cout << "Type: " << type << endl;
     if (type == "Straight Flush") return straightFlushHandler(arrOfPlayerCombination);
-    if (type == "Four Kind");
+    if (type == "Four of Kind") return fourKindHandler(arrOfPlayerCombination);
     if (type == "Full House") return fullHouseHandler(arrOfPlayerCombination);
     if (type == "Flush") return flushHandler(arrOfPlayerCombination);
     if (type == "Three of Kind") return threeKindHandler(arrOfPlayerCombination);
@@ -100,26 +100,76 @@ pair<string, string> Comparator::threeKindHandler(vector<Combination> arrOfPlaye
 }
 
 pair<string, string> Comparator::fourKindHandler(vector<Combination> arrOfPlayerCombination) {
-    // TODO: implement
-    
+    pair<int, char> singleCard = getSingleCard(arrOfPlayerCombination);
+    vector<Combination> c3;
+    vector<Combination> c2;
+    vector<Combination> c1;
+    for (auto combination : arrOfPlayerCombination) {
+        int i = 0;
+        pair<int, char> firstCard = combination.getPlayerCard().getCards()[0];
+        pair<int, char> secondCard = combination.getPlayerCard().getCards()[1];
+        if (firstCard.first == singleCard.first) i++;
+        if (secondCard.first == singleCard.first) i++;
+        if (i == 2) c3.push_back(combination);
+        if (i == 1 || firstCard.first == secondCard.first) c2.push_back(combination);
+        if (i == 0) c1.push_back(combination);
+    }
+    if (c3.size() != 0) {
+        // three kind
+        return {c3[0].getOwnerCard(), "Four of Kind"};
+    } else {
+        // pair
+        if (c2.size() != 0) {
+            if (c2.size() == 1) return {c2[0].getOwnerCard(), "Four of Kind"};
+            else {
+                float max = 0;
+                int index = 0, winIndex = 0;
+                for (auto combination : c2) {
+                    pair<int, char> firstCard = combination.getPlayerCard().getCards()[0];
+                    pair<int, char> secondCard = combination.getPlayerCard().getCards()[1];
+                    float max2;
+                    if (firstCard.first != secondCard.first) {
+                        max2 = firstCard.first == singleCard.first
+                        ? combination.searchVal(firstCard) + combination.searchVal(singleCard)
+                        : combination.searchVal(secondCard) + combination.searchVal(singleCard);
+                    } else {
+                        max2 = combination.searchVal(firstCard) + combination.searchVal(secondCard);
+                    }
+                    if (max < max2) {
+                        max = max2;
+                        winIndex = index;
+                    }
+                    index++;
+                }
+                return {c2[winIndex].getOwnerCard(), "Four of Kind"};
+            }
+        }
+        else {
+            // high card
+            float max = 0;
+            int index = 0, winIndex = 0;
+            for (auto combination : c2) {
+                pair<int, char> firstCard = combination.getPlayerCard().getCards()[0];
+                pair<int, char> secondCard = combination.getPlayerCard().getCards()[1];
+                float max2 = firstCard.first > secondCard.first
+                ? combination.searchVal(firstCard)
+                : combination.searchVal(secondCard);
+                if (max < max2) {
+                    max = max2;
+                    winIndex = index;
+                }
+                index++;
+            }
+            return {c1[winIndex].getOwnerCard(), "Four of Kind"};
+        }
+    }
 }
 
 pair<string, string> Comparator::twoPairHandler(vector<Combination> arrOfPlayerCombination) {
     // case 3 kalau two pairnya di meja
-    vector<pair<int, char>> tableCard = arrOfPlayerCombination[0].getTableCard().getCards();
-    map<int, int> freq;
-    // find the card without pair
-    for (auto card : tableCard) {
-        freq[card.first]++;
-    }
-    pair<int, char> singleCard;
-    for (auto card : tableCard) {
-        if (freq[card.first] == 1) {
-            singleCard = card;
-            break;
-        }
-    }
-    // check wether the hand can make a pair with singleCard
+    pair<int, char> singleCard = getSingleCard(arrOfPlayerCombination);
+    
+    // check whether the hand can make a pair with singleCard
     bool pairable = arrOfPlayerCombination[0].getPlayerCard().getCards()[0].first == singleCard.first 
         ? true
         : arrOfPlayerCombination[0].getPlayerCard().getCards()[1].first == singleCard.first;
@@ -179,6 +229,27 @@ pair<string, string> Comparator::pairHandler(vector<Combination> arrOfPlayerComb
     return {arrOfPlayerCombination[winIndex].getOwnerCard(), "Pair"};
 }
 
+pair<int, char> Comparator::getSingleCard(vector<Combination> arrOfPlayerCombination) {
+    vector<pair<int, char>> tableCard = arrOfPlayerCombination[0].getTableCard().getCards();
+    map<int, int> freq;
+    // find the card without pair
+    for (auto card : tableCard) {
+        freq[card.first]++;
+    }
+    pair<int, char> singleCard;
+    for (auto card : tableCard) {
+        if (freq[card.first] == 1) {
+            singleCard = card;
+            break;
+        }
+    }
+    return singleCard;
+}
+
+// FOUR KIND CASE:
+// table : 6 6 6 6 2
+// p1 : 1 3
+// p2 : 1 2
 
 // PAIR CASE: 
 // table : 6 2 1 3 5
