@@ -7,7 +7,7 @@
 #include "../Ability/ReverseDirection.hpp"
 #include "../Ability/SwapCard.hpp"
 #include "../Ability/Switch.hpp"
-#include "Combination.hpp"
+#include "../Combination/Combination.hpp"
 // #include "GameState.hpp"
 
 using namespace std;
@@ -107,7 +107,7 @@ void PlayerAction::useAbility()
             case "Switch" :
                 Switch::callCard();
                 */
-        }
+        // }
         abilityUsed = true;
     }
     else

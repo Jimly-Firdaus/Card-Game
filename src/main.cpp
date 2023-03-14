@@ -29,7 +29,21 @@ int main()
                 currentRound++;
             }
         }
+        // Game loop
+        bool foundWinner = false;
+        while (!foundWinner)
+        {
+            int currentRound = 0;
+
+            // Round loop
+            while (currentRound != 7)
+            {
+
+                currentRound++;
+            }
+        }
     }
 
+    return 0;
     return 0;
 }
