@@ -7,7 +7,7 @@ pair<string, string> Comparator::compare(vector<Combination> arrOfPlayerCombinat
     if (type == "Four of Kind") return fourKindHandler(arrOfPlayerCombination);
     if (type == "Full House") return fullHouseHandler(arrOfPlayerCombination);
     if (type == "Flush") return flushHandler(arrOfPlayerCombination);
-    if (type == "Three of Kind") return threeKindHandler(arrOfPlayerCombination);
+    if (type == "Three Of Kind") return threeKindHandler(arrOfPlayerCombination);
     if (type == "Two Pair") return twoPairHandler(arrOfPlayerCombination);
     if (type == "Pair") return pairHandler(arrOfPlayerCombination);
     // if (type == "High Card") return highCardHandler(arrOfPlayerCombination);
@@ -58,11 +58,6 @@ pair<string, string> Comparator::fullHouseHandler(vector<Combination> arrOfPlaye
 pair<string, string> Comparator::flushHandler(vector<Combination> arrOfPlayerCombination) {
     cout << "Called here\n"; 
     char color = arrOfPlayerCombination[0].getTableCard().getCards()[0].second;
-    // TODO: implement
-    // setiap player punya 2 card -> loop keduanya cari yang colornya sama dengan flush color
-    // save setiap angka ke new arr
-    // bandingin index max -> cari nickname terkuat berdasarkan index max
-    // return
     int winIndex = 0;
     vector<int> numbersCollection;
     // each of the player must have the same color with table flush (at least one)
@@ -87,16 +82,48 @@ pair<string, string> Comparator::flushHandler(vector<Combination> arrOfPlayerCom
 
     // Find the index of the maximum element
     int index = distance(numbersCollection.begin(), it);
-    cout << index << endl;
     return {arrOfPlayerCombination[index].getOwnerCard(), "Flush"};
 }
 
 pair<string, string> Comparator::threeKindHandler(vector<Combination> arrOfPlayerCombination) {
-    // TODO: implement
-    // karena case yang buat cari full house udah di counter di full house handler -> maka cuman bandingin kicker disini
-    // cari pair yang di meja tersebut (udah pasti two pair di meja, cari angkanya buat ngematchin sama salah satu card player)
-    // sisa 1 card itu jadi kicker buat pembanding pke high card
-    // cari max, return
+    vector<pair<int, char>> tableCard = arrOfPlayerCombination[0].getTableCard().getCards();
+    map<int, int> freq;
+    bool threeKind = false;
+    for (auto card : tableCard) {
+        freq[card.first]++;
+        if(freq[card.first] == 3) {
+            threeKind = true;
+            break;
+        }
+    }
+    float max = 0;
+    int index = 0, winIndex = 0;
+    if (threeKind) {
+        for (auto combination : arrOfPlayerCombination) {
+            double playerCardValue = combination.getStrongestSelf();
+            if (max < playerCardValue) {
+                max = playerCardValue;
+                winIndex = index;
+            }
+            index++;
+        }
+    } else {
+        int threeKindCard = arrOfPlayerCombination[0].isThreeKind().second;
+        for (auto combination : arrOfPlayerCombination) {
+            pair<int, char> firstCard = combination.getPlayerCard().getCards()[0];
+            pair<int, char> secondCard = combination.getPlayerCard().getCards()[1];
+            float max2;
+            max2 = firstCard.first == threeKindCard 
+            ? combination.searchVal(secondCard) 
+            : combination.searchVal(firstCard);
+            if (max < max2) {
+                max = max2;
+                winIndex = index;
+            }
+            index++;
+        }
+    }
+    return {arrOfPlayerCombination[winIndex].getOwnerCard(), "Three of Kind"};
 }
 
 pair<string, string> Comparator::fourKindHandler(vector<Combination> arrOfPlayerCombination) {
