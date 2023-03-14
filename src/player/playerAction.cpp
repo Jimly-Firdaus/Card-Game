@@ -83,3 +83,12 @@ void PlayerAction::halfAction() // Aksi dimana poin game menjadi setengahnya
 void PlayerAction::useAbility() // Aksi dimana pemain menggunakan kartu ability yang dimilikinya
 {
 }
+
+void PlayerAction::setUsed(){
+    if(this->used){
+        this->used = false;
+    }else{
+        HaveBeenUsed e;
+        throw e;
+    }
+}

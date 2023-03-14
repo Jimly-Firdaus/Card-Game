@@ -37,4 +37,12 @@ struct WrongChoice : public exception
 	}
 };
 
+struct HaveBeenUsed : public exception
+{
+	const char *what() const throw()
+	{
+		return "Card has been used!";
+	}
+};
+
 #endif

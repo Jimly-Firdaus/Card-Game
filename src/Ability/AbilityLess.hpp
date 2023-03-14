@@ -5,7 +5,7 @@
 class AbilityLess : public Ability
 {
 public:
-    void callCard();
+    void callCard(PlayerAction&);
     void getCardInfo();
 };
 

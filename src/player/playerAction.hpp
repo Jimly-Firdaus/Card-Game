@@ -30,6 +30,8 @@ class PlayerAction : public player {
     void useAbility(enum myAbility); // Aksi dimana pemain menggunakan kartu ability yang dimilikinya
     // terima parameter abilityCard
     // ability.pointer = new [call card]
+    void setUsed(bool);
+    bool getUsed();
 };
 
 #endif
