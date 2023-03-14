@@ -1,10 +1,10 @@
 #ifndef GAMESTATE_HPP
 #define GAMESTATE_HPP
 
-#include <vector>
+// #include <vector>
 #include <algorithm>
 #include "..\Deck\Deck.hpp"
-#include "..\Player\Player.hpp"
+#include "..\player\playerAction.hpp"
 using namespace std;
 
 const int PLAYERORDER_LENGTH = 7;

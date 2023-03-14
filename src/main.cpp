@@ -1,30 +1,70 @@
 #include <iostream>
-#include "GameState.hpp"
+#include "GameState/GameState.hpp"
+// #include "player/player.hpp"
+#include "player/playerAction.hpp"
+#include <bits/stdc++.h>
+#include "Deck/Deck.hpp"
+using namespace std;
 
+// g++ main.cpp Gamestate/GameState.cpp player/player.cpp Deck/Deck.cpp -o out
 int main()
 {
-    GameState x;
-    cout << x.getRewardPoint() << endl;
-    // x.showTableCard();
-    cout << x.getCurrentTurn() << endl;
+    srand(time(NULL));
+    bool terminateGame = false;
+    GameState game;
 
-    for (int i = 0; i < 10; i++) {
-        x.nextPlayerOrder();
-        cout << x.getCurrentTurn() << endl;
-    }
-    
-    x.setReverseStatus(true);
-    x.setReverseStatusChange(true);
-    
-    for (int i = 0; i < 10; i++) {
-        x.nextPlayerOrder();
-        cout << x.getCurrentTurn() << endl;
-    }
+    while (!terminateGame)
+    {
+        // Player + game state instantiation here
+        // initiate color list
+        char color[4] = {'M', 'K', 'B', 'H'};
+        // initiate player
+        vector<PlayerAction> player(7);
+        // initiate ability list
+        vector<string> ability = {"Re-Roll", "Quadruple", "Quarter", "ReverseDirection", "SwapCard", "Switch", "AbilityLess"};
 
-    x.setReverseStatus(false);
-    x.setReverseStatusChange(true);
-    for (int i = 0; i < 10; i++) {
-        x.nextPlayerOrder();
-        cout << x.getCurrentTurn() << endl;
+        bool foundWinner = false;
+        // game loop
+        while (!foundWinner)
+        {
+            // initiate state
+            GameState state;
+            // initiate deck
+            Deck totalDeck;
+            // fill deck
+            for(int i= 0; i< 4; i++){
+                for(int j= 1; j<=13; j++){
+                    pair<int, char> card= make_pair(j, color[i]);
+                    totalDeck + card;
+                }
+            }
+            // distribute card to player
+            for(int i= 0; i< 7; i++){
+                player[i].getRandomCard(totalDeck);
+            }
+            // Round loop
+            int currentRound = 0;
+            while (currentRound != 7)
+            {
+                // if round 2 then distribute ability card
+                if(currentRound == 2){
+                    for(int i= 0; i< 7; i++){
+                        player[i].getAbilityCard(ability);
+                    }
+                }
+                // play loop
+                int nExecute= 0;
+                while(nExecute != player.size()){
+                    int turnPlayer = state.getCurrentTurn();
+                    PlayerAction currentPlayer = player[turnPlayer];
+                    currentPlayer.playerPlay(state, currentRound);
+                    state.nextPlayerOrder();
+                    nExecute++;
+                }
+                currentRound++;
+            }
+            
+        }
     }
+    return 0;
 }
