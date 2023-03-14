@@ -4,10 +4,13 @@ using namespace std;
 
 // Constructor
 // Default Constructor
-Deck::Deck() {}
+Deck::Deck()
+{
+    vector<pair<int, char>> cards;
+}
 
 // User-defined Constructor
-Deck::Deck(vector<pair<int, char> > Cards)
+Deck::Deck(vector<pair<int, char>> Cards)
 {
     this->cards = Cards;
 }
@@ -20,13 +23,13 @@ Deck &Deck::operator=(const Deck &otherCard)
 }
 
 // Getter
-vector<pair<int, char> > Deck::getCards()
+vector<pair<int, char>> Deck::getCards()
 {
     return cards;
 }
 
 // Setter
-void Deck::setCards(vector<pair<int, char> > newCards)
+void Deck::setCards(vector<pair<int, char>> newCards)
 {
     cards = newCards;
 }
@@ -38,10 +41,10 @@ pair<int, char> Deck::getACard(int idx)
 }
 
 // Generate Card From File
-vector<pair<int, char> > Deck::cardFromFile(string fileName)
+vector<pair<int, char>> Deck::cardFromFile(string fileName)
 {
     string textRead, cardColor, cardNumber;
-    vector<pair<int, char> > result;
+    vector<pair<int, char>> result;
     // Read from the txt file
     ifstream readFile;
     string filePath = "../../test/" + fileName + ".txt";
@@ -88,7 +91,7 @@ vector<pair<int, char> > Deck::cardFromFile(string fileName)
 // Shuffle Card
 void Deck::shuffleCard()
 {
-    random_shuffle(cards.begin(), cards.end());
+    // random_shuffle(cards.begin(), cards.end());
 }
 
 // Get Top of Card
@@ -107,7 +110,7 @@ Deck &Deck::operator+(const pair<int, char> &otherCard)
 // Throw A Card
 Deck &Deck::operator-(const pair<int, char> &otherCard)
 {
-    vector<pair<int, char> >::iterator itr = cards.begin();
+    vector<pair<int, char>>::iterator itr = cards.begin();
     itr = find(cards.begin(), cards.end(), otherCard);
     if (itr != cards.end())
     {
@@ -119,21 +122,8 @@ Deck &Deck::operator-(const pair<int, char> &otherCard)
 // PrintCard
 void Deck::printCard()
 {
-    if (cards.size() == 0)
+    for (int i = 0; i < cards.size(); i++)
     {
-        cout << "There is no card\n";
-    }
-    else
-    {
-        for (int i = 0; i < cards.size(); i++)
-        {
-            cout << i + 1 << ". <" << cards[i].first << ", " << cards[i].second << ">" << endl;
-        }
+        cout << i + 1 << ". <" << cards[i].first << ", " << cards[i].second << ">" << endl;
     }
 }
-
-/*
-Class: Deck : 52 Kartu, bagiKartu
-Attr: array of number + ability card
-Method: getCard (Husnia)
-*/

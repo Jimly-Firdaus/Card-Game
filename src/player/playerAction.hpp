@@ -1,7 +1,7 @@
 #ifndef PLAYERACTION_HPP
 #define PLAYERACTION_HPP
 
-#include "Player.hpp"
+#include "player.hpp"
 
 /*Function overriding here
 Class: PlayerAction extends dari Player buatKombinasi
@@ -9,10 +9,26 @@ Attr: abilityCard
 Method: getCombination, (double, next, half, useAbility (pure virtual))
 */
 
+<<<<<<< HEAD
+class PlayerAction : public Player {
+    private:
+    enum abilityCard
+    {
+        AbilityLess,
+        Quadruple,
+        Quarter,
+        Reroll,
+        ReverseDirection,
+        SwapCard,
+        Switch
+    };
+    bool used;
+=======
 class PlayerAction : public Player
 {
 private:
     bool abilityUsed;
+>>>>>>> c3533a0fd79f605c581b5eb8c95784aa8e607232
 
 public:
     // Constructor
@@ -30,6 +46,8 @@ public:
     void useAbility(); // Aksi dimana pemain menggunakan kartu ability yang dimilikinya
     // terima parameter abilityCard
     // ability.pointer = new [call card]
+    void setUsed(bool);
+    // bool getUsed();
 };
 
 #endif
