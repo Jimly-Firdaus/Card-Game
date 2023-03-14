@@ -461,6 +461,7 @@ pair<float, string> Combination::getStrongestCombination()
      *      1. Kalau ada yang max nya sama -> bandingin colornya
      * Untuk Three Kind:
      *      1. Kalau ada pair sama di meja + ada 2 player yang bisa dapet three kind -> cari highest kicker atau cari yang bisa ngebentuk fullhouse (ini udah dicounter di full house)
+     * Pertimbangin kalau combo terkuatnya terbentuk di meja semua
      */
 
     return result;
