@@ -408,11 +408,10 @@ bool Combination::compare(const pair<int, char> &p1, const pair<int, char> &p2)
 
 pair<int, char> Combination::getHighCard()
 {
-    Deck copyTable(this->tableCard);
-    vector<pair<int, char>> v = mergeDeck(copyTable, playerCard);
+    vector<pair<int, char>> v = playerCard.getCards();
     sort(v.begin(), v.end(), [&](const pair<int, char> &p1, const pair<int, char> &p2)
-         { return compare(p1, p2); });
-    return v[MAX_PLAYER_CARD - 1];
+        { return compare(p1, p2); });
+    return v[MAX_HAND_CARD - 1];
 }
 
 pair<float, string> Combination::getStrongestCombination()
