@@ -16,7 +16,7 @@ private:
 
 public:
     // Constructor
-    PlayerAction();
+    PlayerAction(Deck & fullCard, vector<string> & abilityCards);
     PlayerAction(bool abilityUsed);
 
     // Getter
