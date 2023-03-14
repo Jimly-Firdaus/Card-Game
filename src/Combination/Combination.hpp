@@ -157,6 +157,7 @@ public:
      * @return * vector<pair<int, char>> sorted deck
      */
     vector<pair<int, char>> sortDeck(vector<pair<int, char>> mergedDeck);
+    float getStrongestSelf();
     // Operator overloads
     bool operator<(Combination &other);
     bool operator>(Combination &other);

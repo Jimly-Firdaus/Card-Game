@@ -466,6 +466,14 @@ pair<float, string> Combination::getStrongestCombination()
     return result;
 }
 
+float Combination::getStrongestSelf() {
+    vector<pair<int, char>> playerCard = this->playerCard.getCards();
+    if (playerCard[0].first == playerCard[1].first) return searchVal(playerCard[0]) + searchVal(playerCard[1]);
+    else return searchVal(playerCard[0]) > searchVal(playerCard[1]) 
+        ? searchVal(playerCard[0]) 
+        : searchVal(playerCard[1]);
+}
+
 bool Combination::operator<(Combination &other)
 {
     return this->getStrongestCombination() < other.getStrongestCombination();
