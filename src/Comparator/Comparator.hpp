@@ -34,11 +34,29 @@ public:
      */
     pair<string, string> flushHandler(vector<Combination> arrOfPlayerCombination);
     /**
-     * takes in filtered arr of player card combination if case is straight three of kind
+     * takes in filtered arr of player card combination if case is three of kind
      * @param arrOfPlayerCombination
      * @return pair<string, string> <nickname, combo>
      */
     pair<string, string> threeKindHandler(vector<Combination> arrOfPlayerCombination);
+    /**
+     * takes in filtered arr of player card combination if case is two pair
+     * @param arrOfPlayerCombination
+     * @return pair<string, string> <nickname, combo>
+     */
+    pair<string, string> twoPairHandler(vector<Combination> arrOfPlayerCombination);
+    /**
+     * takes in filtered arr of player card combination if case is pair
+     * @param arrOfPlayerCombination
+     * @return pair<string, string> <nickname, combo>
+     */
+    pair<string, string> pairHandler(vector<Combination> arrOfPlayerCombination);
+    /**
+     * takes in filtered arr of player card combination if case is high card
+     * @param arrOfPlayerCombination
+     * @return pair<string, string> <nickname, combo>
+     */
+    pair<string, string> highCardHandler(vector<Combination> arrOfPlayerCombination);
 };
 
 #endif
