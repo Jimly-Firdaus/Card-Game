@@ -7,10 +7,13 @@
 #include "..\player\Player.hpp"
 using namespace std;
 
+const int PLAYERORDER_LENGTH = 7;
+
 class GameState {
     private:
         int rewardPoint;
         // Deck tableCard;
+        int playerOrder[PLAYERORDER_LENGTH];
         int currentTurn;
         bool reverseStatus;
         bool reverseStatusChange;
@@ -41,8 +44,9 @@ class GameState {
         void halfRewardPoint(); // Halve game's current reward point
         void quarterRewardPoint(); // Quarter game's current reward point
 
-        void nextPlayerOrder(); // Current Turn Rotation
-        
+        void nextPlayerOrder(); // Current Turn Rotation (Change currentTurn and playerOrder)
+        void showPlayerOrder(); // Print Player Order
+
         bool isWin(vector<Player>); // Check if there is a player whose point is >= 2^32
 };
 #endif

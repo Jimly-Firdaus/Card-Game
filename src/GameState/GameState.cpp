@@ -8,8 +8,12 @@ int GameState::totalTurn = 0;
 GameState::GameState() {
     this->rewardPoint = 64;
 
-    // Empty Table Card
+    // // Empty Table Card
     // this->tableCard.setCards({});
+
+    for (int i = 0; i < PLAYERORDER_LENGTH; i++) {
+        this->playerOrder[i] = 0;
+    }
 
     this->currentTurn = 1;
     this->reverseStatus = false;
@@ -111,16 +115,29 @@ void GameState::nextPlayerOrder() {
             totalTurn = 0;
         }   
     }
+    for (int i = 0; i < PLAYERORDER_LENGTH; i++) {
+        this->playerOrder[i] = (this->currentTurn + i) % 7;
+        if (this->playerOrder[i] == 0) this->playerOrder[i] += 7;
+    }
 }
 
-bool GameState::isWin(vector<Player> P) {
-    bool result = false;
-    int i = 0;
-    while (!result && i < P.size()) {
-        if (P[i].getPlayerPoint() >= pow(2, 32)) {
-            result = true;
+void GameState::showPlayerOrder() {
+    for (int i = 0; i < PLAYERORDER_LENGTH; i++) {
+        cout << this->playerOrder[i] << " ";
+        if (i == PLAYERORDER_LENGTH - 1) {
+            cout << endl;
         }
-        i++;
     }
-    return result;
 }
+
+// bool GameState::isWin(vector<Player> P) {
+//     bool result = false;
+//     int i = 0;
+//     while (!result && i < P.size()) {
+//         if (P[i].getPlayerPoint() >= pow(2, 32)) {
+//             result = true;
+//         }
+//         i++;
+//     }
+//     return result;
+// }
