@@ -86,6 +86,7 @@ void GameState::quarterRewardPoint() {
 }
 
 void GameState::nextPlayerOrder() {
+    this->playerOrder[totalTurn] = this->currentTurn; 
     if (!this->reverseStatus) {
         if (!this->reverseStatusChange) {
             this->currentTurn = (this->currentTurn + 1) % 7;
@@ -97,7 +98,7 @@ void GameState::nextPlayerOrder() {
             totalTurn++;
             this->reverseStatusChange = false;
         }
-        if (totalTurn == 6) {
+        if (totalTurn == 7) {
             totalTurn = 0;
         }
     } else {
@@ -111,13 +112,9 @@ void GameState::nextPlayerOrder() {
             totalTurn++;
             this->reverseStatusChange = false; 
         }
-        if (totalTurn == 6) {
+        if (totalTurn == 7) {
             totalTurn = 0;
         }   
-    }
-    for (int i = 0; i < PLAYERORDER_LENGTH; i++) {
-        this->playerOrder[i] = (this->currentTurn + i) % 7;
-        if (this->playerOrder[i] == 0) this->playerOrder[i] += 7;
     }
 }
 

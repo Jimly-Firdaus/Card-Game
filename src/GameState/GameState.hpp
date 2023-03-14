@@ -44,8 +44,8 @@ class GameState {
         void halfRewardPoint(); // Halve game's current reward point
         void quarterRewardPoint(); // Quarter game's current reward point
 
-        void nextPlayerOrder(); // Current Turn Rotation (Change currentTurn and playerOrder)
-        void showPlayerOrder(); // Print Player Order
+        void nextPlayerOrder(); // Player Change In One Round
+        void showPlayerOrder(); // Print PlayerOrder in OneRound
 
         bool isWin(vector<Player>); // Check if there is a player whose point is >= 2^32
 };
