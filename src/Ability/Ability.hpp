@@ -4,6 +4,7 @@
 #include "../player/player.hpp"
 #include "../Exception/Exception.hpp"
 #include "../GameState/GameState.hpp"
+#include "../player/playerAction.hpp"
 
 class Ability
 {

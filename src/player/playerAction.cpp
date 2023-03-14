@@ -7,6 +7,7 @@
 #include "../Ability/ReverseDirection.hpp"
 #include "../Ability/SwapCard.hpp"
 #include "../Ability/Switch.hpp"
+#include "../GameState/GameState.hpp"
 // #include "GameState.hpp"
 
 using namespace std;
@@ -20,16 +21,7 @@ Method: getCombination, (double, next, half, useAbility (pure virtual))
 // Constructor
 PlayerAction::PlayerAction()
 {
-    enum abilityCard
-    {
-        AbilityLess,
-        Quadruple,
-        Quarter,
-        Reroll,
-        ReverseDirection,
-        SwapCard,
-        Switch
-    } used = false;
+    this->used = false;
 }
 
 // Getter
