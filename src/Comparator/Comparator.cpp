@@ -2,14 +2,15 @@
 
 pair<string, string> Comparator::compare(vector<Combination> arrOfPlayerCombination) {
     string type = arrOfPlayerCombination[0].getStrongestCombination().second;
+    cout << "Type: " << type << endl;
     if (type == "Straight Flush") return straightFlushHandler(arrOfPlayerCombination);
     if (type == "Four Kind");
     if (type == "Full House") return fullHouseHandler(arrOfPlayerCombination);
     if (type == "Flush") return flushHandler(arrOfPlayerCombination);
     if (type == "Three of Kind") return threeKindHandler(arrOfPlayerCombination);
     if (type == "Two Pair");
-    if (type == "Pair");
-    if (type == "High Card");
+    if (type == "Pair") return pairHandler(arrOfPlayerCombination);
+    // if (type == "High Card") return highCardHandler(arrOfPlayerCombination);
     else {
         UncounterCombo e;
         throw e;
@@ -109,29 +110,35 @@ pair<string, string> Comparator::twoPairHandler(vector<Combination> arrOfPlayerC
 }
 
 pair<string, string> Comparator::pairHandler(vector<Combination> arrOfPlayerCombination) {
-    // TODO: implement
-    
-}
-
-pair<string, string> Comparator::highCardHandler(vector<Combination> arrOfPlayerCombination) {
-    // TODO: implement
-    // high card ada di meja, jadinya bandingin high card di semua player yang bersangkutan
+    vector<pair<int, char>> pairCard = arrOfPlayerCombination[0].findPair(); // get all the pairs
+    int pairNum = pairCard[0].first;
+    bool containPair = arrOfPlayerCombination[0].getPlayerCard().getCards()[0].first == pairNum 
+        ? true
+        : arrOfPlayerCombination[0].getPlayerCard().getCards()[1].first == pairNum;
     float max = 0;
     int index = 0;
     int winIndex = 0;
     for (auto combination : arrOfPlayerCombination) {
-        pair<int, char> firstCard = combination.getTableCard().getCards()[0];
-        pair<int, char> secondCard = combination.getTableCard().getCards()[1];
-        float max2 = combination.searchVal(firstCard) > combination.searchVal(secondCard)
-            ? combination.searchVal(firstCard)
-            : combination.searchVal(secondCard);
+        pair<int, char> firstCard = combination.getPlayerCard().getCards()[0];
+        pair<int, char> secondCard = combination.getPlayerCard().getCards()[1];
+        float max2;
+        if (containPair) {
+            // if there are hand that can produce pair
+            max2 = firstCard.first == pairNum ? combination.searchVal(secondCard) : combination.searchVal(firstCard);
+        } else {
+            // if no hand can produce pair
+            max2 = combination.searchVal(firstCard) > combination.searchVal(secondCard)
+                ? combination.searchVal(firstCard)
+                : combination.searchVal(secondCard);
+        }
         if (max < max2) {
             max = max2;
             winIndex = index;
         }
         index++;
     }
-    return {arrOfPlayerCombination[winIndex].getOwnerCard(), "High Card"};
+    cout << "Index: " << containPair << endl;
+    return {arrOfPlayerCombination[winIndex].getOwnerCard(), "Pair"};
 }
 
 
@@ -140,6 +147,11 @@ pair<string, string> Comparator::highCardHandler(vector<Combination> arrOfPlayer
 // p1 : 6 8
 // p2 : 6 8
 // p3 : 6 8
+
+// table : 6 6 1 3 5
+// p1 : 9 8
+// p2 : 9 8
+// p3 : 9 8
 // ini cari dlu pairnya apa, trus bandingin playerCard yang bukan card pair
 
 
