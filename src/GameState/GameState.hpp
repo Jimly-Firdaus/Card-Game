@@ -40,6 +40,7 @@ class GameState {
         void addTableCard(Deck&);
 
         void showTableCard(); // Print Table Card
+        Deck getTableCard(); // Get Table Card
         
         void fourtimesRewardPoint(); // Quadruple game's current reward point
         void doubleRewardPoint(); // Double game's current reward point
