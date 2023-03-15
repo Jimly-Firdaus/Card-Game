@@ -244,9 +244,14 @@ pair<int, char> Combination::findBiggest(vector<pair<int, char>> v, int number)
     return resultPair;
 }
 
-pair<bool, int> Combination::isThreeKind()
+pair<bool, int> Combination::isThreeKind(bool checkTable)
 {
-    vector<pair<int, char>> v = mergeDeck(this->tableCard, playerCard);
+    vector<pair<int, char>> v;
+    if (!checkTable) {
+        v = mergeDeck(this->tableCard, playerCard);
+    } else {
+        v = this->tableCard.getCards();
+    }
     vector<pair<int, char>> filteredV = this->getNonSingle(v);
     map<int, int> freq;
     for (const auto ele : filteredV)
@@ -263,10 +268,13 @@ pair<bool, int> Combination::isThreeKind()
     return {false, -1};
 }
 
-pair<bool, vector<pair<int, char>>> Combination::isTwoPair()
+pair<bool, vector<pair<int, char>>> Combination::isTwoPair(bool checkTable)
 {
-    vector<pair<int, char>> mergedCard = mergeDeck(this->tableCard, playerCard);
-    vector<pair<int, char>> allPairs = findPair();
+    vector<pair<int, char>> allPairs = findPair(checkTable);
+    // for (auto ele : allPairs) {
+    //     cout << ele.first << "," << ele.second << " | ";
+    // }
+    // cout << endl;
     pair<bool, vector<pair<int, char>>> result = {false, {}};
     if (allPairs.size() > 3)
     {
@@ -279,9 +287,14 @@ pair<bool, vector<pair<int, char>>> Combination::isTwoPair()
     return result;
 }
 
-pair<bool, float> Combination::isPair()
+pair<bool, float> Combination::isPair(bool checkTable)
 {
-    vector<pair<int, char>> v = mergeDeck(this->tableCard, playerCard);
+    vector<pair<int, char>> v;
+    if (!checkTable) {
+        v = mergeDeck(this->tableCard, playerCard);
+    } else {
+        v = this->tableCard.getCards();
+    }
     vector<pair<int, char>> filteredV = this->getNonSingle(v);
     map<int, int> freq;
     for (const auto ele : filteredV)
@@ -298,13 +311,17 @@ pair<bool, float> Combination::isPair()
     return {false, -1};
 }
 
-vector<pair<int, char>> Combination::findPair()
+vector<pair<int, char>> Combination::findPair(bool checkTable)
 {
     vector<pair<int, char>> pairV, temp;
-    if (isPair().first)
+    if (isPair(checkTable).first)
     {
-        // Deck copyTable(this->tableCard);
-        vector<pair<int, char>> v = mergeDeck(this->tableCard, playerCard);
+        vector<pair<int, char>> v;
+        if (!checkTable) {
+            v = mergeDeck(this->tableCard, playerCard);
+        } else {
+            v = this->tableCard.getCards();
+        }
         temp = this->getNonSingle(v);
         map<int, int> freq;
         for (const auto ele : temp)

@@ -116,7 +116,7 @@ public:
      * Find all pair in hand + table decks
      * @return * vector<pair<int, char>> vector containing all pairs from given decks
      */
-    vector<pair<int, char>> findPair();
+    vector<pair<int, char>> findPair(bool checkTable = false);
     /**
      * Receive sorted merged deck and find all numbers that appear more than once
      * @param mergedDeck
@@ -127,19 +127,19 @@ public:
      * Check whether if current hand + table card is Three of Kind
      * @return * pair<bool, int> bool for Three of Kind. If true returns the card number, else returns -1
      */
-    pair<bool, int> isThreeKind();
+    pair<bool, int> isThreeKind(bool checkTable = false);
     /**
      * Check whether if current hand + table card is Two Pair
      * @param tableCard
      * @param playerCard
      * @return * pair<bool, int> bool for Two Pair. If true returns the Two Pair, else returns empty array
      */
-    pair<bool, vector<pair<int, char>>> isTwoPair();
+    pair<bool, vector<pair<int, char>>> isTwoPair(bool checkTable = false);
     /**
      * Check whether if current hand + table card is Pair
      * @return * pair<bool, int> bool for Pair. If true returns the valuation, else returns -1
      */
-    pair<bool, float> isPair();
+    pair<bool, float> isPair(bool checkTable = false);
     /**
      * Get the highest card from given decks
      * @return pair<int, char> highest card
