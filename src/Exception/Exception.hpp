@@ -36,6 +36,14 @@ struct InvalidInput : public exception
 	}
 };
 
+struct FileNotFound : public exception
+{
+	const char *what() const throw()
+	{
+		return "File not found!";
+	}
+};
+
 // Add your own exception here
 struct WrongChoice : public exception
 {
