@@ -6,7 +6,17 @@
 template <class T>
 class Comparator : public Handler {
     public:
+        /**
+         * Sort the given vector. Defaults to ascending
+         * @param asc 
+         * @return * vector<T> 
+         */
         vector<T> sortVector(vector<T>, bool asc = true);
+        /**
+         * Descending callback function for sortVector
+         * @return true 
+         * @return false 
+         */
         bool descCallbackFn(T, T);
         pair<string, string> compare(const vector<Combination>&);
         

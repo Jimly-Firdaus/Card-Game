@@ -61,6 +61,11 @@ public:
      * @return pair<string, string> <nickname, combo>
      */
     pair<string, string> pairHandler(vector<Combination> arrOfPlayerCombination);
+    /**
+     * Find the single card
+     * @param arrOfPlayerCombination 
+     * @return pair<int, char> 
+     */
     pair<int, char> getSingleCard(vector<Combination> arrOfPlayerCombination);
     /**
      * takes in filtered arr of player card combination
@@ -70,6 +75,10 @@ public:
      * @return pair<string, string> <nickname, combo>
      */
     pair<string, string> getPossibleOfOne(vector<Combination> arrOfPlayerCombination);
+    /**
+     * Takes in player combination and compare the combination value
+     * @return * pair<string, string> winner
+     */
     virtual pair<string, string> compare(const vector<Combination>&) = 0;
 
 };
