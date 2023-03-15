@@ -6,7 +6,7 @@
 #include "../GameState/GameState.hpp"
 #include "../player/playerAction.hpp"
 
-class Ability : public PlayerAction{
+class Ability{
     public:
         /**
         * Call card ability. (pure virtual)
@@ -16,7 +16,8 @@ class Ability : public PlayerAction{
         * @param {int&} tableReward Current table reward
         * those parameters is written for ability usage completion, it can be used or not according to the need of the program.
         */
-        virtual void callCard() = 0;
+        // virtual void callCard() = 0;
+        virtual void callCard(PlayerAction&, Deck&, GameState&) = 0;
         /**
          * Getting card information. (pure virtual)
          */

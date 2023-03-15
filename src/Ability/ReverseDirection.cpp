@@ -8,6 +8,7 @@ void ReverseDirection::getCardInfo(){
     cout << "Reverse Direction, memutar arah giliran, pemain yang sudah melakukan aksi pada giliran tersebut akan dilewati." << endl;
 }
 
-void ReverseDirection::callCard(GameState& state){
+void ReverseDirection::callCard(PlayerAction& player, Deck& deck, GameState& state){
+    state.setReverseStatus(true);
     state.setReverseStatusChange(true);
 }

@@ -6,7 +6,7 @@ class Reroll : public Ability
 {
 public:
     void getCardInfo();
-    void callCard(PlayerAction&, Deck&);
+    void callCard(PlayerAction&, Deck&, GameState&) override;
 };
 
 #endif

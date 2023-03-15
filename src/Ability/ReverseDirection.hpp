@@ -5,8 +5,8 @@
 
 class ReverseDirection : public Ability{
     public:
-        void getCardInfo();
-        void callCard(GameState&);
+        void getCardInfo() override;
+        void callCard(PlayerAction& player, Deck& deck, GameState& state) override;
 };
 
 #endif

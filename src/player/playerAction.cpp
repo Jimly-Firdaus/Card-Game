@@ -2,13 +2,24 @@
 
 PlayerAction::PlayerAction():Player(){
     this->abilityUsed = false;
-    this->PlayerAbility = "none";
 }
 
 void PlayerAction::getAbilityCard(vector<string>& AbilityCard){
     int randNumber = rand() % AbilityCard.size();
     this->PlayerAbility = AbilityCard[randNumber];
+    if(AbilityCard[randNumber] == "Re-Roll"){
+        this->ability = new Reroll();
+    }else if(AbilityCard[randNumber] == "Quadruple"){
+        this->ability = new Quadruple();
+    }else if(AbilityCard[randNumber] == "Quarter"){
+        this->ability = new Quarter();
+    }else if(AbilityCard[randNumber] == "ReverseDirection"){
+        this->ability = new ReverseDirection();
+    }else if(AbilityCard[randNumber] == "SwapCard"){
+        this->ability = new SwapCard();
+    }
     AbilityCard.erase(AbilityCard.begin()+randNumber);
+
 }
 
 void PlayerAction::playerPlay(GameState& state, int currentRound){
@@ -71,7 +82,8 @@ string PlayerAction::getAbility(){
 
 void PlayerAction::ABILITY(GameState & state){
     if(PlayerAbility == "Re-Roll"){
-        
+        Reroll reroll;
+
     }
 }
 

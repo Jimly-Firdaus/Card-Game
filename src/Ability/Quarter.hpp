@@ -4,8 +4,8 @@
 
 class Quarter : public Ability{
     public:
-        void getCardInfo();
-        void callCard();
+        void getCardInfo() override;
+        void callCard(PlayerAction& player, Deck& deck, GameState& state) override;
 };
 
 #endif

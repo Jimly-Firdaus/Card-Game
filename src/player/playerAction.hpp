@@ -22,6 +22,7 @@ Method: getCombination, (double, next, half, useAbility (pure virtual))
 
 class PlayerAction : public Player {
     private:
+    Ability *ability;
     string PlayerAbility;
     bool abilityUsed;
 

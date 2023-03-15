@@ -4,7 +4,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class PlayerCollection : public PlayerAction{
+class PlayerCollection{
     private:
         vector<PlayerAction> player;
         int Neff;
