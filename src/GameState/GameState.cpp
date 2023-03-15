@@ -1,6 +1,5 @@
 #include "GameState.hpp"
-#include <iostream>
-#include <cmath>
+
 using namespace std;
 
 int GameState::totalTurn = 0;

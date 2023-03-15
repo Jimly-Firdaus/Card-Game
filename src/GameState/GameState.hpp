@@ -3,8 +3,10 @@
 
 // #include <vector>
 #include <algorithm>
-// #include "..\Deck\Deck.hpp"
-// #include "..\player\playerAction.hpp"
+#include <iostream>
+#include <cmath>
+#include "..\Deck\Deck.hpp"
+#include "..\player\playerAction.hpp"
 using namespace std;
 
 const int PLAYERORDER_LENGTH = 7;
