@@ -247,37 +247,23 @@ void GameState::showPlayerOrder()
     }
 }
 
-// bool GameState::isWin(vector<Player> P) {
-//     bool result = false;
-//     int i = 0;
-//     while (!result && i < P.size()) {
-//         if (P[i].getPlayerPoint() >= pow(2, 32)) {
-//             result = true;
-//         }
-//         i++;
-//     }
-//     return result;
-// }
+void GameState::reset() {
+    this->rewardPoint = 64;
 
-// void GameState::reset() {
-//     this->rewardPoint = 64;
+    // Empty Table Card
+    for (int i = 0; i < this->tableCard.getCards().size(); i++) {
+        this->tableCard.getCards().erase(this->tableCard.getCards().begin());
+    }
 
-//     // Empty Table Card
-//     for (int i = 0; i < this->tableCard.getCards().size(); i++) {
-//         this->tableCard.getCards().erase(this->tableCard.getCards().begin());
-//     }
+    for (int i = 0; i < PLAYERORDER_LENGTH; i++) {
+        this->playerOrder[i] = 0;
+    }
 
-//     for (int i = 0; i < PLAYERORDER_LENGTH; i++) {
-//         this->playerOrder[i] = 0;
-//     }
+    this->currentTurn = 1;
+    this->reverseStatus = false;
+    this->reverseStatusChange = false;
+}
 
-//     this->currentTurn = 1;
-//     this->reverseStatus = false;
-//     this->reverseStatusChange = false;
-// }
-// void GameState::printCopyPO() {
-//     for (int i = 0; i < copyPlayerOrder.size(); i++) {
-//         cout << copyPlayerOrder[i] << " ";
-//         if (i == copyPlayerOrder.size() - 1) cout << endl;
-//     }
-// }
+Deck GameState::getTableCard() {
+    return this->tableCard;
+}
