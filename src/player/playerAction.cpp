@@ -11,8 +11,97 @@ void PlayerAction::getAbilityCard(vector<string>& AbilityCard){
     AbilityCard.erase(AbilityCard.begin()+randNumber);
 }
 
-void PlayerAction::playerPlay(){
-    
+void PlayerAction::playerPlay(Deck& deck, GameState& state, vector<PlayerAction>& players){
+    cout << "Turn: " << getNickName() << endl;
+    cout << "Command: ";
+    string command;
+    cin >> command;
+    if(command == "NEXT"){
+        NEXT();
+    }else if(command == "REROLL"){
+        try{
+            REROLL(deck);
+            setUsed(true);
+        }catch(HaveBeenUsed e){
+            cout << "Kartu Reroll " <<  e.what() << endl;
+            playerPlay(deck, state, players);
+        }catch (WrongAbilityCard e){
+            cout << e.what() << "Reroll" << endl;
+            playerPlay(deck, state, players);
+        }
+    }else if(command == "DOUBLE"){
+        DOUBLE(state);
+    }else if(command == "QUADRUPLE"){
+        try{
+            QUADRUPLE(state);
+            setUsed(true);
+        }catch(WrongAbilityCard e){
+            cout << e.what() << "Quadruple" << endl;
+            playerPlay(deck, state, players);
+        }
+    }else if(command == "HALF"){
+        try{
+            HALF(state);
+        }catch(exception& e){
+            cout << e.what() << endl;
+        }
+    }else if(command == "QUARTER"){
+        try{
+            QUARTER(state);
+            setUsed(true);
+        }catch(LeftOne e){
+            cout << e.what() << endl;
+        }catch(WrongAbilityCard e){
+            cout << e.what() << endl;
+            playerPlay(deck, state, players);
+        }
+    }else if(command == "REVERSE"){
+
+    }else if(command == "SWAPCARDRANDOM"){
+        try{
+            SWAPCARD(players, true);
+            setUsed(true);
+        }catch(HaveBeenUsed e){
+            cout << "Kartu Reroll " <<  e.what() << endl;
+            playerPlay(deck, state, players);
+        }catch (WrongAbilityCard e){
+            cout << e.what() << "Reroll" << endl;
+            playerPlay(deck, state, players);
+        }
+    }else if(command == "SWAPCARD"){
+        try{
+            SWAPCARD(players, false);
+            setUsed(true);
+        }catch(HaveBeenUsed e){
+            cout << "Kartu Reroll " <<  e.what() << endl;
+            playerPlay(deck, state, players);
+        }catch (WrongAbilityCard e){
+            cout << e.what() << "Reroll" << endl;
+            playerPlay(deck, state, players);
+        }
+    }else if(command == "SWITCH"){
+        try{
+            SWITCH(players);
+            setUsed(true);
+        }catch(HaveBeenUsed e){
+            cout << "Kartu Reroll " <<  e.what() << endl;
+            playerPlay(deck, state, players);
+        }catch (WrongAbilityCard e){
+            cout << e.what() << "Reroll" << endl;
+            playerPlay(deck, state, players);
+        }
+    }else if(command == "ABILITYLESS"){
+        try{
+            ABILITYLESS(players);
+            setUsed(true);
+        }catch(HaveBeenUsed e){
+            cout << "Kartu Reroll " <<  e.what() << endl;
+            playerPlay(deck, state, players);
+        }catch (WrongAbilityCard e){
+            cout << e.what() << "Reroll" << endl;
+            playerPlay(deck, state, players);
+        }
+    }
 }
 
 // void PlayerAction::playerProcess(int currentRound, vector<PlayerAction>& player, GameState& state, Deck& deck, PlayerAction& currentPlayer){
@@ -49,7 +138,7 @@ void PlayerAction::DOUBLE(GameState& state){
 
 void PlayerAction::REROLL(Deck& deck){
     if(this->PlayerAbility == "Re-Roll"){
-            if(abilityUsed){
+        if(abilityUsed){
             HaveBeenUsed e;
             throw e;
         }else{
@@ -117,8 +206,8 @@ void PlayerAction::SWAPCARD(vector<PlayerAction>& players, bool random){
                 try{
                     choice1 = getInput(target.size());
                     valid = true;
-                }catch(WrongChoice e){
-                    e.what();
+                }catch(exception& e){
+                    cout << e.what();
                 }
             }
             string firstPick = target[choice1-1].getNickName();
@@ -131,7 +220,7 @@ void PlayerAction::SWAPCARD(vector<PlayerAction>& players, bool random){
                 try{
                     choice2 = getInput(target.size());
                     valid = true;
-                }catch(WrongChoice e){
+                }catch(exception& e){
                     e.what();
                 }
             }
@@ -151,7 +240,7 @@ void PlayerAction::SWAPCARD(vector<PlayerAction>& players, bool random){
                         index1 = getInput(2);
                         valid = true;
                     }catch(WrongChoice e){
-                        e.what();
+                        cout << e.what() << endl;
                     }
                 }
                 valid = false;
@@ -163,7 +252,7 @@ void PlayerAction::SWAPCARD(vector<PlayerAction>& players, bool random){
                         index2 = getInput(2);
                         valid = true;
                     }catch(WrongChoice e){
-                        e.what();
+                        cout << e.what() << endl;
                     }
                 }
             }
@@ -197,7 +286,7 @@ void PlayerAction::SWITCH(vector<PlayerAction>& players){
                     choice = getInput(target.size());
                     valid = true;
                 }catch(WrongChoice e){
-                    e.what();
+                    cout << e.what() << endl;
                 }
             }
             choice = findIndex(target[choice-1], players);
@@ -235,7 +324,7 @@ void PlayerAction::ABILITYLESS(vector<PlayerAction>& players){
                         choice = getInput(target.size());
                         valid = true;
                     }catch(WrongChoice e){
-                        e.what();
+                        cout << e.what() << endl;
                     }
                 }
                 choice = findIndex(target[choice-1], players);

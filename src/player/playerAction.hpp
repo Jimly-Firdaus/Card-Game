@@ -31,7 +31,7 @@ public:
     // Constructor
     PlayerAction();
     void getAbilityCard(vector<string>& AbilityCard); // partial
-    void playerPlay();
+    void playerPlay(Deck& deck, GameState& state, vector<PlayerAction>& players);
     // void playerProcess(int currentRound, vector<PlayerAction>& player, GameState& state, Deck& deck, PlayerAction& currentPlayer);
     void setUsed(bool abilityUse);
     bool getUsed();
