@@ -1,6 +1,6 @@
 #include "playerAction.hpp"
 
-PlayerAction::PlayerAction():Player(){
+PlayerAction::PlayerAction() : Player() {
     this->abilityUsed = false;
 }
 

@@ -2,12 +2,12 @@
 #define GAMESTATE_HPP
 
 // #include <vector>
-#include <algorithm>
-#include <iostream>
+// #include <algorithm>
+// #include <iostream>
 #include <cmath>
 // #include "..\Deck\Deck.hpp"
 // #include "..\player\playerAction.hpp"
-using namespace std;
+// using namespace std;
 
 const int PLAYERORDER_LENGTH = 7;
 
