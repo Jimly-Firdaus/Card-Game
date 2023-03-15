@@ -2,8 +2,6 @@
 #define GAME_HPP
 
 #include "../GameState/GameState.hpp"
-// #include "player/player.hpp"
-// #include "player/playerAction.hpp"
 #include "../Player/PlayerCollection.hpp"
 #include "../Comparator/Comparator.hpp"
 

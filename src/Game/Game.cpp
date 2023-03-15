@@ -73,6 +73,7 @@ void Game::startGame() {
             resetRound();
             while (this->currentRound != 7)
             {
+                gamestate.addTableCard(gameDeck);
                 // if round 2 then distribute ability card
                 if(this->currentRound == 2){
                     for(auto player : players){
