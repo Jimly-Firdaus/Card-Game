@@ -207,89 +207,8 @@ pair<string, string> Comparator::threeKindHandler(vector<Combination> arrOfPlaye
 
 pair<string, string> Comparator::fourKindHandler(vector<Combination> arrOfPlayerCombination)
 {
-    pair<int, char> singleCard = getSingleCard(arrOfPlayerCombination);
-    vector<Combination> c3;
-    vector<Combination> c2;
-    vector<Combination> c1;
-    for (auto combination : arrOfPlayerCombination)
-    {
-        int i = 0;
-        pair<int, char> firstCard = combination.getPlayerCard().getCards()[0];
-        pair<int, char> secondCard = combination.getPlayerCard().getCards()[1];
-        if (firstCard.first == singleCard.first)
-            i++;
-        if (secondCard.first == singleCard.first)
-            i++;
-        if (i == 2)
-            c3.push_back(combination);
-        if (i == 1 || firstCard.first == secondCard.first)
-            c2.push_back(combination);
-        if (i == 0)
-            c1.push_back(combination);
-    }
-    if (c3.size() != 0)
-    {
-        // three kind
-        return {c3[0].getOwnerCard(), "Four of Kind"};
-    }
-    else
-    {
-        // pair
-        if (c2.size() != 0)
-        {
-            if (c2.size() == 1)
-                return {c2[0].getOwnerCard(), "Four of Kind"};
-            else
-            {
-                float max = 0;
-                int index = 0, winIndex = 0;
-                for (auto combination : c2)
-                {
-                    pair<int, char> firstCard = combination.getPlayerCard().getCards()[0];
-                    pair<int, char> secondCard = combination.getPlayerCard().getCards()[1];
-                    float max2;
-                    if (firstCard.first != secondCard.first)
-                    {
-                        max2 = firstCard.first == singleCard.first
-                                   ? combination.searchVal(firstCard) + combination.searchVal(singleCard)
-                                   : combination.searchVal(secondCard) + combination.searchVal(singleCard);
-                    }
-                    else
-                    {
-                        max2 = combination.searchVal(firstCard) + combination.searchVal(secondCard);
-                    }
-                    if (max < max2)
-                    {
-                        max = max2;
-                        winIndex = index;
-                    }
-                    index++;
-                }
-                return {c2[winIndex].getOwnerCard(), "Four of Kind"};
-            }
-        }
-        else
-        {
-            // high card
-            float max = 0;
-            int index = 0, winIndex = 0;
-            for (auto combination : c2)
-            {
-                pair<int, char> firstCard = combination.getPlayerCard().getCards()[0];
-                pair<int, char> secondCard = combination.getPlayerCard().getCards()[1];
-                float max2 = firstCard.first > secondCard.first
-                                 ? combination.searchVal(firstCard)
-                                 : combination.searchVal(secondCard);
-                if (max < max2)
-                {
-                    max = max2;
-                    winIndex = index;
-                }
-                index++;
-            }
-            return {c1[winIndex].getOwnerCard(), "Four of Kind"};
-        }
-    }
+    pair<string, string> result = getPossibleOfOne(arrOfPlayerCombination);
+    return {result.first, "Four of Kind with " + result.second};
 }
 
 pair<string, string> Comparator::twoPairHandler(vector<Combination> arrOfPlayerCombination)
@@ -376,7 +295,7 @@ pair<int, char> Comparator::getSingleCard(vector<Combination> arrOfPlayerCombina
     {
         freq[card.first]++;
     }
-    pair<int, char> singleCard;
+    pair<int, char> singleCard = {-1, ' '};
     for (auto card : tableCard)
     {
         if (freq[card.first] == 1)
@@ -386,6 +305,108 @@ pair<int, char> Comparator::getSingleCard(vector<Combination> arrOfPlayerCombina
         }
     }
     return singleCard;
+}
+
+pair<string, string> Comparator::getPossibleOfOne(vector<Combination> arrOfPlayerCombination) {
+    pair<int, char> singleCard = getSingleCard(arrOfPlayerCombination).first == -1 ? make_pair(0, ' ') : getSingleCard(arrOfPlayerCombination);
+    if (singleCard.first != -1) {
+
+        vector<Combination> c3;
+        vector<Combination> c2;
+        vector<Combination> c1;
+        for (auto combination : arrOfPlayerCombination)
+        {
+            int i = 0;
+            pair<int, char> firstCard = combination.getPlayerCard().getCards()[0];
+            pair<int, char> secondCard = combination.getPlayerCard().getCards()[1];
+            if (firstCard.first == singleCard.first)
+                i++;
+            if (secondCard.first == singleCard.first)
+                i++;
+            if (i == 2)
+                c3.push_back(combination);
+            if (i == 1 || firstCard.first == secondCard.first)
+                c2.push_back(combination);
+            if (i == 0)
+                c1.push_back(combination);
+        }
+        if (c3.size() != 0)
+        {
+            // three kind
+            return {c3[0].getOwnerCard(), "Three of Kind kicker"};
+        }
+        else
+        {
+            // pair
+            if (c2.size() != 0)
+            {
+                float max = 0;
+                int index = 0, winIndex = 0;
+                for (auto combination : c2)
+                {
+                    pair<int, char> firstCard = combination.getPlayerCard().getCards()[0];
+                    pair<int, char> secondCard = combination.getPlayerCard().getCards()[1];
+                    float max2;
+                    if (firstCard.first != secondCard.first)
+                    {
+                        max2 = firstCard.first == singleCard.first
+                                    ? combination.searchVal(firstCard) + combination.searchVal(singleCard)
+                                    : combination.searchVal(secondCard) + combination.searchVal(singleCard);
+                    }
+                    else
+                    {
+                        max2 = combination.searchVal(firstCard) + combination.searchVal(secondCard);
+                    }
+                    if (max < max2)
+                    {
+                        max = max2;
+                        winIndex = index;
+                    }
+                    index++;
+                }
+                return c2.size() == 1
+                    ? make_pair(c2[0].getOwnerCard(), "Pair kicker")
+                    : make_pair(c2[winIndex].getOwnerCard(), "Pair kicker");
+            }
+            else
+            {
+                // high card
+                float max = 0;
+                int index = 0, winIndex = 0;
+                for (auto combination : c1)
+                {
+                    pair<int, char> firstCard = combination.getPlayerCard().getCards()[0];
+                    pair<int, char> secondCard = combination.getPlayerCard().getCards()[1];
+                    float max2 = firstCard.first > secondCard.first
+                                    ? combination.searchVal(firstCard)
+                                    : combination.searchVal(secondCard);
+                    if (max < max2)
+                    {
+                        max = max2;
+                        winIndex = index;
+                    }
+                    index++;
+                }
+                return {c1[winIndex].getOwnerCard(), "High Card kicker"};
+            }
+        }
+    } else {
+        float max = 0;
+        int index = 0, winIndex = 0;
+        for (auto combination : arrOfPlayerCombination)
+        {
+            pair<int, char> firstCard = combination.getPlayerCard().getCards()[0];
+            pair<int, char> secondCard = combination.getPlayerCard().getCards()[1];
+            float max2 = combination.getStrongestSelf();
+            if (max < max2)
+            {
+                max = max2;
+                winIndex = index;
+            }
+            index++;
+        }
+        return {arrOfPlayerCombination[winIndex].getOwnerCard(), "High Card kicker"};
+    }
 }
 
 // FOUR KIND CASE:
@@ -428,3 +449,15 @@ pair<int, char> Comparator::getSingleCard(vector<Combination> arrOfPlayerCombina
 // p1 : 2 7
 // p2 : 2 7
 // p3 : 2 7
+
+
+// FULL HOUSE
+// table : 3 3 2 2 1 (strongest color of polo here)
+// p1 : 3 2
+// p2 : 3 2
+
+// table : 3 3 3 2 1
+// p1 : 2 9
+// p2 : 1 9
+
+// table : 3 3 3 2 2
