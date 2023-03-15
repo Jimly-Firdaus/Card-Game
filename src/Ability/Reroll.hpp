@@ -6,7 +6,7 @@ class Reroll : public Ability
 {
 public:
     void getCardInfo();
-    void callCard(Player&, Deck);
+    void callCard(PlayerAction&, Deck&);
 };
 
 #endif

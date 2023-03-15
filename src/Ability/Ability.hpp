@@ -6,7 +6,7 @@
 #include "../GameState/GameState.hpp"
 #include "../player/playerAction.hpp"
 
-class Ability{
+class Ability : public PlayerAction{
     public:
         /**
         * Call card ability. (pure virtual)

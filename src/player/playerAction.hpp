@@ -11,7 +11,7 @@
 #include "../Ability/Switch.hpp"
 #include "../Combination/Combination.hpp"
 #include "../GameState/GameState.hpp"
-#include 
+#include "../Ability/Ability.hpp"
 using namespace std;
 
 /*Function overriding here
@@ -22,12 +22,23 @@ Method: getCombination, (double, next, half, useAbility (pure virtual))
 
 class PlayerAction : public Player {
     private:
-    string PlayerAbiliy;
+    string PlayerAbility;
     bool abilityUsed;
 
 public:
     // Constructor
     PlayerAction();
+    void getAbilityCard(vector<string>& AbilityCard);
+    void playerPlay(GameState& state, int currentRound);
+    void playerProcess(int currentRound, GameState& state);
+    void setUsed(bool);
+    bool getUsed();
+    string getAbility();
+    void DOUBLE(GameState& state);
+    void NEXT();
+    void HALF(GameState& state);
+    void ABILITY(GameState& state);
+    void printPlayerInfo();
     // PlayerAction(Deck & fullCard);
     // PlayerAction(bool abilityUsed);
 
@@ -42,7 +53,6 @@ public:
     // void useAbility(); // Aksi dimana pemain menggunakan kartu ability yang dimilikinya
     // // terima parameter abilityCard
     // // ability.pointer = new [call card]
-    void setUsed(bool);
     // bool getUsed();
 };
 

@@ -1,3 +1,80 @@
+#include "playerAction.hpp"
+
+PlayerAction::PlayerAction():Player(){
+    this->abilityUsed = false;
+    this->PlayerAbility = "none";
+}
+
+void PlayerAction::getAbilityCard(vector<string>& AbilityCard){
+    int randNumber = rand() % AbilityCard.size();
+    this->PlayerAbility = AbilityCard[randNumber];
+    AbilityCard.erase(AbilityCard.begin()+randNumber);
+}
+
+void PlayerAction::playerPlay(GameState& state, int currentRound){
+    printPlayerOption();
+    bool inputTrue = false;
+    while(!inputTrue){
+        try{
+            playerProcess(currentRound, state);
+            inputTrue = true;
+        }catch(WrongChoice e){
+            e.what();
+            cout << "Please reinput your choice" << endl;
+        }
+    }
+}
+
+void PlayerAction::playerProcess(int currentRound, GameState& state){
+    cout << "Please include the number : ";
+    int choice;
+    cin >> choice;
+    if(choice == 1){
+        DOUBLE(state);
+    }else if(choice == 2){
+        NEXT();
+    }else if(choice == 3){
+        HALF(state);
+    }else if(choice == 4){
+        ABILITY(state);
+    }else{
+        WrongChoice e;
+        throw e;
+    }
+}
+
+void PlayerAction::setUsed(bool abilityUsed){
+    this->abilityUsed = abilityUsed;
+}
+
+bool PlayerAction::getUsed(){
+    return this->abilityUsed;
+}
+
+void PlayerAction::DOUBLE(GameState& state){
+    state.doubleRewardPoint();
+    cout << "The table point has been doubled" << endl;
+}
+
+void PlayerAction::NEXT(){
+    cout << "Nothing done" << endl;
+}
+
+void PlayerAction::HALF(GameState& state){
+    state.halfRewardPoint();
+    cout << "The table point has been halfed" << endl;
+}
+
+string PlayerAction::getAbility(){
+    return this->PlayerAbility;
+}
+
+void PlayerAction::ABILITY(GameState & state){
+    if(PlayerAbility == "Re-Roll"){
+        
+    }
+}
+
 // #include <iostream>
 // #include "playerAction.hpp"
 

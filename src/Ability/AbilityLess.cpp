@@ -11,7 +11,7 @@ void AbilityLess::callCard(PlayerAction &player)
 {
     try
     {
-        player.setUsed();
+        player.setUsed(true);
     }
     catch (HaveBeenUsed e)
     {

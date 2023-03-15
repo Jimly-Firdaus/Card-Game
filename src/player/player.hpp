@@ -2,6 +2,10 @@
 #define PLAYER_HPP
 
 #include "../Deck/Deck.hpp"
+#include "../GameState/GameState.hpp"
+// #include <ctime>
+// #include <cstdlib>
+#include <bits/stdc++.h>
 
 /*Class: Player : Kartu yang dimiliki, Poin Player, Action (Double, Next, Half, Ability)
 Attr: ownedCard, playerPoint,
@@ -14,16 +18,18 @@ protected:
     Deck ownedCard; // Hand card yang dimiliki oleh setiap pemain (termasuk ability card)
     int playerPoint;
     string nickName;
-    int idPlayer;
+    // int idPlayer;
 
 public:
     // Constructor
     Player();
-    void getRandomCard(Deck& Deck);
-    void getAbilityCard(vector<string>& AbilityCard);
+    void getCard(Deck& Deck);
     void printPlayerOption();
-    void playerPlay(GameState& state, int currentRound);
     int getPlayerPoint();
+    void setPlayerPoint(int playerPoint);
+    void setNickName(string nickName);
+    string getNickName();
+    Deck getOwnedCard();
     // Player(Deck &fullCard);        // Default Constructor
     // Player(Deck ownedCard, int playerPoint, string ability, string nickName, int idPlayer); // User-defined Constructor
     // // Setiap instantiate, menerima deck owned card yang dirandom secara langsung

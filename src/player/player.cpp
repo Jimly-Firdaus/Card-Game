@@ -1,4 +1,48 @@
-// #include "player.hpp"
+#include "player.hpp"
+
+Player::Player(){
+    this->playerPoint = 0;
+    this->nickName = "none";
+}
+
+void Player::getCard(Deck& Deck){
+    pair<int, char> firstCard = Deck.getTopCard();
+    Deck - firstCard;
+    pair<int, char> secondCard = Deck.getTopCard();
+    Deck - secondCard;
+    this->ownedCard + firstCard;
+    this->ownedCard + secondCard;
+}
+
+void Player::printPlayerOption(){
+    cout << "=======================" << endl;
+    cout << "What Do You Want To Do?" << endl;
+    cout << "=======================" << endl;
+    cout << "1. Double" << endl;
+    cout << "2. Next" << endl;
+    cout << "3. Half" << endl;
+    cout << "4. Ability" << endl;
+}
+
+int Player::getPlayerPoint(){
+    return this->playerPoint;
+}
+
+string Player::getNickName(){
+    return this->nickName;
+}
+
+void Player::setPlayerPoint(int playerPoint){
+    this->playerPoint = playerPoint;
+}
+
+void Player::setNickName(string nickName){
+    this->nickName = nickName;
+}
+
+Deck Player::getOwnedCard(){
+    return this->ownedCard;
+}
 // #include "../Deck/Deck.hpp"
 // #include <iostream>
 // using namespace std;
