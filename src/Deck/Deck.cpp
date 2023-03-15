@@ -55,6 +55,10 @@ pair<vector<pair<int, char> >, vector<string> > Deck::cardFromFile(string fileNa
         ifstream readFile;
         string filePath = "../../test/" + fileName + ".txt";
         readFile.open(filePath.c_str(), ios::in);
+        if (!readFile) {
+            FileNotFound e;
+            throw e;
+        }
 
         // Read the file line by line
         pair<int, char> newElement;
