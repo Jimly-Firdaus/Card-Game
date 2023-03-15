@@ -12,12 +12,13 @@ const int PLAYERORDER_LENGTH = 7;
 class GameState {
     private:
         int rewardPoint;
-        // Deck tableCard;
+        Deck tableCard;
         int playerOrder[PLAYERORDER_LENGTH];
         int currentTurn;
         bool reverseStatus;
         bool reverseStatusChange;
         static int totalTurn;
+        static int round;
 
     public:
         // Ctor
@@ -36,6 +37,7 @@ class GameState {
         void setReverseStatus(bool); // Set game's reverse status (true: reversed, false: not reversed)
         void setReverseStatusChange(bool); // Set true if player do the reverse action
         void setTotalTurn(int); // Set total turns (number of turns before reverse)
+        void addTableCard(Deck&);
 
         // void showTableCard(); // Print Table Card
         
@@ -47,6 +49,7 @@ class GameState {
         void nextPlayerOrder(); // Player Change In One Round
         void showPlayerOrder(); // Print PlayerOrder in OneRound
 
-        bool isWin(vector<PlayerAction>); // Check if there is a player whose point is >= 2^32
+        bool isWin(vector<Player>); // Check if there is a player whose point is >= 2^32
+        void reset(); // Reset GameState
 };
 #endif
