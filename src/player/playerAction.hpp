@@ -11,7 +11,6 @@
 #include "../Ability/Switch.hpp"
 #include "../Combination/Combination.hpp"
 #include "../GameState/GameState.hpp"
-#include 
 using namespace std;
 
 /*Function overriding here
