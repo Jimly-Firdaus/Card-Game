@@ -1,20 +1,15 @@
 #ifndef GAMESTATE_HPP
 #define GAMESTATE_HPP
 
-// #include <vector>
-// #include <algorithm>
-// #include <iostream>
 #include <cmath>
-// #include "..\Deck\Deck.hpp"
-// #include "..\player\playerAction.hpp"
-// using namespace std;
+#include "../Deck/Deck.hpp"
 
 const int PLAYERORDER_LENGTH = 7;
 
 class GameState {
     private:
         int rewardPoint;
-        // Deck tableCard;
+        Deck tableCard;
         int playerOrder[PLAYERORDER_LENGTH];
         int currentTurn;
         bool reverseStatus;
@@ -42,9 +37,9 @@ class GameState {
         void setReverseStatusChange(bool); // Set true if player do the reverse action
         void setTotalTurn(int); // Set total turns (number of turns before reverse)
         void setGameNumber(int); // Set Game Number
-        // void addTableCard(Deck&);
+        void addTableCard(Deck&);
 
-        // void showTableCard(); // Print Table Card
+        void showTableCard(); // Print Table Card
         
         void fourtimesRewardPoint(); // Quadruple game's current reward point
         void doubleRewardPoint(); // Double game's current reward point
