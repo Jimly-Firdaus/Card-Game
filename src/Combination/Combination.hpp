@@ -25,14 +25,14 @@ const double STRAIGHTFLUSH_POINT = 37.11;
 class Combination
 {
 public:
-    // Constructor
+    // Ctor, cctor, cassign
     Combination(Deck tableCard, Deck playerCard, string nickname);
     Combination(const Combination& other);
     Combination& operator=(const Combination& other);
     // Getter
     Deck getPlayerCard() const; // return current player card
     Deck getTableCard() const; // return table card
-    string getOwnerCard() const;
+    string getOwnerCard() const; // return player name
     /**
      * Get the strongest combination deck
      * @return float value of the strongest combination in playerCards
@@ -72,6 +72,7 @@ public:
     pair<bool, int> isFourKind();
     /**
      * Check whether if current hand + table card is Full House
+     * @param checkTable if true then only check table card, false otherwise
      * @return * pair<bool, int> bool for Full House. If true returns the card number, else returns -1
      */
     pair<bool, int> isFullHouse(bool checkTable = false);
@@ -114,6 +115,7 @@ public:
     vector<pair<int, char>> mergeDeck(vector<pair<int, char>> firstDeck, vector<pair<int, char>> secondDeck);
     /**
      * Find all pair in hand + table decks
+     * @param checkTable if true then only check table card, false otherwise
      * @return * vector<pair<int, char>> vector containing all pairs from given decks
      */
     vector<pair<int, char>> findPair(bool checkTable = false);
@@ -125,18 +127,19 @@ public:
     vector<pair<int, char>> getNonSingle(Deck mergedDeck);
     /**
      * Check whether if current hand + table card is Three of Kind
+     * @param checkTable if true then only check table card, false otherwise
      * @return * pair<bool, int> bool for Three of Kind. If true returns the card number, else returns -1
      */
     pair<bool, int> isThreeKind(bool checkTable = false);
     /**
      * Check whether if current hand + table card is Two Pair
-     * @param tableCard
-     * @param playerCard
-     * @return * pair<bool, int> bool for Two Pair. If true returns the Two Pair, else returns empty array
+     * @param checkTable if true then only check table card, false otherwise
+     * @return pair<bool, int> bool for Two Pair. If true returns the Two Pair, else returns empty array
      */
     pair<bool, vector<pair<int, char>>> isTwoPair(bool checkTable = false);
     /**
      * Check whether if current hand + table card is Pair
+     * @param checkTable if true then only check table card, false otherwise
      * @return * pair<bool, int> bool for Pair. If true returns the valuation, else returns -1
      */
     pair<bool, float> isPair(bool checkTable = false);
