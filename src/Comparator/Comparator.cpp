@@ -114,7 +114,54 @@ pair<string, string> Comparator::straightFlushHandler(vector<Combination> arrOfP
 
 pair<string, string> Comparator::fullHouseHandler(vector<Combination> arrOfPlayerCombination)
 {
-    // TODO: pseudo code
+    Combination playerCombination = arrOfPlayerCombination[0];
+    bool isTableFullHouse = playerCombination.isFullHouse(true).first;
+    bool isTableTwoPair = playerCombination.isTwoPair(true).first;
+    bool isTableThreeKind = playerCombination.isThreeKind(true).first && !playerCombination.isPair(true).first;
+    float max = 0;
+    int index = 0, winIndex = 0;
+    if (isTableTwoPair)
+    {
+        int poloCard = playerCombination.isFullHouse().second;
+        for (auto combination : arrOfPlayerCombination)
+        {
+            pair<int, char> firstCard = combination.getPlayerCard().getCards()[0];
+            pair<int, char> secondCard = combination.getPlayerCard().getCards()[1];
+            pair<int, char> playerPoloCard = firstCard.first == poloCard
+                ? firstCard
+                : secondCard;
+            float playerPoloVal = combination.searchVal(playerPoloCard);
+            if (max < playerPoloVal)
+            {
+                max = playerPoloVal;
+                winIndex = index;
+            }
+            index++;
+        }
+        return {arrOfPlayerCombination[winIndex].getOwnerCard(), "Full House"};
+    }
+    if (isTableThreeKind)
+    {
+        max = 0;
+        index = 0;
+        winIndex = 0;
+        for (auto combination : arrOfPlayerCombination)
+        {
+            float playerMaxPair = combination.isPair().second;
+            if (max < playerMaxPair)
+            {
+                max = playerMaxPair;
+                winIndex = index;
+            }
+            index++;
+        }
+        return {arrOfPlayerCombination[winIndex].getOwnerCard(), "Full House with Highest Pair"};
+    }
+    if (isTableFullHouse)
+    {
+        pair<string, string> result = getPossibleOfOne(arrOfPlayerCombination);
+        return {result.first, "Full House with " + result.second};
+    }
 }
 
 pair<string, string> Comparator::flushHandler(vector<Combination> arrOfPlayerCombination)
@@ -192,8 +239,8 @@ pair<string, string> Comparator::threeKindHandler(vector<Combination> arrOfPlaye
             pair<int, char> secondCard = combination.getPlayerCard().getCards()[1];
             float max2;
             max2 = firstCard.first == threeKindCard
-                       ? combination.searchVal(secondCard)
-                       : combination.searchVal(firstCard);
+                ? combination.searchVal(secondCard)
+                : combination.searchVal(firstCard);
             if (max < max2)
             {
                 max = max2;
@@ -217,8 +264,8 @@ pair<string, string> Comparator::twoPairHandler(vector<Combination> arrOfPlayerC
 
     // check whether the hand can make a pair with singleCard
     bool pairable = arrOfPlayerCombination[0].getPlayerCard().getCards()[0].first == singleCard.first
-                        ? true
-                        : arrOfPlayerCombination[0].getPlayerCard().getCards()[1].first == singleCard.first;
+        ? true
+        : arrOfPlayerCombination[0].getPlayerCard().getCards()[1].first == singleCard.first;
     float max = 0;
     int index = 0;
     int winIndex = 0;
@@ -230,14 +277,14 @@ pair<string, string> Comparator::twoPairHandler(vector<Combination> arrOfPlayerC
         if (pairable)
         {
             max2 = firstCard.first == singleCard.first
-                       ? combination.searchVal(firstCard)
-                       : combination.searchVal(secondCard);
+                ? combination.searchVal(firstCard)
+                : combination.searchVal(secondCard);
         }
         else
         {
             max2 = combination.searchVal(firstCard) > combination.searchVal(secondCard)
-                       ? combination.searchVal(firstCard)
-                       : combination.searchVal(secondCard);
+                ? combination.searchVal(firstCard)
+                : combination.searchVal(secondCard);
         }
         if (max < max2)
         {
@@ -254,8 +301,8 @@ pair<string, string> Comparator::pairHandler(vector<Combination> arrOfPlayerComb
     vector<pair<int, char>> pairCard = arrOfPlayerCombination[0].findPair(); // get all the pairs
     int pairNum = pairCard[0].first;
     bool containPair = arrOfPlayerCombination[0].getPlayerCard().getCards()[0].first == pairNum
-                           ? true
-                           : arrOfPlayerCombination[0].getPlayerCard().getCards()[1].first == pairNum;
+        ? true
+        : arrOfPlayerCombination[0].getPlayerCard().getCards()[1].first == pairNum;
     float max = 0;
     int index = 0;
     int winIndex = 0;
@@ -267,14 +314,16 @@ pair<string, string> Comparator::pairHandler(vector<Combination> arrOfPlayerComb
         if (containPair)
         {
             // if there are hand that can produce pair
-            max2 = firstCard.first == pairNum ? combination.searchVal(secondCard) : combination.searchVal(firstCard);
+            max2 = firstCard.first == pairNum 
+                ? combination.searchVal(secondCard) 
+                : combination.searchVal(firstCard);
         }
         else
         {
             // if no hand can produce pair
             max2 = combination.searchVal(firstCard) > combination.searchVal(secondCard)
-                       ? combination.searchVal(firstCard)
-                       : combination.searchVal(secondCard);
+                ? combination.searchVal(firstCard)
+                : combination.searchVal(secondCard);
         }
         if (max < max2)
         {
@@ -307,9 +356,11 @@ pair<int, char> Comparator::getSingleCard(vector<Combination> arrOfPlayerCombina
     return singleCard;
 }
 
-pair<string, string> Comparator::getPossibleOfOne(vector<Combination> arrOfPlayerCombination) {
+pair<string, string> Comparator::getPossibleOfOne(vector<Combination> arrOfPlayerCombination)
+{
     pair<int, char> singleCard = getSingleCard(arrOfPlayerCombination).first == -1 ? make_pair(0, ' ') : getSingleCard(arrOfPlayerCombination);
-    if (singleCard.first != -1) {
+    if (singleCard.first != -1)
+    {
 
         vector<Combination> c3;
         vector<Combination> c2;
@@ -350,8 +401,8 @@ pair<string, string> Comparator::getPossibleOfOne(vector<Combination> arrOfPlaye
                     if (firstCard.first != secondCard.first)
                     {
                         max2 = firstCard.first == singleCard.first
-                                    ? combination.searchVal(firstCard) + combination.searchVal(singleCard)
-                                    : combination.searchVal(secondCard) + combination.searchVal(singleCard);
+                            ? combination.searchVal(firstCard) + combination.searchVal(singleCard)
+                            : combination.searchVal(secondCard) + combination.searchVal(singleCard);
                     }
                     else
                     {
@@ -378,8 +429,8 @@ pair<string, string> Comparator::getPossibleOfOne(vector<Combination> arrOfPlaye
                     pair<int, char> firstCard = combination.getPlayerCard().getCards()[0];
                     pair<int, char> secondCard = combination.getPlayerCard().getCards()[1];
                     float max2 = firstCard.first > secondCard.first
-                                    ? combination.searchVal(firstCard)
-                                    : combination.searchVal(secondCard);
+                        ? combination.searchVal(firstCard)
+                        : combination.searchVal(secondCard);
                     if (max < max2)
                     {
                         max = max2;
@@ -390,7 +441,9 @@ pair<string, string> Comparator::getPossibleOfOne(vector<Combination> arrOfPlaye
                 return {c1[winIndex].getOwnerCard(), "High Card kicker"};
             }
         }
-    } else {
+    }
+    else
+    {
         float max = 0;
         int index = 0, winIndex = 0;
         for (auto combination : arrOfPlayerCombination)
@@ -449,15 +502,3 @@ pair<string, string> Comparator::getPossibleOfOne(vector<Combination> arrOfPlaye
 // p1 : 2 7
 // p2 : 2 7
 // p3 : 2 7
-
-
-// FULL HOUSE
-// table : 3 3 2 2 1 (strongest color of polo here)
-// p1 : 3 2
-// p2 : 3 2
-
-// table : 3 3 3 2 1
-// p1 : 2 9
-// p2 : 1 9
-
-// table : 3 3 3 2 2
