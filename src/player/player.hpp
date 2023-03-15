@@ -1,7 +1,7 @@
 #ifndef PLAYER_HPP
 #define PLAYER_HPP
 
-#include "../Deck/Deck.hpp"
+// #include "../Deck/Deck.hpp"
 #include "../GameState/GameState.hpp"
 // #include <ctime>
 // #include <cstdlib>

@@ -2,11 +2,11 @@
 #define _ABILITY_HPP_
 #include <iostream>
 #include <vector>
-#include "../player/player.hpp"
+// #include "../player/player.hpp"
 #include "../Exception/Exception.hpp"
 #include "../GameState/GameState.hpp"
-#include "../player/playerAction.hpp"
-#include "../player/PlayerCollection.hpp"
+// #include "../Player/playerAction.hpp"
+#include "../Player/PlayerCollection.hpp"
 using namespace std;
 
 class Ability : public PlayerAction{

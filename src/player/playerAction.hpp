@@ -11,8 +11,9 @@
 #include "../Ability/Switch.hpp"
 #include "../Combination/Combination.hpp"
 #include "../GameState/GameState.hpp"
-#include "../Ability/Ability.hpp"
+// #include "../Ability/Ability.hpp"
 using namespace std;
+class Ability;
 
 /*Function overriding here
 Class: PlayerAction extends dari Player buatKombinasi
