@@ -42,6 +42,8 @@ public:
     void ABILITY(PlayerCollection& player, GameState& state, Deck& deck);
     void getAbilityInfo();
     void printPlayerInfo();
+    bool operator<(const PlayerAction& other);
+    bool operator>(const PlayerAction& other);
     // PlayerAction(Deck & fullCard);
     // PlayerAction(bool abilityUsed);
 

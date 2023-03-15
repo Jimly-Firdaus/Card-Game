@@ -113,6 +113,15 @@ void PlayerAction::printPlayerInfo(){
     cout << endl;
     cout << "===================================" << endl;
 }
+
+bool PlayerAction::operator<(const PlayerAction& other) {
+    return this->getPlayerPoint() < other.getPlayerPoint();
+}
+
+bool PlayerAction::operator>(const PlayerAction& other) {
+    return this->getPlayerPoint() > other.getPlayerPoint();
+}
+
 // #include <iostream>
 // #include "playerAction.hpp"
 
