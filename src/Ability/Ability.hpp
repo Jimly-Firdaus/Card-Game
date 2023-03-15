@@ -1,9 +1,10 @@
 #ifndef _ABILITY_HPP_
 #define _ABILITY_HPP_
 #include <iostream>
-#include "player/player.hpp"
-#include "lib-header/Exception.hpp"
-#include "Deck/Deck.hpp"
+#include "../player/player.hpp"
+#include "../Exception/Exception.hpp"
+#include "../GameState/GameState.hpp"
+#include "../player/playerAction.hpp"
 
 class Ability{
     public:

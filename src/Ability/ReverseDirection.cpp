@@ -9,5 +9,5 @@ void ReverseDirection::getCardInfo(){
 }
 
 void ReverseDirection::callCard(GameState& state){
-    state.setNext(-1);
+    state.setReverseStatusChange(true);
 }
