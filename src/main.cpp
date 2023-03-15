@@ -1,11 +1,7 @@
-#include <iostream>
 #include "GameState/GameState.hpp"
 // #include "player/player.hpp"
-#include "player/playerAction.hpp"
+// #include "player/playerAction.hpp"
 #include "player/PlayerCollection.hpp"
-#include <bits/stdc++.h>
-#include "Deck/Deck.hpp"
-using namespace std;
 
 // g++ main.cpp Gamestate/GameState.cpp player/player.cpp Deck/Deck.cpp -o out
 int main()

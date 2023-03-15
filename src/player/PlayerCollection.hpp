@@ -1,7 +1,8 @@
 #ifndef _PLAYERCOLLECTION_HPP_
 #define _PLAYERCOLLECTION_HPP_
 #include "playerAction.hpp"
-#include <bits/stdc++.h>
+// #include <bits/stdc++.h>
+#include <vector>
 using namespace std;
 
 class PlayerCollection{

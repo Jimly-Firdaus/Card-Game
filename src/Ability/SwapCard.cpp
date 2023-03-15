@@ -1,29 +1,39 @@
 #include "SwapCard.hpp"
-#include <bits/stdc++.h>
-#include "Exception/Exception.hpp"
+// #include <bits/stdc++.h>
+
 using namespace std;
 
-void SwapCard::getCardInfo(){
+void SwapCard::getCardInfo()
+{
     cout << "Swap Card, menukar 1 kartu main deck milik pemain lain dengan 1 kartu main deck milik pemain lain. Tidak boleh ditukar dengan kartu main deck diri sendiri." << endl;
 }
 
-int SwapCard::getCard(string choice){
-    if(choice == "left"){
+int SwapCard::getCard(string choice)
+{
+    if (choice == "left")
+    {
         return 0;
-    }else if(choice == "right"){
+    }
+    else if (choice == "right")
+    {
         return 1;
     }
 }
 
-int SwapCard::getInput(){
+int SwapCard::getInput()
+{
     int idx;
     bool validChoice = false;
-    while(!validChoice){
-        try{
-            string currentChoice= getChoice();
+    while (!validChoice)
+    {
+        try
+        {
+            string currentChoice = getChoice();
             validChoice = true;
             idx = getCard(currentChoice);
-        }catch(WrongChoice e){
+        }
+        catch (WrongChoice e)
+        {
             e.what();
             cout << endl;
         }
@@ -31,15 +41,20 @@ int SwapCard::getInput(){
     return idx;
 }
 
-void SwapCard::callCard(PlayerCollection& player, GameState& state, Deck& deck){
+void SwapCard::callCard(PlayerCollection &player, GameState &state, Deck &deck)
+{
     cout << "This is your target" << endl;
     printTarget(player);
     bool inputValid = false;
     string targetNickName;
-    while(!inputValid){
-        try{
+    while (!inputValid)
+    {
+        try
+        {
             targetNickName = getTarget(player);
-        }catch(WrongChoice e){
+        }
+        catch (WrongChoice e)
+        {
             e.what();
         }
     }
@@ -54,37 +69,46 @@ void SwapCard::callCard(PlayerCollection& player, GameState& state, Deck& deck){
     pair<int, char> targetCard = player.getPlayer()[idxTargetNickName].getOwnedCard().getACard(idxTarget);
     pair<int, char> currentCard = this->getOwnedCard().getACard(idxCurrent);
     player.getPlayer()[idxTargetNickName].getOwnedCard().setACard(idxTarget, currentCard);
-    this->getOwnedCard().setACard(idxCurrent, targetCard);    
+    this->getOwnedCard().setACard(idxCurrent, targetCard);
 }
 
-string SwapCard::getChoice(){
+string SwapCard::getChoice()
+{
     cout << "Please include your choice: " << endl;
     string choice;
     cin >> choice;
-    if(choice != "left" && choice != "right"){
+    if (choice != "left" && choice != "right")
+    {
         WrongChoice e;
         throw e;
     }
     return choice;
 }
 
-void SwapCard::printTarget(PlayerCollection& player){
-    int n= 1;
-    for(int i= 0; i< 7; i++){
-        if(player.getPlayer()[i].getNickName() != this->nickName){
+void SwapCard::printTarget(PlayerCollection &player)
+{
+    int n = 1;
+    for (int i = 0; i < 7; i++)
+    {
+        if (player.getPlayer()[i].getNickName() != this->nickName)
+        {
             cout << n << ". " << player.getPlayer()[i].getNickName();
             n++;
         }
     }
 }
 
-string SwapCard::getTarget(PlayerCollection& player){
+string SwapCard::getTarget(PlayerCollection &player)
+{
     cout << "Please include your choice (nickname) : ";
     string choice;
     cin >> choice;
-    if(player.checkTarget(choice, this->nickName)){
+    if (player.checkTarget(choice, this->nickName))
+    {
         return choice;
-    }else{
+    }
+    else
+    {
         WrongChoice e;
         throw e;
     }

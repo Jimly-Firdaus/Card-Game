@@ -1,6 +1,7 @@
 #ifndef _SWAPCARD_HPP_
 #define _SWAPCARD_HPP_
 #include "Ability.hpp"
+#include "../Exception/Exception.hpp"
 
 class SwapCard : public Ability{
     public:
