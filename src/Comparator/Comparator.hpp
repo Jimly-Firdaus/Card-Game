@@ -62,6 +62,14 @@ public:
      */
     pair<string, string> pairHandler(vector<Combination> arrOfPlayerCombination);
     pair<int, char> getSingleCard(vector<Combination> arrOfPlayerCombination);
+    /**
+     * takes in filtered arr of player card combination
+     * Returns by finding all possible combination for single card on the table & hand
+     * if no single card in table, look for strongest combination on hand
+     * @param arrOfPlayerCombination
+     * @return pair<string, string> <nickname, combo>
+     */
+    pair<string, string> getPossibleOfOne(vector<Combination> arrOfPlayerCombination);
 };
 
 #endif
