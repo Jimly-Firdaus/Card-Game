@@ -7,7 +7,9 @@ void Reroll::getCardInfo()
     cout << "Re-Roll, membuang 2 kartu dari main deck yang dimiliki oleh diri sendiri dan mengambil ulang 2 kartu." << endl;
 }
 
-void Reroll::callCard(Player &player, Deck newCard)
+void Reroll::callCard(PlayerCollection& player, GameState& state, Deck& deck) 
 {
-    player.setPlayerCard(newCard);
+    this->getOwnedCard()-this->getOwnedCard().getACard(0);
+    this->getOwnedCard()-this->getOwnedCard().getACard(1);
+    this->getCard(deck);
 }

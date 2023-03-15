@@ -1,11 +1,13 @@
 #ifndef _ABILITY_HPP_
 #define _ABILITY_HPP_
 #include <iostream>
-#include "player/player.hpp"
-#include "lib-header/Exception.hpp"
-#include "Deck/Deck.hpp"
+#include "../player/player.hpp"
+#include "../Exception/Exception.hpp"
+#include "../GameState/GameState.hpp"
+#include "../player/playerAction.hpp"
+#include "../player/PlayerCollection.hpp"De
 
-class Ability{
+class Ability : public PlayerAction{
     public:
         /**
         * Call card ability. (pure virtual)
@@ -15,7 +17,8 @@ class Ability{
         * @param {int&} tableReward Current table reward
         * those parameters is written for ability usage completion, it can be used or not according to the need of the program.
         */
-        virtual void callCard() = 0;
+        // virtual void callCard() = 0;
+        virtual void callCard(PlayerCollection& player, GameState& state, Deck& deck) = 0;
         /**
          * Getting card information. (pure virtual)
          */

@@ -28,6 +28,15 @@ struct NoPairFound : public exception
 	}
 };
 
+// Add your own exception here
+struct WrongChoice : public exception
+{
+	const char *what() const throw()
+	{
+		return "Your choice is wrong!";
+	}
+};
+
 struct UncounterCombo : public exception
 {
 	const char *what() const throw()
@@ -36,12 +45,11 @@ struct UncounterCombo : public exception
 	}
 };
 
-// Add your own exception here
-struct WrongChoice : public exception
+struct HaveBeenUsed : public exception
 {
 	const char *what() const throw()
 	{
-		return "Your choice is wrong!";
+		return "Card has been used!";
 	}
 };
 

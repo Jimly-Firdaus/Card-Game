@@ -32,8 +32,9 @@ public:
     // Getter A Card
     pair<int, char> getACard(int idx);
 
+    void setACard(int idx, pair<int, char> card);
     // Generate Card From File
-    pair<vector<pair<int, char> >, vector<string> > Deck::cardFromFile(string fileName);
+    // pair<vector<pair<int, char> >, vector<string> > Deck::cardFromFile(string fileName);
 
     /*
     52 baris pertama pada deck card berisi DeckCard dengan format :

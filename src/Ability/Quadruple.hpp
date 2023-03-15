@@ -4,8 +4,8 @@
 
 class Quadruple : public Ability{
     public:
-        void getCardInfo();
-        void callCard();
+        void getCardInfo() override;
+        void callCard(PlayerCollection& player, GameState& state, Deck& deck) override;
 };
 
 #endif
