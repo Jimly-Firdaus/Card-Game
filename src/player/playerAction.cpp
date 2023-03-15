@@ -146,7 +146,7 @@ void PlayerAction::REROLL(Deck& deck){
             getCard(deck);
             cout << "Melakukan pembuangan kartu yang dimiliki" << endl;
             cout << "Kamu mendapatkan 2 kartu yang baru yaitu:" << endl;
-            deck.printCard();
+            getOwnedCard().printCard();
         }
     }else{
         WrongAbilityCard e;

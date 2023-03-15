@@ -77,7 +77,7 @@ void Game::startGame() {
                 // if round 2 then distribute ability card
                 if(this->currentRound == 2){
                     for(auto player : players){
-                        player.getAbilityCard(getBaseAbility());
+                        player.getAbilityCard(this->baseAbility);
                     }
                 }
 
@@ -88,7 +88,7 @@ void Game::startGame() {
                     getCommand(command);
                     // turn player ke gamestate.getCurrentTurn() - 1
                     // player mechanism goes here
-
+                    players[gamestate.getCurrentTurn()-1].playerPlay(gameDeck, gamestate, players);
 
 
                     maxTurn++;
@@ -169,7 +169,7 @@ vector<char> Game::getBaseCardColor() {
     return this->baseCardColor;
 }
 
-vector<string> Game::getBaseAbility() {
+vector<string> Game::getBaseAbility() const {
     return this->baseAbility;
 }
 
