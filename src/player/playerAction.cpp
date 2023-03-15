@@ -26,12 +26,12 @@ void PlayerAction::getAbilityCard(vector<string>& AbilityCard){
 
 }
 
-void PlayerAction::playerPlay(GameState& state, int currentRound){
+void PlayerAction::playerPlay(int currentRound, PlayerCollection& player, GameState& state, Deck& deck){
     printPlayerOption();
     bool inputTrue = false;
     while(!inputTrue){
         try{
-            playerProcess(currentRound, state);
+            playerProcess(currentRound, player, state, deck);
             inputTrue = true;
         }catch(WrongChoice e){
             e.what();
@@ -40,7 +40,7 @@ void PlayerAction::playerPlay(GameState& state, int currentRound){
     }
 }
 
-void PlayerAction::playerProcess(int currentRound, GameState& state){
+void PlayerAction::playerProcess(int currentRound, PlayerCollection& player, GameState& state, Deck& deck){
     cout << "Please include the number : ";
     int choice;
     cin >> choice;
@@ -51,7 +51,7 @@ void PlayerAction::playerProcess(int currentRound, GameState& state){
     }else if(choice == 3){
         HALF(state);
     }else if(choice == 4){
-        ABILITY(state);
+        ABILITY(player, state, deck);
     }else{
         WrongChoice e;
         throw e;
@@ -84,13 +84,35 @@ string PlayerAction::getAbility(){
     return this->PlayerAbility;
 }
 
-void PlayerAction::ABILITY(GameState & state){
-    if(PlayerAbility == "Re-Roll"){
-        Reroll reroll;
-
-    }
+void PlayerAction::ABILITY(PlayerCollection& player, GameState& state, Deck& deck){
+    this->ability->callCard(player, state, deck);
+    this->abilityUsed = true;
 }
 
+void PlayerAction::getAbilityInfo(){
+    this->ability->getCardInfo();
+}
+
+void PlayerAction::printPlayerInfo(){
+    cout << "===================================" << endl;
+    cout << "Nickname : " << this->nickName << endl;
+    cout << "Point : " << this->playerPoint << endl;
+    cout << "Card : " << endl;
+    this->ownedCard.printCard();
+    cout << endl;
+    cout << "Ability Card : " << getAbility() << endl;
+    cout << "Description  : " << endl;
+    getAbilityInfo();
+    cout << endl;
+    cout << "Status : ";
+    if(this->abilityUsed){
+        cout << "used";
+    }else{
+        cout << "not used";
+    }
+    cout << endl;
+    cout << "===================================" << endl;
+}
 // #include <iostream>
 // #include "playerAction.hpp"
 

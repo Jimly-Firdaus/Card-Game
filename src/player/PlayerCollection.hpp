@@ -12,7 +12,9 @@ class PlayerCollection{
         PlayerCollection();
         vector<PlayerAction> getPlayer();
         int getNeff();
-        int printAllPlayer();
+        bool checkTarget(string nickNameTarget, string nickNameCurrent);
+        void printAllPlayer();
+        int getTargetIdx(string targetNickName);
 };
 
 #endif

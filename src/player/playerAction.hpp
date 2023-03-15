@@ -30,15 +30,16 @@ public:
     // Constructor
     PlayerAction();
     void getAbilityCard(vector<string>& AbilityCard);
-    void playerPlay(GameState& state, int currentRound);
-    void playerProcess(int currentRound, GameState& state);
+    void playerPlay(int currentRound, PlayerCollection& player, GameState& state, Deck& deck);
+    void playerProcess(int currentRound, PlayerCollection& player, GameState& state, Deck& deck);
     void setUsed(bool);
     bool getUsed();
     string getAbility();
     void DOUBLE(GameState& state);
     void NEXT();
     void HALF(GameState& state);
-    void ABILITY(GameState& state);
+    void ABILITY(PlayerCollection& player, GameState& state, Deck& deck);
+    void getAbilityInfo();
     void printPlayerInfo();
     // PlayerAction(Deck & fullCard);
     // PlayerAction(bool abilityUsed);

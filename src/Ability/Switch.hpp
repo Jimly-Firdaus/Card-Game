@@ -5,7 +5,9 @@
 class Switch : public Ability{
     public:
         void getCardInfo();
-        void callCard(player&, player&);
+        void callCard(PlayerCollection& player, GameState& state, Deck& deck);
+        string getTarget(PlayerCollection& player);
+        void printTarget(PlayerCollection& player);
 };
 
 #endif

@@ -5,8 +5,11 @@
 class AbilityLess : public Ability
 {
 public:
-    void callCard(PlayerAction&);
+    void callCard(PlayerCollection& player, GameState& state, Deck& deck);
     void getCardInfo();
+    void setCardOff(PlayerAction& chosenPlayer);
+    string getInput(PlayerCollection& player);
+    void printTarget(PlayerCollection& player);
 };
 
 #endif

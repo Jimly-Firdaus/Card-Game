@@ -5,8 +5,9 @@
 #include "../Exception/Exception.hpp"
 #include "../GameState/GameState.hpp"
 #include "../player/playerAction.hpp"
+#include "../player/PlayerCollection.hpp"De
 
-class Ability{
+class Ability : public PlayerAction{
     public:
         /**
         * Call card ability. (pure virtual)
@@ -17,7 +18,7 @@ class Ability{
         * those parameters is written for ability usage completion, it can be used or not according to the need of the program.
         */
         // virtual void callCard() = 0;
-        virtual void callCard(PlayerAction&, Deck&, GameState&) = 0;
+        virtual void callCard(PlayerCollection& player, GameState& state, Deck& deck) = 0;
         /**
          * Getting card information. (pure virtual)
          */

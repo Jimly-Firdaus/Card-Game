@@ -38,6 +38,10 @@ pair<int, char> Deck::getACard(int idx)
     return cards[idx];
 }
 
+void Deck::setACard(int idx, pair<int, char> card){
+    this->cards[idx] = card;
+}
+
 // Generate Card From File
 // pair<vector<pair<int, char> >, vector<string> > Deck::cardFromFile(string fileName)
 // {

@@ -7,9 +7,10 @@ class SwapCard : public Ability{
         void getCardInfo();
         int getCard(string);
         int getInput();
-        void swap(Player&, int, int);
         string getChoice();
-        void callCard(Player&);
+        string getTarget(PlayerCollection& player);
+        void callCard(PlayerCollection& player, GameState& state, Deck& deck);
+        void printTarget(PlayerCollection& player);
 };
 
 #endif
