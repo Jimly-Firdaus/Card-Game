@@ -6,7 +6,10 @@
 template <class T>
 class Comparator : public Handler {
     public:
-        vector<T> sortVector(vector<T>);
+        vector<T> sortVector(vector<T>, bool asc = true);
+        bool descCallbackFn(T, T);
+        pair<string, string> compare(const vector<Combination>&);
+        
 };
 
 template <>
