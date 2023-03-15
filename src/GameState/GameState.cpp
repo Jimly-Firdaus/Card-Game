@@ -5,6 +5,7 @@ using namespace std;
 
 int GameState::totalTurn = 0;
 int GameState::round = 1;
+int GameState::gameNumber = 1;
 
 GameState::GameState() {
     this->rewardPoint = 64;
@@ -54,6 +55,10 @@ int GameState::getTotalTurn() {
     return totalTurn;
 }
 
+int GameState::getGameNumber() {
+    return gameNumber;
+}
+
 void GameState::setCurrentTurn(int x) {
     this->currentTurn = x;
 }
@@ -70,10 +75,14 @@ void GameState::setTotalTurn(int x) {
     totalTurn = x;
 }
 
-void GameState::addTableCard(Deck& d) {
-    this->tableCard.getCards().push_back(d.getCards()[0]);
-    d.getCards().erase(d.getCards().begin());
+void GameState::setGameNumber(int x) {
+    gameNumber = x;
 }
+
+// void GameState::addTableCard(Deck& d) {
+//     this->tableCard.getCards().push_back(d.getCards()[0]);
+//     d.getCards().erase(d.getCards().begin());
+// }
 
 void GameState::fourtimesRewardPoint() {
     this->setRewardPoint(4 * this->getRewardPoint());
@@ -92,98 +101,325 @@ void GameState::quarterRewardPoint() {
 }
 
 void GameState::nextPlayerOrder() {
-    int copyPlayerOrder[7];
-    this->playerOrder[totalTurn] = this->currentTurn; 
-    if (!this->reverseStatus) {
-        if (round == 1) {
+    this->playerOrder[totalTurn] = this->currentTurn;
+    if (round == 1) {
+        if (!this->reverseStatus) {
             if (!this->reverseStatusChange) {
                 this->currentTurn = (this->currentTurn + 1) % 7;
-                if (this->currentTurn == 0) this->currentTurn += 7;
+                if (this->currentTurn <= 0) this->currentTurn += 7;
                 totalTurn++;
             } else {
-                this->currentTurn = (this->currentTurn + totalTurn + 1) % 7;
-                if (this->currentTurn == 0) this->currentTurn += 7;
+                this->currentTurn = (this->currentTurn + 1 + totalTurn) % 7;
+                if (this->currentTurn <= 0) this->currentTurn += 7;
+                this->reverseStatusChange = false;
                 totalTurn++;
-                this->reverseStatusChange = false;
             }
-            if (totalTurn == 6) {
-                totalTurn = 0;
+    
+            if (totalTurn == 7) {
                 round++;
-                if (round == 7) round = 1;
-                this->currentTurn = playerOrder[1];
-                this->reverseStatusChange = false;
-                for (int i = 0; i < PLAYERORDER_LENGTH; i++) {
-                    copyPlayerOrder[i] = this->playerOrder[i];
-                    cout << copyPlayerOrder[i] << " ";
-                    if (i == PLAYERORDER_LENGTH - 1) cout << endl; // BENAR
-                }
+                totalTurn = 0;
+                this->currentTurn = this->playerOrder[1];
             }
         } else {
-            totalTurn++;
-            if (totalTurn + 1 <= 6) {
-                this->currentTurn = copyPlayerOrder[totalTurn + 1];
-            } else {
-                this->currentTurn = copyPlayerOrder[0];
-            }
-            this->playerOrder[totalTurn] = this->currentTurn;
-            if (totalTurn == 7) {
-                totalTurn = 0;
-                for (int i = 0; i < PLAYERORDER_LENGTH; i++) {
-                    copyPlayerOrder[i] = this->playerOrder[i];
-                    cout << copyPlayerOrder[i] << " ";
-                    if (i == PLAYERORDER_LENGTH - 1) cout << endl;
-                }
-            }
-            round++;
-            if (round == 7) round = 1;
-        }
-    } else {
-        if (round == 1) {
-            if (!this->reverseStatusChange) { 
+            if (!this->reverseStatusChange) {
                 this->currentTurn = (this->currentTurn - 1) % 7;
                 if (this->currentTurn <= 0) this->currentTurn += 7;
                 totalTurn++;
             } else {
-                currentTurn = (currentTurn - totalTurn - 1) % 7;
+                this->currentTurn = (this->currentTurn - 1 - totalTurn) % 7;
                 if (this->currentTurn <= 0) this->currentTurn += 7;
+                this->reverseStatusChange = false;
                 totalTurn++;
-                this->reverseStatusChange = false; 
             }
+    
             if (totalTurn == 7) {
                 totalTurn = 0;
                 round++;
-                if (round == 7) round = 1;
-                this->currentTurn = playerOrder[1];
+                this->currentTurn = this->playerOrder[1];
+            }
+        }
+    } else {
+        if (!this->reverseStatus) {
+            if (!this->reverseStatusChange) {
+                this->currentTurn = (this->currentTurn + 1) % 7;
+                if (this->currentTurn <= 0) this->currentTurn += 7;
+                totalTurn++;
+            } else {
+                this->currentTurn = (this->currentTurn + 1 + totalTurn) % 7;
+                if (this->currentTurn <= 0) this->currentTurn += 7;
                 this->reverseStatusChange = false;
-                for (int i = 0; i < PLAYERORDER_LENGTH; i++) {
-                    copyPlayerOrder[i] = this->playerOrder[i];
-                    cout << copyPlayerOrder[i] << " ";
-                    if (i == PLAYERORDER_LENGTH - 1) cout << endl;
-                }
+                totalTurn++;
+            }
+
+            if (totalTurn == 7) {
+                round++;
+                totalTurn = 0;
+                this->currentTurn = this->playerOrder[1];
             }
         } else {
-            totalTurn--;
-            if (totalTurn <= 0) totalTurn += 7;
-            if (totalTurn - 1 >= 0) {
-                this->currentTurn = copyPlayerOrder[totalTurn - 1];
+            if (!this->reverseStatusChange) {
+                this->currentTurn = (this->currentTurn - 1) % 7;
+                if (this->currentTurn <= 0) this->currentTurn += 7;
+                totalTurn++;
             } else {
-                this->currentTurn = copyPlayerOrder[6];
+                this->currentTurn = (this->currentTurn - 1 - totalTurn) % 7;
+                if (this->currentTurn <= 0) this->currentTurn += 7;
+                this->reverseStatusChange = false;
+                totalTurn++;
             }
-            this->playerOrder[totalTurn] = this->currentTurn;
-            if (totalTurn == 6) {
-                totalTurn = 0;
-                for (int i = 0; i < PLAYERORDER_LENGTH; i++) {
-                    copyPlayerOrder[i] = this->playerOrder[i];
-                    cout << copyPlayerOrder[i] << " ";
-                    if (i == PLAYERORDER_LENGTH - 1) cout << endl;
-                }
-            }
-            round++;
-            if (round == 7) round = 1;
-        }
         
+            if (totalTurn == 7) {
+                round++;
+                totalTurn = 0;
+                this->currentTurn = this->playerOrder[1];
+            }
+        }
     }
-}
+
+    if (round == 7) {
+        round = 1;
+        gameNumber++;
+    }
+    // this->playerOrder[totalTurn] = this->currentTurn; 
+    // if (!this->reverseStatus) {
+    //     if (!this->reverseStatusChange) {
+    //         this->currentTurn = (this->currentTurn + 1) % 7;
+    //         if (this->currentTurn == 0) this->currentTurn += 7;
+    //         totalTurn++;
+    //     } else {
+    //         this->currentTurn = (this->currentTurn + totalTurn + 1) % 7;
+    //         if (this->currentTurn == 0) this->currentTurn += 7;
+    //         totalTurn++;
+    //         this->reverseStatusChange = false;
+    //     }
+    //     if (totalTurn == 7) {
+    //         totalTurn = 0;
+    //         totalTurn++;
+    //     }
+    // } else {
+    //     if (!this->reverseStatusChange) { 
+    //         this->currentTurn = (this->currentTurn - 1) % 7;
+    //         if (this->currentTurn <= 0) this->currentTurn += 7;
+    //         totalTurn++;
+    //     } else {
+    //         currentTurn = (currentTurn - totalTurn - 1) % 7;
+    //         if (this->currentTurn <= 0) this->currentTurn += 7;
+    //         totalTurn++;
+    //         this->reverseStatusChange = false; 
+    //     }
+    //     if (totalTurn == 7) {
+    //         totalTurn = 0;
+    //         totalTurn++;
+    //     }   
+    // }
+    // this->playerOrder[totalTurn] = this->currentTurn;
+    // if (!this->reverseStatus) {
+    //     if (round == 1) {
+    //         if (!this->reverseStatusChange) {
+    //             this->currentTurn = (this->currentTurn + 1) % 7;
+    //             if (this->currentTurn == 0) this->currentTurn += 7;
+    //             // cout << "CT: "<< this->currentTurn << endl;
+    //             totalTurn++;
+    //         } else { // To anticipate players that have got their turns before
+    //             this->currentTurn = (this->currentTurn + totalTurn + 1) % 7;
+    //             if (this->currentTurn == 0) this->currentTurn += 7;
+    //             this->playerOrder[totalTurn] = this->currentTurn;
+    //             // cout << "CT: "<< this->currentTurn << endl;
+    //             totalTurn++;
+    //             this->reverseStatusChange = false;
+    //         }
+
+    //         if (totalTurn == 7) {
+    //             totalTurn = 0;
+    //             round++;
+
+    //             copyPlayerOrder.clear(); // Erase all items
+    //             // Copy playerOrder to another array copyPlayerOrder
+    //             for (int i = 0; i < PLAYERORDER_LENGTH; i++) {
+    //                 copyPlayerOrder.push_back(this->playerOrder[i]);
+    //             }
+    //             this->currentTurn = playerOrder[1]; // First player of the next round
+    //             copyPlayerOrder.push_back(playerOrder[0]); // 1 2 3 4 5 6 7 1, totalTurn = 0
+    //             copyPlayerOrder.erase(copyPlayerOrder.begin());
+
+    //             // CopyPlayerOrder FILLED
+    //         }
+    //     } else {
+    //         totalTurn++;
+    //         if (totalTurn + 1 == 8) {
+    //             totalTurn = 0;
+    //         }
+    //         this->currentTurn = copyPlayerOrder[totalTurn + 1];
+    //         if (totalTurn == 0) {
+    //             this->currentTurn = playerOrder[1];
+    //             copyPlayerOrder.push_back(playerOrder[0]);
+    //             copyPlayerOrder.erase(copyPlayerOrder.begin());
+    //             cout << "Print" << endl;
+    //             printCopyPO();
+    //         }
+    //     }
+    // } else {
+    //     if (round == 1) {
+    //         if (!this->reverseStatusChange) {
+    //             this->currentTurn = (this->currentTurn - 1) % 7;
+    //             if (this->currentTurn <= 0) this->currentTurn += 7;
+    //             this->playerOrder[totalTurn] = this->currentTurn;
+    //             totalTurn++;
+    //         } else { // To anticipate players that have got their turns before
+    //             this->currentTurn = (this->currentTurn - totalTurn - 1) % 7;
+    //             if (this->currentTurn <= 0) this->currentTurn += 7;
+    //             this->playerOrder[totalTurn] = this->currentTurn;
+    //             totalTurn++;
+    //             this->reverseStatusChange = false;
+    //         }
+
+    //         if (totalTurn == 7) {
+    //             totalTurn = 0;
+    //             round++;
+
+    //             copyPlayerOrder.clear(); // Erase all items
+    //             // Copy playerOrder to another array copyPlayerOrder
+    //             for (int i = 0; i < PLAYERORDER_LENGTH; i++) {
+    //                 copyPlayerOrder.push_back(this->playerOrder[i]);
+    //             }
+    //             this->currentTurn = playerOrder[1]; // First player of the next round
+    //             copyPlayerOrder.push_back(playerOrder[0]); // 1 2 3 4 5 6 7 1, totalTurn = 0
+
+    //             // CopyPlayerO rder FILLED
+    //         }
+    //     } else {
+    //         totalTurn++;
+    //         if (!this->reverseStatusChange) {
+    //             if (totalTurn + 1 == 8) {
+    //                 totalTurn = 0;
+    //             }
+    //             this->currentTurn = copyPlayerOrder[totalTurn + 1];
+    //             if (totalTurn == 0) {
+    //                 this->currentTurn = playerOrder[1];
+    //                 copyPlayerOrder.push_back(playerOrder[0]);
+    //                 copyPlayerOrder.erase(copyPlayerOrder.begin());
+    //                 cout << "Print" << endl;
+    //                 printCopyPO();
+    //             }
+    //         } else {
+    //             totalTurn++;
+    //             if (totalTurn + 1 == 8) {
+    //                 totalTurn = 0;
+    //             }
+    //             if (totalTurn - 1 <= 0) this->playerOrder[totalTurn] = copyPlayerOrder[totalTurn - 1 + 7];
+    //             else (this->playerOrder[totalTurn] = copyPlayerOrder[totalTurn - 1]);
+    //             if (totalTurn == 0) {
+    //                 this->currentTurn = playerOrder[1];
+    //                 copyPlayerOrder.push_back(playerOrder[0]);
+    //                 copyPlayerOrder.erase(copyPlayerOrder.begin());
+    //             }
+    //         }
+            
+    //     }
+    }
+        // this->playerOrder[totalTurn] = this->currentTurn;
+        // if (round == 1) {
+        //     if (!this->reverseStatusChange) {
+        //         this->currentTurn = (this->currentTurn + 1) % 7;
+        //         if (this->currentTurn == 0) this->currentTurn += 7;
+        //         totalTurn++;
+        //     } else {
+        //         this->currentTurn = (this->currentTurn + totalTurn + 1) % 7;
+        //         if (this->currentTurn == 0) this->currentTurn += 7;
+        //         totalTurn++;
+        //         this->reverseStatusChange = false;
+        //     }
+
+        //     if (totalTurn == 7) { // From last player in round 1 to first player in round 2 (PlayerOrder Filled)
+        //         totalTurn = 0;
+        //         round++; // Go to next round
+
+        //         for (int i = 0; i < PLAYERORDER_LENGTH; i++) { // Copy PlayerOrder
+        //             copyPlayerOrder[i] = this->playerOrder[i];
+        //             // cout << copyPlayerOrder[i] << " ";
+        //             // if (i == PLAYERORDER_LENGTH - 1) cout << endl; // BENAR
+        //         }
+        //         this->currentTurn = playerOrder[1]; // First player in round 2
+        //         this->reverseStatusChange = false;
+        //         playerOrder[0] = this->currentTurn;
+        //     }
+        // } else {
+        //     if (totalTurn + 1 <= 6) {
+        //         this->currentTurn = copyPlayerOrder[totalTurn + 1];
+        //         totalTurn++;
+        //     } else {
+        //         this->currentTurn = copyPlayerOrder[0];
+        //     }
+        //     this->playerOrder[totalTurn] = this->currentTurn;
+
+        //     if (totalTurn == 7) { // Last player from round n to first player from round n + 1
+        //         totalTurn = 0;
+        //         round++;
+        //         if (round == 7) round = 1;
+
+        //         for (int i = 0; i < PLAYERORDER_LENGTH; i++) {
+        //             copyPlayerOrder[i] = this->playerOrder[i];
+        //             // cout << copyPlayerOrder[i] << " ";
+        //             // if (i == PLAYERORDER_LENGTH - 1) cout << endl;
+        //         }
+        //         this->currentTurn = playerOrder[1]; // First player in round n + 1
+        //         this->reverseStatusChange = false;
+        //         playerOrder[0] = this->currentTurn;
+        //     }
+        // }
+
+
+        // if (round == 1) {
+        //     if (!this->reverseStatusChange) { 
+        //         this->currentTurn = (this->currentTurn - 1) % 7;
+        //         if (this->currentTurn <= 0) this->currentTurn += 7;
+        //         this->playerOrder[totalTurn] = this->currentTurn;
+        //         totalTurn++;
+        //     } else {
+        //         currentTurn = (currentTurn - totalTurn - 1) % 7;
+        //         if (this->currentTurn <= 0) this->currentTurn += 7;
+        //         this->playerOrder[totalTurn] = this->currentTurn;
+        //         totalTurn++;
+        //         this->reverseStatusChange = false; 
+        //     }
+
+        //     if (totalTurn == 7) {
+        //         totalTurn = 0;
+        //         round++;
+                
+        //         for (int i = 0; i < PLAYERORDER_LENGTH; i++) {
+        //             copyPlayerOrder[i] = this->playerOrder[i];
+        //             // cout << copyPlayerOrder[i] << " ";
+        //             // if (i == PLAYERORDER_LENGTH - 1) cout << endl;
+        //         }
+        //         this->currentTurn = playerOrder[1];
+        //         this->reverseStatusChange = false;
+        //         playerOrder[0] = this->currentTurn;
+        //     }
+        // } else {
+        //     if (totalTurn - 1 >= 0) {
+        //         totalTurn--;
+        //         this->currentTurn = copyPlayerOrder[totalTurn - 1];
+        //     } else {
+        //         this->currentTurn = copyPlayerOrder[6];
+        //     }
+        //     this->playerOrder[totalTurn] = this->currentTurn;
+
+        //     if (totalTurn == 7) {
+        //         totalTurn = 0;
+        //         round++;
+        //         if (round == 7) round = 1;
+
+        //         for (int i = 0; i < PLAYERORDER_LENGTH; i++) {
+        //             copyPlayerOrder[i] = this->playerOrder[i];
+        //             // cout << copyPlayerOrder[i] << " ";
+        //             // if (i == PLAYERORDER_LENGTH - 1) cout << endl;
+        //         }
+        //         this->currentTurn = playerOrder[1]; // First player in round n + 1
+        //         this->reverseStatusChange = false;
+        //         playerOrder[0] = this->currentTurn;
+        //     }
+        // }
 
 void GameState::showPlayerOrder() {
     for (int i = 0; i < PLAYERORDER_LENGTH; i++) {
@@ -193,7 +429,6 @@ void GameState::showPlayerOrder() {
         }
     }
 }
-
 
 // bool GameState::isWin(vector<Player> P) {
 //     bool result = false;
@@ -207,19 +442,25 @@ void GameState::showPlayerOrder() {
 //     return result;
 // }
 
-void GameState::reset() {
-    this->rewardPoint = 64;
+// void GameState::reset() {
+//     this->rewardPoint = 64;
 
-    // Empty Table Card
-    for (int i = 0; i < this->tableCard.getCards().size(); i++) {
-        this->tableCard.getCards().erase(this->tableCard.getCards().begin());
-    }
+//     // Empty Table Card
+//     for (int i = 0; i < this->tableCard.getCards().size(); i++) {
+//         this->tableCard.getCards().erase(this->tableCard.getCards().begin());
+//     }
 
-    for (int i = 0; i < PLAYERORDER_LENGTH; i++) {
-        this->playerOrder[i] = 0;
-    }
+//     for (int i = 0; i < PLAYERORDER_LENGTH; i++) {
+//         this->playerOrder[i] = 0;
+//     }
 
-    this->currentTurn = 1;
-    this->reverseStatus = false;
-    this->reverseStatusChange = false;
-}
+//     this->currentTurn = 1;
+//     this->reverseStatus = false;
+//     this->reverseStatusChange = false;
+// }
+// void GameState::printCopyPO() {
+//     for (int i = 0; i < copyPlayerOrder.size(); i++) {
+//         cout << copyPlayerOrder[i] << " ";
+//         if (i == copyPlayerOrder.size() - 1) cout << endl;
+//     }
+// }
