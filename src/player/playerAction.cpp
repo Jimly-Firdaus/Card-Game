@@ -17,6 +17,10 @@ void PlayerAction::getAbilityCard(vector<string>& AbilityCard){
         this->ability = new ReverseDirection();
     }else if(AbilityCard[randNumber] == "SwapCard"){
         this->ability = new SwapCard();
+    }else if(AbilityCard[randNumber] == "Switch"){
+        this->ability = new Switch();
+    }else if(AbilityCard[randNumber] == "AbilityLess"){
+        this->ability = new AbilityLess();
     }
     AbilityCard.erase(AbilityCard.begin()+randNumber);
 
