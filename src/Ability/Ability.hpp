@@ -9,7 +9,7 @@
 #include "../Player/PlayerCollection.hpp"
 using namespace std;
 
-class Ability : public PlayerAction{
+class Ability{
     public:
         /**
         * Call card ability. (pure virtual)
@@ -20,7 +20,7 @@ class Ability : public PlayerAction{
         * those parameters is written for ability usage completion, it can be used or not according to the need of the program.
         */
         // virtual void callCard() = 0;
-        virtual void callCard(PlayerCollection& player, GameState& state, Deck& deck) = 0;
+        virtual void callCard(vector<PlayerAction>& player, GameState& state, Deck& deck, PlayerAction currentPlayer) = 0;
         /**
          * Getting card information. (pure virtual)
          */

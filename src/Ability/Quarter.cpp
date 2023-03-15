@@ -5,6 +5,6 @@ void Quarter::getCardInfo(){
     cout << "Quarter, sama seperti aksi half hanya saja multipliernya menjadi 0.25x." << endl;
 }
 
-void Quarter::callCard(PlayerCollection& player, GameState& state, Deck& deck){
+void Quarter::callCard(PlayerCollection& player, GameState& state, Deck& deck, PlayerAction& currentPlayer){
     state.quarterRewardPoint();
 }

@@ -1,46 +1,46 @@
-#ifndef PLAYERACTION_HPP
-#define PLAYERACTION_HPP
+// #ifndef PLAYERACTION_HPP
+// #define PLAYERACTION_HPP
 
 #include "player.hpp"
-#include "../Ability/AbilityLess.hpp"
-#include "../Ability/Quadruple.hpp"
-#include "../Ability/Quarter.hpp"
-#include "../Ability/Reroll.hpp"
-#include "../Ability/ReverseDirection.hpp"
-#include "../Ability/SwapCard.hpp"
-#include "../Ability/Switch.hpp"
-#include "../Combination/Combination.hpp"
-#include "../GameState/GameState.hpp"
-// #include "../Ability/Ability.hpp"
-using namespace std;
-class Ability;
+// #include "../Ability/AbilityLess.hpp"
+// #include "../Ability/Quadruple.hpp"
+// #include "../Ability/Quarter.hpp"
+// #include "../Ability/Reroll.hpp"
+// #include "../Ability/ReverseDirection.hpp"
+// #include "../Ability/SwapCard.hpp"
+// #include "../Ability/Switch.hpp"
+// #include "../Combination/Combination.hpp"
+// #include "../GameState/GameState.hpp"
+// // #include "../Ability/Ability.hpp"
+// // using namespace std;
+// class Ability;
 
-/*Function overriding here
-Class: PlayerAction extends dari Player buatKombinasi
-Attr: abilityCard
-Method: getCombination, (double, next, half, useAbility (pure virtual))
-*/
+// /*Function overriding here
+// Class: PlayerAction extends dari Player buatKombinasi
+// Attr: abilityCard
+// Method: getCombination, (double, next, half, useAbility (pure virtual))
+// */
 
 class PlayerAction : public Player {
     private:
-    Ability *ability;
-    string PlayerAbility;
+    // Ability *ability;
+    // string PlayerAbility;
     bool abilityUsed;
 
 public:
     // Constructor
     PlayerAction();
-    void getAbilityCard(vector<string>& AbilityCard);
-    void playerPlay(int currentRound, PlayerCollection& player, GameState& state, Deck& deck);
-    void playerProcess(int currentRound, PlayerCollection& player, GameState& state, Deck& deck);
-    void setUsed(bool);
-    bool getUsed();
-    string getAbility();
-    void DOUBLE(GameState& state);
-    void NEXT();
-    void HALF(GameState& state);
-    void ABILITY(PlayerCollection& player, GameState& state, Deck& deck);
-    void getAbilityInfo();
+    // void getAbilityCard(vector<string>& AbilityCard);
+    // void playerPlay(int currentRound, vector<PlayerAction>& player, GameState& state, Deck& deck, PlayerAction& currentPlayer);
+    // void playerProcess(int currentRound, vector<PlayerAction>& player, GameState& state, Deck& deck, PlayerAction& currentPlayer);
+    // void setUsed(bool);
+    // bool getUsed();
+    // string getAbility();
+    // void DOUBLE(GameState& state);
+    // void NEXT();
+    // void HALF(GameState& state);
+    // void ABILITY(vector<PlayerAction>& player, GameState& state, Deck& deck, PlayerAction& currentPlayer);
+    // void getAbilityInfo();
     void printPlayerInfo();
     // PlayerAction(Deck & fullCard);
     // PlayerAction(bool abilityUsed);
@@ -59,4 +59,4 @@ public:
     // bool getUsed();
 };
 
-#endif
+// #endif
