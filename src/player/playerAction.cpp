@@ -90,7 +90,6 @@ void PlayerAction::useAbility()
 {
     if (!abilityUsed)
     {
-        /*
         switch(myAbility) {
             case "AbilityLess":
                 AbilityLess::callCard()
@@ -106,7 +105,6 @@ void PlayerAction::useAbility()
                 SwapCard::callCard();
             case "Switch" :
                 Switch::callCard();
-                */
         }
         abilityUsed = true;
     }
