@@ -5,7 +5,7 @@ Player::Player(){
     this->nickName = "none";
 }
 
-void Player::getCard(Deck& Deck){
+void Player::getCard(Deck& Deck){ 
     pair<int, char> firstCard = Deck.getTopCard();
     Deck - firstCard;
     pair<int, char> secondCard = Deck.getTopCard();

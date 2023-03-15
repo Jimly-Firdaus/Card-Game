@@ -28,6 +28,14 @@ struct NoPairFound : public exception
 	}
 };
 
+struct InvalidInput : public exception
+{
+	const char *what() const throw()
+	{
+		return "Invalid input!";
+	}
+};
+
 // Add your own exception here
 struct WrongChoice : public exception
 {

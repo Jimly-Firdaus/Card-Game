@@ -39,15 +39,14 @@ public:
     pair<vector<pair<int, char> >, vector<string> > cardFromFile(string fileName);
 
     /*
-    52 baris pertama pada deck card berisi DeckCard dengan format :
+    14 baris pertama pada deck card berisi DeckCard dengan format :
     C<space>N
         C berisi character M/B/K/H yang mewakili warna tiap kartu
         N berisi integer 1-13 yang mewakili nomor kartu
 
     7 Baris berikutnya berisi list AbilityCard dengan format :
-    C
-        C berisi character inisial tiap ability card
-        Nilai integer pada ability card akan diset 0
+    S
+        C berisi string inisial tiap ability card
 
     Note : Karena deck card dan ability card masih jadi 1 vector, maka diimplementasinya nanti harus di split
     */
