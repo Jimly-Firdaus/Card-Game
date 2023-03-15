@@ -10,6 +10,7 @@ using namespace std;
 const int MAX_AVAIL_NUMBER = 13;
 const int MAX_AVAIL_CHAR = 4;
 const int MAX_PLAYER_CARD = 7;
+const int MAX_HAND_CARD = 2;
 
 // COMBO CARD EXTRA POINTS
 const double PAIR_POINT = 1.39;
@@ -44,7 +45,8 @@ public:
      * @return true if comparison right
      * @return false otherwise
      */
-    virtual bool compare(const pair<int, char> &p1, const pair<int, char> &p2);
+    template <class T, class U>
+    bool compare(const pair<T, U> &p1, const pair<T, U> &p2);
     /**
      * Give the constant valuation of given number & type (color)
      * @param number
@@ -72,7 +74,7 @@ public:
      * Check whether if current hand + table card is Full House
      * @return * pair<bool, int> bool for Full House. If true returns the card number, else returns -1
      */
-    pair<bool, int> isFullHouse();
+    pair<bool, int> isFullHouse(bool checkTable = false);
     /**
      * Check whether if current hand + table card is Flush
      * @return pair<bool, pair<int, char>> bool for Flush. If true returns card, else returns empty card (0, ' ')
@@ -114,7 +116,7 @@ public:
      * Find all pair in hand + table decks
      * @return * vector<pair<int, char>> vector containing all pairs from given decks
      */
-    vector<pair<int, char>> findPair();
+    vector<pair<int, char>> findPair(bool checkTable = false);
     /**
      * Receive sorted merged deck and find all numbers that appear more than once
      * @param mergedDeck
@@ -125,19 +127,19 @@ public:
      * Check whether if current hand + table card is Three of Kind
      * @return * pair<bool, int> bool for Three of Kind. If true returns the card number, else returns -1
      */
-    pair<bool, int> isThreeKind();
+    pair<bool, int> isThreeKind(bool checkTable = false);
     /**
      * Check whether if current hand + table card is Two Pair
      * @param tableCard
      * @param playerCard
      * @return * pair<bool, int> bool for Two Pair. If true returns the Two Pair, else returns empty array
      */
-    pair<bool, vector<pair<int, char>>> isTwoPair();
+    pair<bool, vector<pair<int, char>>> isTwoPair(bool checkTable = false);
     /**
      * Check whether if current hand + table card is Pair
      * @return * pair<bool, int> bool for Pair. If true returns the valuation, else returns -1
      */
-    pair<bool, float> isPair();
+    pair<bool, float> isPair(bool checkTable = false);
     /**
      * Get the highest card from given decks
      * @return pair<int, char> highest card
@@ -155,6 +157,7 @@ public:
      * @return * vector<pair<int, char>> sorted deck
      */
     vector<pair<int, char>> sortDeck(vector<pair<int, char>> mergedDeck);
+    float getStrongestSelf();
     // Operator overloads
     bool operator<(Combination &other);
     bool operator>(Combination &other);

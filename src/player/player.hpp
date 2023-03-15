@@ -5,7 +5,8 @@
 #include "../GameState/GameState.hpp"
 // #include <ctime>
 // #include <cstdlib>
-#include <bits/stdc++.h>
+// #include <bits/stdc++.h>
+#include <vector>
 
 /*Class: Player : Kartu yang dimiliki, Poin Player, Action (Double, Next, Half, Ability)
 Attr: ownedCard, playerPoint,

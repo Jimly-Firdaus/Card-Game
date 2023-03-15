@@ -97,9 +97,14 @@ pair<bool, int> Combination::isFourKind()
     return {false, -1};
 }
 
-pair<bool, int> Combination::isFullHouse()
+pair<bool, int> Combination::isFullHouse(bool checkTable)
 {
-    vector<pair<int, char>> v = mergeDeck(this->tableCard, playerCard);
+    vector<pair<int, char>> v;
+    if (!checkTable) {
+        v = mergeDeck(this->tableCard, playerCard);
+    } else {
+        v = this->tableCard.getCards();
+    }
     vector<pair<int, char>> filteredV = this->getNonSingle(v);
     vector<pair<int, char>> pair, triplet;
     map<int, int> freq;
@@ -239,9 +244,14 @@ pair<int, char> Combination::findBiggest(vector<pair<int, char>> v, int number)
     return resultPair;
 }
 
-pair<bool, int> Combination::isThreeKind()
+pair<bool, int> Combination::isThreeKind(bool checkTable)
 {
-    vector<pair<int, char>> v = mergeDeck(this->tableCard, playerCard);
+    vector<pair<int, char>> v;
+    if (!checkTable) {
+        v = mergeDeck(this->tableCard, playerCard);
+    } else {
+        v = this->tableCard.getCards();
+    }
     vector<pair<int, char>> filteredV = this->getNonSingle(v);
     map<int, int> freq;
     for (const auto ele : filteredV)
@@ -258,10 +268,13 @@ pair<bool, int> Combination::isThreeKind()
     return {false, -1};
 }
 
-pair<bool, vector<pair<int, char>>> Combination::isTwoPair()
+pair<bool, vector<pair<int, char>>> Combination::isTwoPair(bool checkTable)
 {
-    vector<pair<int, char>> mergedCard = mergeDeck(this->tableCard, playerCard);
-    vector<pair<int, char>> allPairs = findPair();
+    vector<pair<int, char>> allPairs = findPair(checkTable);
+    // for (auto ele : allPairs) {
+    //     cout << ele.first << "," << ele.second << " | ";
+    // }
+    // cout << endl;
     pair<bool, vector<pair<int, char>>> result = {false, {}};
     if (allPairs.size() > 3)
     {
@@ -274,9 +287,14 @@ pair<bool, vector<pair<int, char>>> Combination::isTwoPair()
     return result;
 }
 
-pair<bool, float> Combination::isPair()
+pair<bool, float> Combination::isPair(bool checkTable)
 {
-    vector<pair<int, char>> v = mergeDeck(this->tableCard, playerCard);
+    vector<pair<int, char>> v;
+    if (!checkTable) {
+        v = mergeDeck(this->tableCard, playerCard);
+    } else {
+        v = this->tableCard.getCards();
+    }
     vector<pair<int, char>> filteredV = this->getNonSingle(v);
     map<int, int> freq;
     for (const auto ele : filteredV)
@@ -293,13 +311,17 @@ pair<bool, float> Combination::isPair()
     return {false, -1};
 }
 
-vector<pair<int, char>> Combination::findPair()
+vector<pair<int, char>> Combination::findPair(bool checkTable)
 {
     vector<pair<int, char>> pairV, temp;
-    if (isPair().first)
+    if (isPair(checkTable).first)
     {
-        // Deck copyTable(this->tableCard);
-        vector<pair<int, char>> v = mergeDeck(this->tableCard, playerCard);
+        vector<pair<int, char>> v;
+        if (!checkTable) {
+            v = mergeDeck(this->tableCard, playerCard);
+        } else {
+            v = this->tableCard.getCards();
+        }
         temp = this->getNonSingle(v);
         map<int, int> freq;
         for (const auto ele : temp)
@@ -391,8 +413,8 @@ float Combination::searchVal(int number, char type) const
         throw e;
     }
 }
-
-bool Combination::compare(const pair<int, char> &p1, const pair<int, char> &p2)
+template <class T, class U>
+bool Combination::compare(const pair<T, U> &p1, const pair<T, U> &p2)
 {
     // If the first elements are different, compare them
     if (p1.first != p2.first)
@@ -408,11 +430,10 @@ bool Combination::compare(const pair<int, char> &p1, const pair<int, char> &p2)
 
 pair<int, char> Combination::getHighCard()
 {
-    Deck copyTable(this->tableCard);
-    vector<pair<int, char>> v = mergeDeck(copyTable, playerCard);
+    vector<pair<int, char>> v = playerCard.getCards();
     sort(v.begin(), v.end(), [&](const pair<int, char> &p1, const pair<int, char> &p2)
-         { return compare(p1, p2); });
-    return v[MAX_PLAYER_CARD - 1];
+        { return compare(p1, p2); });
+    return v[MAX_HAND_CARD - 1];
 }
 
 pair<float, string> Combination::getStrongestCombination()
@@ -432,7 +453,7 @@ pair<float, string> Combination::getStrongestCombination()
     if (pair.first)
         result = {pair.second + PAIR_POINT, "Pair"};
     if (twoPair.first)
-        result = {searchVal(twoPair.second[0]) + searchVal(twoPair.second[1]) + TWO_PAIR_POINT, "Two Pair"};
+        result = {searchVal(twoPair.second[0]) + searchVal(twoPair.second[1]) + searchVal(twoPair.second[2]) + searchVal(twoPair.second[3]) + TWO_PAIR_POINT, "Two Pair"};
     if (threeKind.first)
         result = {searchVal(threeKind.second, 'M') + THREEKIND_POINT, "Three Of Kind"};
     if (straight.first)
@@ -465,6 +486,14 @@ pair<float, string> Combination::getStrongestCombination()
      */
 
     return result;
+}
+
+float Combination::getStrongestSelf() {
+    vector<pair<int, char>> playerCard = this->playerCard.getCards();
+    if (playerCard[0].first == playerCard[1].first) return searchVal(playerCard[0]) + searchVal(playerCard[1]);
+    else return searchVal(playerCard[0]) > searchVal(playerCard[1]) 
+        ? searchVal(playerCard[0]) 
+        : searchVal(playerCard[1]);
 }
 
 bool Combination::operator<(Combination &other)
