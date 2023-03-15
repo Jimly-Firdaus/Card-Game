@@ -1,11 +1,15 @@
 #ifndef _ABILITYLESS_HPP_
 #define _ABILITYLESS_HPP_
-#include "AbilityList.hpp"
+#include "Ability.hpp"
 
-class AbilityLess : public AbilityList{
-    public:
-        void callCard();
-        void getCardInfo();
+class AbilityLess : public Ability
+{
+public:
+    void callCard(PlayerCollection& player, GameState& state, Deck& deck);
+    void getCardInfo();
+    void setCardOff(PlayerAction& chosenPlayer);
+    string getInput(PlayerCollection& player);
+    void printTarget(PlayerCollection& player);
 };
 
 #endif

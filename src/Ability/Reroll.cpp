@@ -1,13 +1,15 @@
 #include "Reroll.hpp"
-#include <bits/stdc++.h>
+// #include <bits/stdc++.h>
 using namespace std;
 
-template <class T>
-void Reroll<T>::getCardInfo(){
+void Reroll::getCardInfo()
+{
     cout << "Re-Roll, membuang 2 kartu dari main deck yang dimiliki oleh diri sendiri dan mengambil ulang 2 kartu." << endl;
 }
 
-template <class T>
-void Reroll<T>::callCard(player<T>& player, Deck& currentDeck){
-    
+void Reroll::callCard(PlayerCollection& player, GameState& state, Deck& deck) 
+{
+    this->getOwnedCard()-this->getOwnedCard().getACard(0);
+    this->getOwnedCard()-this->getOwnedCard().getACard(1);
+    this->getCard(deck);
 }

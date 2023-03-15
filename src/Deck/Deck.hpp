@@ -4,8 +4,9 @@
 #define vector Vector
 #include <iostream>
 #include <cstring>
+#include <string>
 #include <vector>
-#include <array>
+// #include <array>
 #include <algorithm>
 #include <random>
 #include <utility>
@@ -33,6 +34,7 @@ public:
     // Getter A Card
     pair<int, char> getACard(int idx);
 
+    void setACard(int idx, pair<int, char> card);
     // Generate Card From File
     pair<vector<pair<int, char> >, vector<string> > cardFromFile(string fileName);
 
