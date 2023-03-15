@@ -57,14 +57,14 @@ pair<vector<pair<int, char> >, vector<string> > Deck::cardFromFile(string fileNa
         readFile.open(filePath.c_str(), ios::in);
 
         // Read the file line by line
+        pair<int, char> newElement;
         while (getline(readFile, textRead))
         {
-            if (idx < 52)
+            if (idx < 14)
             {
                 string el1 = "";
                 string el2 = "";
                 size_t itr = textRead.find(' ');
-                pair<int, char> newElement;
                 if (itr != string::npos)
                 {
                     for (int i = 0; i < itr; i++)
@@ -94,6 +94,20 @@ pair<vector<pair<int, char> >, vector<string> > Deck::cardFromFile(string fileNa
         }
         readFile.close();
 
+        // Auto-fill deck card
+        char color[4] = {'M', 'B', 'K', 'H'};
+        for (int i = 1; i < 14; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                vector<pair<int, char> >::iterator itr = find(deck.begin(), deck.end(), make_pair(i, color[j]));
+                if (itr == deck.end()) // Card not found
+                {
+                    newElement = make_pair(i, color[j]);
+                    deck.push_back(newElement);
+                }
+            }
+        }
         result = make_pair(deck, ability);
     } while (!validDeckCard(result));
 
@@ -105,37 +119,45 @@ bool Deck::validDeckCard(pair<vector<pair<int, char> >, vector<string> > result)
 {
     vector<pair<int, char> > deck = result.first;
     vector<string> ability = result.second;
-
     bool valid = true;
-    char color[4] = {'M', 'B', 'K', 'H'};
-    for (int i = 1; i < 14 && valid; i++)
+
+    if (deck.size() != 52 && ability.size() != 7)
     {
-        for (int j = 0; j < 4 && valid; j++)
+        valid = false;
+    }
+    else
+    {
+
+        bool valid = true;
+        char color[4] = {'M', 'B', 'K', 'H'};
+        for (int i = 1; i < 14 && valid; i++)
         {
-            vector<pair<int, char> >::iterator itr = find(deck.begin(), deck.end(), make_pair(i, color[j]));
-            if (itr == deck.end())
+            for (int j = 0; j < 4 && valid; j++)
+            {
+                vector<pair<int, char> >::iterator itr = find(deck.begin(), deck.end(), make_pair(i, color[j]));
+                if (itr == deck.end())
+                {
+                    valid = false;
+                }
+            }
+        }
+
+        string abilityList[7] = {"Re-Roll", "Quadruple", "Quarter", "Reverse", "Swap", "Switch", "Abilityless"};
+        for (int i = 0; i < 7 && valid; i++)
+        {
+            vector<string>::iterator itr = find(ability.begin(), ability.end(), abilityList[i]);
+            if (itr == ability.end())
             {
                 valid = false;
             }
         }
+
+        if (!valid)
+            throw "Invalid Input!"; // Tambahin input yang ga ketemu
+
+        return valid;
     }
-
-    string abilityList[7] = {"Re-Roll", "Quadruple", "Quarter", "Reverse", "Swap", "Switch", "Abilityless"};
-    for (int i = 0; i < 7 && valid; i++)
-    {
-        vector<string>::iterator itr = find(ability.begin(), ability.end(), abilityList[i]);
-        if (itr == ability.end())
-        {
-            valid = false;
-        }
-    }
-
-    if (!valid)
-        throw "Invalid Input!"; // Tambahin input yang ga ketemu
-
-    return valid;
 }
-
 // Shuffle Card
 void Deck::shuffleCard()
 {
