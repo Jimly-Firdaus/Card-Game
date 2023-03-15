@@ -97,9 +97,14 @@ pair<bool, int> Combination::isFourKind()
     return {false, -1};
 }
 
-pair<bool, int> Combination::isFullHouse()
+pair<bool, int> Combination::isFullHouse(bool checkTable)
 {
-    vector<pair<int, char>> v = mergeDeck(this->tableCard, playerCard);
+    vector<pair<int, char>> v;
+    if (!checkTable) {
+        v = mergeDeck(this->tableCard, playerCard);
+    } else {
+        v = this->tableCard.getCards();
+    }
     vector<pair<int, char>> filteredV = this->getNonSingle(v);
     vector<pair<int, char>> pair, triplet;
     map<int, int> freq;

@@ -74,7 +74,7 @@ public:
      * Check whether if current hand + table card is Full House
      * @return * pair<bool, int> bool for Full House. If true returns the card number, else returns -1
      */
-    pair<bool, int> isFullHouse();
+    pair<bool, int> isFullHouse(bool checkTable = false);
     /**
      * Check whether if current hand + table card is Flush
      * @return pair<bool, pair<int, char>> bool for Flush. If true returns card, else returns empty card (0, ' ')
