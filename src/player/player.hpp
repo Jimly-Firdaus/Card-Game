@@ -1,8 +1,9 @@
 #ifndef PLAYER_HPP
 #define PLAYER_HPP
 
-#include "../Deck/Deck.hpp"
+// #include "../Deck/Deck.hpp"
 #include "../GameState/GameState.hpp"
+// #include "../Ability/AbilityLess.hpp"
 // #include <ctime>
 // #include <cstdlib>
 // #include <bits/stdc++.h>
@@ -25,10 +26,10 @@ public:
     // Constructor
     Player();
     void getCard(Deck& Deck); // done
-    void printPlayerOption();
-    int getPlayerPoint();
-    void setPlayerPoint(int playerPoint);
-    void setNickName(string nickName);
+    void printPlayerOption(); // done
+    int getPlayerPoint(); // done
+    void setPlayerPoint(int playerPoint); // done
+    void setNickName(string nickName); // done
     string getNickName(); // done
     Deck getOwnedCard(); // done
     // Player(Deck &fullCard);        // Default Constructor

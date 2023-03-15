@@ -24,24 +24,35 @@
 class PlayerAction : public Player {
     private:
     // Ability *ability;
-    // string PlayerAbility;
+    string PlayerAbility;
     bool abilityUsed;
 
 public:
     // Constructor
     PlayerAction();
-    // void getAbilityCard(vector<string>& AbilityCard);
-    // void playerPlay(int currentRound, vector<PlayerAction>& player, GameState& state, Deck& deck, PlayerAction& currentPlayer);
+    void getAbilityCard(vector<string>& AbilityCard); // partial
+    void playerPlay();
     // void playerProcess(int currentRound, vector<PlayerAction>& player, GameState& state, Deck& deck, PlayerAction& currentPlayer);
-    // void setUsed(bool);
-    // bool getUsed();
-    // string getAbility();
-    // void DOUBLE(GameState& state);
-    // void NEXT();
-    // void HALF(GameState& state);
+    void setUsed(bool abilityUse);
+    bool getUsed();
+    string getAbility(); // done
+    void REROLL(Deck& deck);
+    void QUADRUPLE(GameState& state);
+    void DOUBLE(GameState& state); // done
+    void REVERSE(GameState& state); 
+    void SWAPCARD(vector<PlayerAction>& players, bool random);
+    vector<PlayerAction> printTarget(string nickName, vector<PlayerAction>& players, string firstPick);
+    int findIndex(PlayerAction target, vector<PlayerAction>& players);
+    void SWITCH(vector<PlayerAction>& players);
+    void ABILITYLESS(vector<PlayerAction>& players);
+    bool allTargetUsedAbilityCard(vector<PlayerAction> players, string nickName);
+    int getInput(int n);
+    void NEXT(); // done
+    void HALF(GameState& state); // done
+    void QUARTER(GameState& state);
     // void ABILITY(vector<PlayerAction>& player, GameState& state, Deck& deck, PlayerAction& currentPlayer);
     // void getAbilityInfo();
-    void printPlayerInfo();
+    void printPlayerInfo(); // done
     // PlayerAction(Deck & fullCard);
     // PlayerAction(bool abilityUsed);
 

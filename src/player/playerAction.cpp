@@ -2,43 +2,18 @@
 
 PlayerAction::PlayerAction() : Player() {
     this->abilityUsed = false;
+    this->PlayerAbility = "none";
 }
 
-// void PlayerAction::getAbilityCard(vector<string>& AbilityCard){
-//     int randNumber = rand() % AbilityCard.size();
-//     this->PlayerAbility = AbilityCard[randNumber];
-//     if(AbilityCard[randNumber] == "Re-Roll"){
-//         this->ability = new Reroll();
-//     }else if(AbilityCard[randNumber] == "Quadruple"){
-//         this->ability = new Quadruple();
-//     }else if(AbilityCard[randNumber] == "Quarter"){
-//         this->ability = new Quarter();
-//     }else if(AbilityCard[randNumber] == "ReverseDirection"){
-//         this->ability = new ReverseDirection();
-//     }else if(AbilityCard[randNumber] == "SwapCard"){
-//         this->ability = new SwapCard();
-//     }else if(AbilityCard[randNumber] == "Switch"){
-//         this->ability = new Switch();
-//     }else if(AbilityCard[randNumber] == "AbilityLess"){
-//         this->ability = new AbilityLess();
-//     }
-//     AbilityCard.erase(AbilityCard.begin()+randNumber);
+void PlayerAction::getAbilityCard(vector<string>& AbilityCard){
+    int randNumber = rand() % AbilityCard.size();
+    this->PlayerAbility = AbilityCard[randNumber];
+    AbilityCard.erase(AbilityCard.begin()+randNumber);
+}
 
-// }
-
-// void PlayerAction::playerPlay(int currentRound, vector<PlayerAction>& player, GameState& state, Deck& deck, PlayerAction& currentPlayer){
-//     printPlayerOption();
-//     bool inputTrue = false;
-//     while(!inputTrue){
-//         try{
-//             playerProcess(currentRound, player, state, deck, currentPlayer);
-//             inputTrue = true;
-//         }catch(WrongChoice e){
-//             e.what();
-//             cout << "Please reinput your choice" << endl;
-//         }
-//     }
-// }
+void PlayerAction::playerPlay(){
+    
+}
 
 // void PlayerAction::playerProcess(int currentRound, vector<PlayerAction>& player, GameState& state, Deck& deck, PlayerAction& currentPlayer){
 //     cout << "Please include the number : ";
@@ -66,23 +41,316 @@ PlayerAction::PlayerAction() : Player() {
 //     return this->abilityUsed;
 // }
 
-// void PlayerAction::DOUBLE(GameState& state){
-//     state.doubleRewardPoint();
-//     cout << "The table point has been doubled" << endl;
-// }
+void PlayerAction::DOUBLE(GameState& state){
+    int earlyReward = state.getRewardPoint();
+    state.doubleRewardPoint();
+    cout << getNickName() << " melakukan DOUBLE! Poin hadiah naik dari " << earlyReward << " menjadi " << state.getRewardPoint() << "!" << endl;
+}
 
-// void PlayerAction::NEXT(){
-//     cout << "Nothing done" << endl;
-// }
+void PlayerAction::REROLL(Deck& deck){
+    if(this->PlayerAbility == "Re-Roll"){
+            if(abilityUsed){
+            HaveBeenUsed e;
+            throw e;
+        }else{
+            getOwnedCard().getCards().clear();
+            getCard(deck);
+            cout << "Melakukan pembuangan kartu yang dimiliki" << endl;
+            cout << "Kamu mendapatkan 2 kartu yang baru yaitu:" << endl;
+            deck.printCard();
+        }
+    }else{
+        WrongAbilityCard e;
+        throw e;
+    }
+}
 
-// void PlayerAction::HALF(GameState& state){
-//     state.halfRewardPoint();
-//     cout << "The table point has been halfed" << endl;
-// }
+void PlayerAction::QUADRUPLE(GameState& state){
+    if(this->PlayerAbility == "Quadruple"){
+            if(abilityUsed){
+            HaveBeenUsed e;
+            throw e;
+        }else{
+            int earlyReward = state.getRewardPoint();
+            state.fourtimesRewardPoint();
+            cout << getNickName() << " melakukan QUADRUPLE! Poin hadiah naik dari " << earlyReward << " menjadi " << state.getRewardPoint() << "!" << endl;
+        }
+    }else{
+        WrongAbilityCard e;
+        throw e;
+    }
+}
 
-// string PlayerAction::getAbility(){
-//     return this->PlayerAbility;
-// }
+void PlayerAction::REVERSE(GameState& state){
+    if(this->PlayerAbility == "ReverseDirection"){
+        if(abilityUsed){
+            cout << "Oops, kartu ability reversemu telah dimatikan sebelumnya :(" << endl;
+            cout << "Silahkan lakukan perintah lain." << endl;
+        }else{
+            cout << getNickName() << " melakukan reverse!" << endl;
+            
+        }
+    }else{
+        WrongAbilityCard e;
+        throw e;
+    }
+}
+
+void PlayerAction::NEXT(){
+    cout << "Giliran dilanjut ke pemain selanjutnya." << endl;
+}
+
+void PlayerAction::SWAPCARD(vector<PlayerAction>& players, bool random){
+    if(this->PlayerAbility == "SwapCard"){
+        if(abilityUsed){
+            HaveBeenUsed e;
+            throw e;
+        }else{
+            cout << getNickName() << " melakukan SWAPCARD." << endl;
+            int choice1;
+            int choice2;
+            vector<PlayerAction> target;
+            bool valid = false;
+            while(!valid){
+                cout << "Silahkan pilih pemain yang kartunya ingin anda tukar:" << endl;
+                target = printTarget(getNickName(), players, "0");
+                try{
+                    choice1 = getInput(target.size());
+                    valid = true;
+                }catch(WrongChoice e){
+                    e.what();
+                }
+            }
+            string firstPick = target[choice1-1].getNickName();
+            choice1 = findIndex(target[choice1-1], players);
+            target.clear();
+            valid = false;
+            while(!valid){
+                cout << "Silahkan pilih pemain yang kartunya ingin anda tukar:" << endl;
+                target = printTarget(getNickName(), players, firstPick);
+                try{
+                    choice2 = getInput(target.size());
+                    valid = true;
+                }catch(WrongChoice e){
+                    e.what();
+                }
+            }
+            choice2 = findIndex(target[choice2-1], players);
+            int index1;
+            int index2;
+            if(random){
+                index1 = rand() % 2 + 1;
+                index2 = rand() % 2 + 1;
+            }else{
+                valid = false;
+                while(!valid){
+                    cout << "Silahkan pilih kartu kanan/kiri " << players[choice1].getNickName() << endl;
+                    cout << "1. Kanan" << endl;
+                    cout << "2. Kiri" << endl;
+                    try{
+                        index1 = getInput(2);
+                        valid = true;
+                    }catch(WrongChoice e){
+                        e.what();
+                    }
+                }
+                valid = false;
+                while(!valid){
+                    cout << "Silahkan pilih kartu kanan/kiri " << players[choice2].getNickName() << endl;
+                    cout << "1. Kanan" << endl;
+                    cout << "2. Kiri" << endl;
+                    try{
+                        index2 = getInput(2);
+                        valid = true;
+                    }catch(WrongChoice e){
+                        e.what();
+                    }
+                }
+            }
+            pair<int, char> firstCard = players[choice1].getOwnedCard().getACard(index1-1);
+            pair<int, char> secondCard = players[choice2].getOwnedCard().getACard(index2-1);
+            players[choice1].getOwnedCard().setACard(index1-1, secondCard);
+            players[choice2].getOwnedCard().setACard(index2-1, firstCard);
+        }
+    }else{
+        WrongAbilityCard e;
+        throw e;
+    }
+}
+
+void PlayerAction::SWITCH(vector<PlayerAction>& players){
+    if(this->PlayerAbility == "Switch"){
+        if(abilityUsed){
+            HaveBeenUsed e;
+            throw e;
+        }else{
+            cout << getNickName() << " melakukan switch!" << endl;
+            int choice;
+            vector<PlayerAction> target;
+            cout << "Kartumu sekarang adalah:" << endl;
+            getOwnedCard().printCard();
+            bool valid = false;
+            while(!valid){
+                cout << "Silahkan pilih pemain yang kartunya ingin anda tukar:" << endl;
+                target = printTarget(getNickName(), players, "0");
+                try{
+                    choice = getInput(target.size());
+                    valid = true;
+                }catch(WrongChoice e){
+                    e.what();
+                }
+            }
+            choice = findIndex(target[choice-1], players);
+            Deck temp = getOwnedCard();
+            getOwnedCard() = players[choice].getOwnedCard();
+            players[choice].getOwnedCard() = temp;
+            cout << "Kedua kartu " << getNickName() << " telah ditukar dengan " << players[choice].getNickName() << endl;
+            cout << "Kartumu sekarang adalah:" << endl;
+            getOwnedCard().printCard();
+        }
+    }else{
+        WrongAbilityCard e;
+        throw e;
+    }
+}
+
+void PlayerAction::ABILITYLESS(vector<PlayerAction>& players){
+    if(this->PlayerAbility == "AbilityLess"){
+        if(abilityUsed){
+            HaveBeenUsed e;
+            throw e;
+        }else{
+            if(allTargetUsedAbilityCard(players, getNickName())){
+                AllTargetUsedAbilityCard e;
+                throw e;
+            }else{
+                cout << getNickName() << " akan mematikan ability lawan!" << endl;
+                int choice;
+                vector<PlayerAction> target;
+                bool valid = false;
+                while(!valid){
+                    cout << "Silahkan pilih pemain yang kartu abilitinya ingin anda matikan:" << endl;
+                    target = printTarget(getNickName(), players, "0");
+                    try{
+                        choice = getInput(target.size());
+                        valid = true;
+                    }catch(WrongChoice e){
+                        e.what();
+                    }
+                }
+                choice = findIndex(target[choice-1], players);
+                try{
+                    players[choice].setUsed(true);
+                }catch(HaveBeenUsed e){
+                    cout << "Kartu ability " << players[choice].getNickName() << " telah dipakai sebelumnya. Yah, sayang penggunaan kartu ini sia-sia." << endl;
+                }
+            }
+        }
+    }else{
+        WrongAbilityCard e;
+        throw e;
+    }
+}
+
+void PlayerAction::setUsed(bool abilityUse){
+    if(this->abilityUsed){
+        HaveBeenUsed e;
+        throw e;
+    }else{
+        this->abilityUsed = true;
+    }
+}
+
+bool PlayerAction::allTargetUsedAbilityCard(vector<PlayerAction> players, string nickName){
+    for(int i= 0; i< players.size(); i++){
+        if(players[i].getNickName() != nickName && !players[i].getUsed()){
+            return false;
+        }
+    }
+    return true;
+}
+
+bool PlayerAction::getUsed(){
+    return abilityUsed;
+}
+
+vector<PlayerAction> PlayerAction::printTarget(string nickName, vector<PlayerAction>& players, string firstPick){
+    int number = 1;
+    vector<PlayerAction> target;
+    if(firstPick == "0"){
+        for(auto player: players){
+            if(player.getNickName() != nickName){
+                cout << number << ". " << player.getNickName() << endl;
+                target.push_back(player);
+                number++;
+            }
+        }
+    }else{
+        for(auto player: players){
+            if(player.getNickName() != nickName && player.getNickName() != firstPick){
+                cout << number << ". " << player.getNickName() << endl;
+                target.push_back(player);
+                number++;
+            }
+        }
+    }
+    return target;
+}
+
+int PlayerAction::findIndex(PlayerAction target, vector<PlayerAction>& players){
+    for(int i= 0; i< players.size(); i++){
+        if(target.getNickName() == players[i].getNickName()){
+            return i;
+        }
+    }
+}
+
+int PlayerAction::getInput(int n){
+    int choice;
+    cin >> choice;
+    if(choice >= 1 && choice <=n){
+        return choice;
+    }else{
+        WrongChoice e;
+        throw e;
+    }
+}
+
+void PlayerAction::HALF(GameState& state){
+    if(state.getRewardPoint()>1){
+        int earlyReward = state.getRewardPoint();
+        state.halfRewardPoint();
+        cout << getNickName() << " melakukan HALF! Poin hadiah turun dari " << earlyReward << " menjadi " << state.getRewardPoint() << "!" << endl;
+    }else{
+        LeftOne e;
+        throw e;
+    }
+}
+
+void PlayerAction::QUARTER(GameState& state){
+    if(this->PlayerAbility == "Quarter"){
+        if(abilityUsed){
+            HaveBeenUsed e;
+            throw e;
+        }else{
+            if(state.getRewardPoint()>1){
+                int earlyReward = state.getRewardPoint();
+                state.quarterRewardPoint();
+                cout << getNickName() << " melakukan QUARTER! Poin hadiah turun dari " << earlyReward << " menjadi " << state.getRewardPoint() << "!" << endl;
+            }else{
+                LeftOne e;
+                throw e;
+            }
+        }
+    }else{
+        WrongAbilityCard e;
+        throw e;
+    }
+}
+
+string PlayerAction::getAbility(){
+    return this->PlayerAbility;
+}
 
 // void PlayerAction::ABILITY(vector<PlayerAction>& player, GameState& state, Deck& deck, PlayerAction& currentPlayer){
 //     this->ability->callCard(player, state, deck, currentPlayer);
@@ -99,8 +367,7 @@ void PlayerAction::printPlayerInfo(){
     cout << "Point : " << this->playerPoint << endl;
     cout << "Card : " << endl;
     Player::getOwnedCard().printCard();
-    cout << endl;
-    // cout << "Ability Card : " << getAbility() << endl;
+    cout << "Ability Card : " << getAbility() << endl;
     // cout << "Description  : " << endl;
     // getAbilityInfo();
     // cout << endl;

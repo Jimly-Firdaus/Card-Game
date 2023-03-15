@@ -76,7 +76,7 @@ bool AbilityLess::checkTarget(string nickNameTarget, string nickNameCurrent, vec
         throw e;
     }else{
         for(int i= 0; i< player.size(); i++){
-            if(this->player[i].getNickName() == nickNameTarget){
+            if(player[i].getNickName() == nickNameTarget){
                 return true;
             }else{
                 WrongChoice e;

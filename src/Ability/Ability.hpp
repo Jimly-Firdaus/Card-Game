@@ -5,20 +5,12 @@
 // #include "../player/player.hpp"
 #include "../Exception/Exception.hpp"
 #include "../GameState/GameState.hpp"
-// #include "../Player/playerAction.hpp"
-#include "../Player/PlayerCollection.hpp"
+#include "../Player/playerAction.hpp"
 using namespace std;
 
 class Ability{
     public:
-        /**
-        * Call card ability. (pure virtual)
-        * @param {player&} user Owner of the card
-        * @param {player&} target Target player
-        * @param {vector<player>&} playerOrder Player turn order
-        * @param {int&} tableReward Current table reward
-        * those parameters is written for ability usage completion, it can be used or not according to the need of the program.
-        */
+
         // virtual void callCard() = 0;
         virtual void callCard(vector<PlayerAction>& player, GameState& state, Deck& deck, PlayerAction currentPlayer) = 0;
         /**
