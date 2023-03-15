@@ -10,6 +10,7 @@
 #include <random>
 #include <utility>
 #include <fstream>
+#include "../Exception/Exception.hpp"
 
 using namespace std;
 

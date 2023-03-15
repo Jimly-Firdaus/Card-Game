@@ -148,9 +148,10 @@ bool Deck::validDeckCard(pair<vector<pair<int, char> >, vector<string> > result)
             }
         }
 
-        if (!valid)
+        if (!valid){
+            MapElementNotFound e;
             throw "Invalid Input!"; // Tambahin input yang ga ketemu
-
+        }
         return valid;
     }
 }
