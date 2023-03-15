@@ -122,7 +122,7 @@ bool Deck::validDeckCard(pair<vector<pair<int, char> >, vector<string> > result)
     {
         if (count(deck.begin(), deck.end(), deck[i]) > 1)
         {
-            cout << "There's more than one card <" << deck[i].first << ", " << deck[i].second << ">" << endl;
+            cout << "Deck <" << deck[i].first << ", " << deck[i].second << "> more than one" << endl;
             valid = false;
         }
     }
@@ -130,12 +130,12 @@ bool Deck::validDeckCard(pair<vector<pair<int, char> >, vector<string> > result)
     {
         if (count(ability.begin(), ability.end(), ability[i]) > 1)
         {
-            cout << "There's more than one ability card <" << ability[i] << ">" << endl;
+            cout << "Ability <" << ability[i] << "> more than one" << endl;
             valid = false;
         }
     }
 
-    if (deck.size() != 52 && ability.size() != 7 && !valid)
+    if (deck.size() != 52 && ability.size() != 7 && valid)
     {
         valid = false;
     }
@@ -151,16 +151,10 @@ bool Deck::validDeckCard(pair<vector<pair<int, char> >, vector<string> > result)
                 vector<pair<int, char> >::iterator itr = find(deck.begin(), deck.end(), make_pair(i, color[j]));
                 if (itr == deck.end())
                 {
+                    cout << "Cant find card <" << i << "," << color[j] << ">" << endl;
                     valid = false;
                 }
             }
-        }
-
-        if (!valid)
-        {
-            MapElementNotFound e;
-            cout << "Cant find card <" << i << "," << color[j] << ">" << endl;
-            throw e;
         }
 
         string abilityList[7] = {"Re-Roll", "Quadruple", "Quarter", "Reverse", "Swap", "Switch", "Abilityless"};
@@ -173,12 +167,11 @@ bool Deck::validDeckCard(pair<vector<pair<int, char> >, vector<string> > result)
                 valid = false;
             }
         }
-
-        if (!valid)
-        {
-            MapElementNotFound e;
-            throw e;
-        }
+    }
+    if (!valid)
+    {
+        MapElementNotFound e;
+        throw e;
     }
     return valid;
 }
