@@ -4,8 +4,9 @@
 #define vector Vector
 #include <iostream>
 #include <cstring>
+#include <string>
 #include <vector>
-#include <array>
+// #include <array>
 #include <algorithm>
 #include <random>
 #include <utility>
@@ -35,7 +36,7 @@ public:
 
     void setACard(int idx, pair<int, char> card);
     // Generate Card From File
-    // pair<vector<pair<int, char> >, vector<string> > Deck::cardFromFile(string fileName);
+    pair<vector<pair<int, char> >, vector<string> > Deck::cardFromFile(string fileName);
 
     /*
     52 baris pertama pada deck card berisi DeckCard dengan format :
