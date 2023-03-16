@@ -43,6 +43,10 @@ void Player::setNickName(string nickName){
 Deck Player::getOwnedCard(){
     return this->ownedCard;
 }
+
+void Player::setACardPlayer(int idx, pair<int, char> card){
+    this->ownedCard.setACard(idx, card);
+}
 // #include "../Deck/Deck.hpp"
 // #include <iostream>
 // using namespace std;

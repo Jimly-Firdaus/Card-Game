@@ -32,6 +32,7 @@ public:
     void setNickName(string nickName); // done
     string getNickName(); // done
     Deck getOwnedCard(); // done
+    void setACardPlayer(int idx, pair<int, char> card);
     // Player(Deck &fullCard);        // Default Constructor
     // Player(Deck ownedCard, int playerPoint, string ability, string nickName, int idPlayer); // User-defined Constructor
     // // Setiap instantiate, menerima deck owned card yang dirandom secara langsung
