@@ -49,9 +49,9 @@ int main(){
     // cout << "===================" << endl;
     // player.HALF(state);
     // cout << "This is reward point :" << state.getRewardPoint() << endl;
-    // player.setNickName()
-    // player.getCard(deck);
-    // player.getAbilityCard(abilities);
-    // player.printPlayerInfo();
-    // player.playerPlay(deck, state, players);
+    // player.setNickName();
+    player.getCard(deck);
+    player.getAbilityCard(abilities);
+    player.printPlayerInfo();
+    player.playerPlay(deck, state, players);
 }
