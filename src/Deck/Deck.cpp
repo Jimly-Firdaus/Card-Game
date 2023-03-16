@@ -47,7 +47,7 @@ pair<vector<pair<int, char> >, vector<string> > Deck::cardFromFile(string fileNa
     {
         // Read from the txt file
         ifstream readFile;
-        string filePath = "../../test/" + fileName + ".txt";
+        string filePath = "../test/" + fileName + ".txt";
         readFile.open(filePath.c_str(), ios::in);
         if (!readFile) {
             FileNotFound e;
@@ -58,7 +58,7 @@ pair<vector<pair<int, char> >, vector<string> > Deck::cardFromFile(string fileNa
         pair<int, char> newElement;
         while (getline(readFile, textRead))
         {
-            if (idx < 14)
+            if (idx < 19)
             {
                 string el1 = "";
                 string el2 = "";
@@ -223,4 +223,8 @@ void Deck::printCard()
             cout << i + 1 << ". <" << cards[i].first << ", " << cards[i].second << ">" << endl;
         }
     }
+}
+
+void Deck::setACard(int idx, pair<int, char> card){
+    this->cards[idx] = card;
 }
