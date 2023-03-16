@@ -45,7 +45,6 @@ void Game::startGame() {
             this->fileConfig = choice == "y";
 
             // Reinstantiate state & deck
-            
             Deck gameDeck;
             if (!this->fileConfig) {
                 // Refill & Reshuffle deck 
@@ -56,7 +55,9 @@ void Game::startGame() {
                     }
                 }
                 gameDeck.shuffleCard();
+            // cout << "SIGSEGVVVVVVV - if" << endl;
             } else {
+                // cout << "SIGSEGVVVVVVV - else" << endl;
                 // Get card config from txt
                 string filename;
                 // getline(cin, filename);
@@ -73,23 +74,27 @@ void Game::startGame() {
                 }
                 gameDeck = deckCards;
             }
-            
+            // cout << "SIGSEGVVVVVVV - player" << endl;
             for (auto& player : players) {
                 player.getCard(gameDeck);
             }
-            
+            // cout << "SIGSEGVVVVVVV - after-player" << endl;
             // Round loop
             resetRound();
-            while (this->currentRound < 7)
+            restoreAbilityCard();
+            gamestate.reset();
+            // int currentRound = 1;
+            // cout << "SEGG FAULTT" << endl;
+            while (currentRound < 7)
             {
+                cout << "--------- NEW ROUND --------" << endl;
                 // if round 2 then distribute ability card
-                if(this->currentRound == 1){
-                    for(auto& player : players){
-                        player.getAbilityCard(this->baseAbility);
-                        
+                if(currentRound == 2){
+                    for(int i = 0; i < players.size(); i++){
+                        players[i].getAbilityCard(this->baseAbility);
                     }
                 }
-                if (this->currentRound >= 1) {
+                if (currentRound >= 2) {
                     gamestate.addTableCard(gameDeck);
                 }
                 // play loop
@@ -104,15 +109,15 @@ void Game::startGame() {
                     cout << endl;
                     cout << "Reward Point: " << gamestate.getRewardPoint();
                     cout << endl;
-                    // cout << "Current Player Card: ";
                     players[gamestate.getCurrentTurn()-1].playerPlay(gameDeck, gamestate, players);
                     gamestate.nextPlayerOrder();
                     maxTurn++;
                 }
-                cout << "--------Round: " << this->currentRound << endl;
-                cout << "HERE" << endl;
-                if (this->currentRound == 6) {
-                    bool haveWinner = endCurrentGame(players);
+                cout << "--------Round: " << currentRound << "-----------" << endl;
+                // cout << "HERE" << endl;
+                if (currentRound == 6) {
+                    // cout << "HERE";
+                    // bool haveWinner = endCurrentGame(players);
                     vector<Combination> playersCombination;
                     for (auto player : players) {
                         Combination c(gamestate.getTableCard(), player.getOwnedCard(), player.getNickName());
@@ -127,8 +132,9 @@ void Game::startGame() {
                     }
                     cout << result.first << " win this game with " << result.second << endl;
                 }
-                cout << "FINISHED ROUND : " << this->currentRound;
+                cout << "FINISHED ROUND : " << currentRound << endl;
                 nextRound();
+                // currentRound++;
             }
             if (endCurrentGame(players)) {
                 foundWinner = true;
@@ -158,11 +164,16 @@ void Game::setEndGameStatus(bool status) {
 }
 
 void Game::resetRound() {
-    this->currentRound = 0;
+    this->currentRound = 1;
 }
 
 void Game::nextRound() {
     this->currentRound++;
+}
+
+void Game::restoreAbilityCard() {
+    vector<string> baseAbility = {"Re-Roll", "Quadruple", "Quarter", "ReverseDirection", "SwapCard", "Switch", "AbilityLess"};
+    this->baseAbility = baseAbility;
 }
 
 void Game::restartGame() {

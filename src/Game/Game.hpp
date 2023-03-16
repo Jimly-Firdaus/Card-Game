@@ -21,6 +21,7 @@ class Game {
         void endGame();
         void setBaseAbility(vector<string> baseAbility);
         void setEndGameStatus(bool status);
+        void restoreAbilityCard();
         bool validateUsername(vector<PlayerAction> players, string newUsername);
         void resetRound();
         void nextRound();
