@@ -14,16 +14,6 @@ void Player::getCard(Deck& Deck){
     this->ownedCard + secondCard;
 }
 
-void Player::printPlayerOption(){
-    cout << "=======================" << endl;
-    cout << "What Do You Want To Do?" << endl;
-    cout << "=======================" << endl;
-    cout << "1. Double" << endl;
-    cout << "2. Next" << endl;
-    cout << "3. Half" << endl;
-    cout << "4. Ability" << endl;
-}
-
 long long Player::getPlayerPoint(){
     return this->playerPoint;
 }
