@@ -93,4 +93,12 @@ struct AllTargetUsedAbilityCard: public exception
 	}
 };
 
+struct WrongInput : public exception
+{
+	const char* what() const throw()
+	{
+		return "Wrong input";
+	}
+};
+
 #endif
