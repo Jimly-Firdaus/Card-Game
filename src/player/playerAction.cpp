@@ -158,8 +158,9 @@ void PlayerAction::REROLL(Deck& deck){
         if(abilityUsed){
             HaveBeenUsed e;
             throw e;
-        }else{
-            getOwnedCard().getCards().clear();
+        } else {
+            this->ownedCard - this->ownedCard.getACard(0);
+            this->ownedCard - this->ownedCard.getACard(1);
             getCard(deck);
             cout << "Melakukan pembuangan kartu yang dimiliki" << endl;
             cout << "Kamu mendapatkan 2 kartu yang baru yaitu:" << endl;
@@ -224,8 +225,10 @@ void PlayerAction::SWAPCARD(vector<PlayerAction>& players, bool random){
                 try{
                     choice1 = getInput(target.size());
                     valid = true;
-                }catch(exception& e){
+                }catch(WrongChoice e){
                     cout << e.what();
+                }catch(WrongInput e){
+                    cout << e.what() << endl;
                 }
             }
             string firstPick = target[choice1-1].getNickName();
@@ -238,8 +241,10 @@ void PlayerAction::SWAPCARD(vector<PlayerAction>& players, bool random){
                 try{
                     choice2 = getInput(target.size());
                     valid = true;
-                }catch(exception& e){
-                    e.what();
+                }catch(WrongChoice e){
+                    cout << e.what() << endl;
+                }catch(WrongInput e){
+                    cout << e.what() << endl;
                 }
             }
             choice2 = findIndex(target[choice2-1], players);
@@ -252,12 +257,14 @@ void PlayerAction::SWAPCARD(vector<PlayerAction>& players, bool random){
                 valid = false;
                 while(!valid){
                     cout << "Silahkan pilih kartu kanan/kiri " << players[choice1].getNickName() << endl;
-                    cout << "1. Kanan" << endl;
-                    cout << "2. Kiri" << endl;
+                    cout << "1. Kiri" << endl;
+                    cout << "2. Kanan" << endl;
                     try{
                         index1 = getInput(2);
                         valid = true;
                     }catch(WrongChoice e){
+                        cout << e.what() << endl;
+                    }catch(WrongInput e){
                         cout << e.what() << endl;
                     }
                 }
@@ -271,13 +278,26 @@ void PlayerAction::SWAPCARD(vector<PlayerAction>& players, bool random){
                         valid = true;
                     }catch(WrongChoice e){
                         cout << e.what() << endl;
+                    }catch(WrongInput e){
+                        cout << e.what() << endl;
                     }
                 }
             }
+            cout << "Kartu " << players[choice1].getNickName() << " sebelum adalah:" << endl;
+            players[choice1].getOwnedCard().printCard();
+            cout << "Kartu " << players[choice2].getNickName() << " sebelum adalah:" << endl;
+            players[choice2].getOwnedCard().printCard();
+
             pair<int, char> firstCard = players[choice1].getOwnedCard().getACard(index1-1);
             pair<int, char> secondCard = players[choice2].getOwnedCard().getACard(index2-1);
-            players[choice1].getOwnedCard().setACard(index1-1, secondCard);
-            players[choice2].getOwnedCard().setACard(index2-1, firstCard);
+
+            players[choice1].setACardPlayer(index1-1, secondCard);
+            players[choice2].setACardPlayer(index2-1, firstCard);
+
+            cout << "Kartu " << players[choice1].getNickName() << " sekarang adalah:" << endl;
+            players[choice1].getOwnedCard().printCard();
+            cout << "Kartu " << players[choice2].getNickName() << " sekarang adalah:" << endl;
+            players[choice2].getOwnedCard().printCard();
         }
     }else{
         WrongAbilityCard e;
@@ -305,20 +325,28 @@ void PlayerAction::SWITCH(vector<PlayerAction>& players){
                     valid = true;
                 }catch(WrongChoice e){
                     cout << e.what() << endl;
+                }catch(WrongInput e){
+                    cout << e.what() << endl;
                 }
             }
             choice = findIndex(target[choice-1], players);
             Deck temp = getOwnedCard();
-            getOwnedCard() = players[choice].getOwnedCard();
-            players[choice].getOwnedCard() = temp;
+            this->setOwnedCard(players[choice].getOwnedCard());
+            players[choice].setOwnedCard(temp);
             cout << "Kedua kartu " << getNickName() << " telah ditukar dengan " << players[choice].getNickName() << endl;
             cout << "Kartumu sekarang adalah:" << endl;
             getOwnedCard().printCard();
+            cout << "Kartu lawan: " << endl;
+            players[choice].getOwnedCard().printCard();
         }
     }else{
         WrongAbilityCard e;
         throw e;
     }
+}
+
+void PlayerAction::setOwnedCard(const Deck& deck){
+    this->ownedCard = deck;
 }
 
 void PlayerAction::ABILITYLESS(vector<PlayerAction>& players){
@@ -343,11 +371,14 @@ void PlayerAction::ABILITYLESS(vector<PlayerAction>& players){
                         valid = true;
                     }catch(WrongChoice e){
                         cout << e.what() << endl;
+                    }catch(WrongInput e){
+                        cout << e.what() << endl;
                     }
                 }
                 choice = findIndex(target[choice-1], players);
                 try{
                     players[choice].setUsed(true);
+                    cout << "Kartu ability " << players[choice].getNickName() << " telah dimatikan." << endl;
                 }catch(HaveBeenUsed e){
                     cout << "Kartu ability " << players[choice].getNickName() << " telah dipakai sebelumnya. Yah, sayang penggunaan kartu ini sia-sia." << endl;
                 }
@@ -416,11 +447,18 @@ int PlayerAction::findIndex(PlayerAction target, vector<PlayerAction>& players){
 int PlayerAction::getInput(int n){
     int choice;
     cin >> choice;
-    if(choice >= 1 && choice <=n){
-        return choice;
-    }else{
-        WrongChoice e;
+    if(cin.fail()){
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        WrongInput e;
         throw e;
+    }else{
+        if(choice >= 1 && choice <=n){
+            return choice;
+        }else{
+            WrongChoice e;
+            throw e;
+        }
     }
 }
 

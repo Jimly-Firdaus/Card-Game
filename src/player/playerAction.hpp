@@ -53,6 +53,7 @@ public:
     // void ABILITY(vector<PlayerAction>& player, GameState& state, Deck& deck, PlayerAction& currentPlayer);
     // void getAbilityInfo();
     void printPlayerInfo(); // done
+    void setOwnedCard(const Deck& deck);
     bool operator<(PlayerAction& other);
     bool operator>(PlayerAction& other);
     // PlayerAction(Deck & fullCard);
