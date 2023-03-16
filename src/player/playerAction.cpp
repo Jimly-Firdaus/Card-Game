@@ -16,91 +16,107 @@ void PlayerAction::playerPlay(Deck& deck, GameState& state, vector<PlayerAction>
     cout << "Command: ";
     string command;
     cin >> command;
-    if(command == "NEXT"){
-        NEXT();
-    }else if(command == "REROLL"){
-        try{
-            REROLL(deck);
-            setUsed(true);
-        }catch(HaveBeenUsed e){
-            cout << "Kartu Reroll " <<  e.what() << endl;
-            playerPlay(deck, state, players);
-        }catch (WrongAbilityCard e){
-            cout << e.what() << "Reroll" << endl;
-            playerPlay(deck, state, players);
+    if(command == "NEXT" || command == "REROLL" || command == "DOUBLE" || command == "QUADRUPLE" || command == "HALF" || command == "QUARTER" || command == "REVERSE" || command == "SWAPCARDRANDOM" || command == "SWAPCARD" || command == "SWITCH" || command == "ABILITYLESS")
+    {
+        if(command == "NEXT"){
+            NEXT();
+        }else if(command == "REROLL"){
+            try{
+                REROLL(deck);
+                setUsed(true);
+            }catch(HaveBeenUsed e){
+                cout << "Kartu Reroll " <<  e.what() << endl;
+                playerPlay(deck, state, players);
+            }catch (WrongAbilityCard e){
+                cout << e.what() << "Reroll" << endl;
+                playerPlay(deck, state, players);
+            }
+        }else if(command == "DOUBLE"){
+            DOUBLE(state);
+        }else if(command == "QUADRUPLE"){
+            try{
+                QUADRUPLE(state);
+                setUsed(true);
+            }catch(WrongAbilityCard e){
+                cout << e.what() << "Quadruple" << endl;
+                playerPlay(deck, state, players);
+            }
+        }else if(command == "HALF"){
+            try{
+                HALF(state);
+            }catch(exception& e){
+                cout << e.what() << endl;
+            }
+        }else if(command == "QUARTER"){
+            try{
+                QUARTER(state);
+                setUsed(true);
+            }catch(LeftOne e){
+                cout << e.what() << endl;
+            }catch(WrongAbilityCard e){
+                cout << e.what() << endl;
+                playerPlay(deck, state, players);
+            }
+        }else if(command == "REVERSE"){
+            try{
+                REVERSE(state);
+                setUsed(true);
+            }catch(HaveBeenUsed e){
+                cout << "Oops, kartu ability reversemu telah dimatikan sebelumnya :(" << endl;
+                cout << "Silahkan lakukan perintah lain." << endl;
+                playerPlay(deck, state, players);
+            }catch (WrongAbilityCard e){
+                cout << e.what() << "Reverse" << endl;
+                playerPlay(deck, state, players);
+            }
+        }else if(command == "SWAPCARDRANDOM"){
+            try{
+                SWAPCARD(players, true);
+                setUsed(true);
+            }catch(HaveBeenUsed e){
+                cout << "Kartu Swapcard " <<  e.what() << endl;
+                playerPlay(deck, state, players);
+            }catch (WrongAbilityCard e){
+                cout << e.what() << "Swapcard" << endl;
+                playerPlay(deck, state, players);
+            }
+        }else if(command == "SWAPCARD"){
+            try{
+                SWAPCARD(players, false);
+                setUsed(true);
+            }catch(HaveBeenUsed e){
+                cout << "Kartu Swapcard " <<  e.what() << endl;
+                playerPlay(deck, state, players);
+            }catch (WrongAbilityCard e){
+                cout << e.what() << "Swapcard" << endl;
+                playerPlay(deck, state, players);
+            }
+        }else if(command == "SWITCH"){
+            try{
+                SWITCH(players);
+                setUsed(true);
+            }catch(HaveBeenUsed e){
+                cout << "Kartu Switch " <<  e.what() << endl;
+                playerPlay(deck, state, players);
+            }catch (WrongAbilityCard e){
+                cout << e.what() << "Switch" << endl;
+                playerPlay(deck, state, players);
+            }
+        }else if(command == "ABILITYLESS"){
+            try{
+                ABILITYLESS(players);
+                setUsed(true);
+            }catch(HaveBeenUsed e){
+                cout << "Kartu AbilityLess " <<  e.what() << endl;
+                playerPlay(deck, state, players);
+            }catch (WrongAbilityCard e){
+                cout << e.what() << "AbilityLess" << endl;
+                playerPlay(deck, state, players);
+            }
         }
-    }else if(command == "DOUBLE"){
-        DOUBLE(state);
-    }else if(command == "QUADRUPLE"){
-        try{
-            QUADRUPLE(state);
-            setUsed(true);
-        }catch(WrongAbilityCard e){
-            cout << e.what() << "Quadruple" << endl;
-            playerPlay(deck, state, players);
-        }
-    }else if(command == "HALF"){
-        try{
-            HALF(state);
-        }catch(exception& e){
-            cout << e.what() << endl;
-        }
-    }else if(command == "QUARTER"){
-        try{
-            QUARTER(state);
-            setUsed(true);
-        }catch(LeftOne e){
-            cout << e.what() << endl;
-        }catch(WrongAbilityCard e){
-            cout << e.what() << endl;
-            playerPlay(deck, state, players);
-        }
-    }else if(command == "REVERSE"){
-
-    }else if(command == "SWAPCARDRANDOM"){
-        try{
-            SWAPCARD(players, true);
-            setUsed(true);
-        }catch(HaveBeenUsed e){
-            cout << "Kartu Reroll " <<  e.what() << endl;
-            playerPlay(deck, state, players);
-        }catch (WrongAbilityCard e){
-            cout << e.what() << "Reroll" << endl;
-            playerPlay(deck, state, players);
-        }
-    }else if(command == "SWAPCARD"){
-        try{
-            SWAPCARD(players, false);
-            setUsed(true);
-        }catch(HaveBeenUsed e){
-            cout << "Kartu Reroll " <<  e.what() << endl;
-            playerPlay(deck, state, players);
-        }catch (WrongAbilityCard e){
-            cout << e.what() << "Reroll" << endl;
-            playerPlay(deck, state, players);
-        }
-    }else if(command == "SWITCH"){
-        try{
-            SWITCH(players);
-            setUsed(true);
-        }catch(HaveBeenUsed e){
-            cout << "Kartu Reroll " <<  e.what() << endl;
-            playerPlay(deck, state, players);
-        }catch (WrongAbilityCard e){
-            cout << e.what() << "Reroll" << endl;
-            playerPlay(deck, state, players);
-        }
-    }else if(command == "ABILITYLESS"){
-        try{
-            ABILITYLESS(players);
-            setUsed(true);
-        }catch(HaveBeenUsed e){
-            cout << "Kartu Reroll " <<  e.what() << endl;
-            playerPlay(deck, state, players);
-        }catch (WrongAbilityCard e){
-            cout << e.what() << "Reroll" << endl;
-            playerPlay(deck, state, players);
-        }
+    }else{
+        cout << "Command Wrong" << endl;
+        playerPlay(deck, state, players);
     }
 }
 
@@ -173,11 +189,12 @@ void PlayerAction::QUADRUPLE(GameState& state){
 void PlayerAction::REVERSE(GameState& state){
     if(this->PlayerAbility == "ReverseDirection"){
         if(abilityUsed){
-            cout << "Oops, kartu ability reversemu telah dimatikan sebelumnya :(" << endl;
-            cout << "Silahkan lakukan perintah lain." << endl;
+            HaveBeenUsed e;
+            throw e;
         }else{
             cout << getNickName() << " melakukan reverse!" << endl;
-            
+            state.setReverseStatus(true);
+            state.setReverseStatusChange(true);
         }
     }else{
         WrongAbilityCard e;
