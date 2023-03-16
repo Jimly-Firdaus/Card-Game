@@ -250,15 +250,14 @@ void GameState::showPlayerOrder()
 
 void GameState::reset() {
     this->rewardPoint = 64;
-
+    // cout << "SEGGGGGGGVVVV reset table cardd" << endl;
     // Empty Table Card
-    for (int i = 0; i < this->tableCard.getCards().size(); i++) {
-        this->tableCard.getCards().erase(this->tableCard.getCards().begin());
-    }
-
+    this->tableCard.getCards().clear();
+    // cout << "SEGGGGGGGVVVV reset" << endl;
     for (int i = 0; i < PLAYERORDER_LENGTH; i++) {
         this->playerOrder[i] = 0;
     }
+    // cout << "SEGGGGGGGVVVV after -- reset" << endl;
 
     this->currentTurn = 1;
     this->reverseStatus = false;
