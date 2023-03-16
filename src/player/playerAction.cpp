@@ -392,6 +392,7 @@ int PlayerAction::findIndex(PlayerAction target, vector<PlayerAction>& players){
             return i;
         }
     }
+    return -1;
 }
 
 int PlayerAction::getInput(int n){
@@ -469,6 +470,15 @@ void PlayerAction::printPlayerInfo(){
     cout << endl;
     cout << "===================================" << endl;
 }
+
+bool PlayerAction::operator<(PlayerAction& other) {
+    return this->getPlayerPoint() < other.getPlayerPoint();
+}
+
+bool PlayerAction::operator>(PlayerAction& other) {
+    return this->getPlayerPoint() > other.getPlayerPoint();
+}
+
 // // #include <iostream>
 // // #include "playerAction.hpp"
 

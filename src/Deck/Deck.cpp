@@ -156,11 +156,12 @@ bool Deck::validDeckCard(pair<vector<pair<int, char> >, vector<string> > result)
             }
         }
 
-        if (!valid)
-            throw "Invalid Input!"; // Tambahin input yang ga ketemu
+        if (!valid){
+            throw "Invalid Input!";
+        } // Tambahin input yang ga ketemu
 
-        return valid;
     }
+    return valid;
 }
 // Shuffle Card
 void Deck::shuffleCard()

@@ -1,7 +1,7 @@
 #include "GameState.hpp"
-#include <iostream>
+// #include <iostream>
+// using namespace std;
 #include <cmath>
-using namespace std;
 
 int GameState::totalTurn = 0;
 int GameState::round = 1;

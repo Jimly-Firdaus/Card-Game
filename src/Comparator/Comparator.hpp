@@ -2,11 +2,12 @@
 #define COMPARATOR_HPP
 
 #include "Handler.hpp"
+#include "../player/playerAction.hpp"
 
 template <class T>
 class Comparator : public Handler {
     public:
-        vector<T> sortVector(vector<T>, bool asc = true);
+        void sortVector(vector<T>&, bool asc);
         bool descCallbackFn(T, T);
         pair<string, string> compare(const vector<Combination>&);
         

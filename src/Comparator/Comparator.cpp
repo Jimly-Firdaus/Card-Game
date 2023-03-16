@@ -1,9 +1,9 @@
 #include "Comparator.hpp"
 
 template <class T>
-vector<T> Comparator<T>::sortVector(vector<T> v, bool asc) {
-    if (asc) return sort(v.begin(), v.end()); 
-    else return sort(v.begin(), v.end(), descCallbackFn);
+void Comparator<T>::sortVector(vector<T>& v, bool asc) {
+    if (asc) sort(v.begin(), v.end()); 
+    else sort(v.begin(), v.end(), [this](T a, T b) {return descCallbackFn(a, b);});
 }
 
 template <class T>
@@ -13,7 +13,7 @@ bool Comparator<T>::descCallbackFn(T a, T b) {
 
 template <class T>
 pair<string, string> Comparator<T>::compare(const vector<Combination>& v) {
-    return Handler::compare(v);
+    return {"", ""};
 }
 
 pair<string, string> Comparator<Combination>::compare(const vector<Combination>& arrOfPlayerCombination) {
@@ -30,3 +30,6 @@ pair<string, string> Comparator<Combination>::compare(const vector<Combination>&
     if (checker.size() == 1) return {checker[0].getOwnerCard(), checker[0].getStrongestCombination().second};
     else return deepCompare(checker);
 }
+
+template class Comparator<PlayerAction>;
+template class Comparator<Combination>;

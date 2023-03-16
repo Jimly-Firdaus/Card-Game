@@ -162,6 +162,7 @@ pair<string, string> Handler::fullHouseHandler(vector<Combination> arrOfPlayerCo
         pair<string, string> result = getPossibleOfOne(arrOfPlayerCombination);
         return {result.first, "Full House with " + result.second};
     }
+    return {"", ""};
 }
 
 pair<string, string> Handler::flushHandler(vector<Combination> arrOfPlayerCombination)
