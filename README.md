@@ -25,7 +25,7 @@ Dalam rangka merayakan pesta panen gula di kerajaan permen, akan diadakan kompet
 ```shell
 ./run.sh
 ```
-- Double klik pada file `run.sh`
+NB: jika tidak bisa harap menggunakan dos2unix run.sh untuk mengconvert file ke Unix/Linux line endings.
 
 ## Tech Stack
 ### Programming Language
