@@ -18,7 +18,7 @@ class Player
 {
 protected:
     Deck ownedCard; // Hand card yang dimiliki oleh setiap pemain (termasuk ability card)
-    int playerPoint;
+    long long playerPoint;
     string nickName;
     // int idPlayer;
 
@@ -27,8 +27,8 @@ public:
     Player();
     void getCard(Deck& Deck); // done
     void printPlayerOption(); // done
-    int getPlayerPoint(); // done
-    void setPlayerPoint(int playerPoint); // done
+    long long getPlayerPoint(); // done
+    void setPlayerPoint(long long playerPoint); // done
     void setNickName(string nickName); // done
     string getNickName(); // done
     Deck getOwnedCard(); // done

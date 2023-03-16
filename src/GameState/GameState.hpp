@@ -8,7 +8,7 @@ const int PLAYERORDER_LENGTH = 7;
 
 class GameState {
     private:
-        int rewardPoint;
+        long long rewardPoint;
         Deck tableCard;
         int playerOrder[PLAYERORDER_LENGTH];
         int currentTurn;
@@ -23,8 +23,8 @@ class GameState {
         GameState();
 
         // Getter & Setter
-        int getRewardPoint(); // Get game's current reward point
-        void setRewardPoint(int); // Set game's current reward point with desired value
+        long long getRewardPoint(); // Get game's current reward point
+        void setRewardPoint(long long); // Set game's current reward point with desired value
 
         int getCurrentTurn(); // Get game's current turn
         bool getReverseStatus(); // Get game's reverse status

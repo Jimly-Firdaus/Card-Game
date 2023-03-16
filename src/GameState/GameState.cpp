@@ -20,12 +20,12 @@ GameState::GameState()
     this->reverseStatusChange = false;
 }
 
-int GameState::getRewardPoint()
+long long GameState::getRewardPoint()
 {
     return this->rewardPoint;
 }
 
-void GameState::setRewardPoint(int x)
+void GameState::setRewardPoint(long long x)
 {
     this->rewardPoint = x;
 }
@@ -94,8 +94,9 @@ void GameState::setGameNumber(int x)
 
 void GameState::addTableCard(Deck &d)
 {
-    this->tableCard.getCards().push_back(d.getCards()[0]);
-    d.getCards().erase(d.getCards().begin());
+    pair<int, char> firstCard = d.getTopCard();
+    d - firstCard;
+    this->tableCard + firstCard;
 }
 
 void GameState::fourtimesRewardPoint()

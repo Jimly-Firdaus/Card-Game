@@ -24,7 +24,7 @@ void Player::printPlayerOption(){
     cout << "4. Ability" << endl;
 }
 
-int Player::getPlayerPoint(){
+long long Player::getPlayerPoint(){
     return this->playerPoint;
 }
 
@@ -32,7 +32,7 @@ string Player::getNickName(){
     return this->nickName;
 }
 
-void Player::setPlayerPoint(int playerPoint){
+void Player::setPlayerPoint(long long playerPoint){
     this->playerPoint = playerPoint;
 }
 
