@@ -41,17 +41,17 @@ int SwapCard::getInput()
     return idx;
 }
 
-void SwapCard::callCard(PlayerCollection &player, GameState &state, Deck &deck)
+void SwapCard::callCard(PlayerCollection &player, GameState &state, Deck &deck, PlayerAction& currentPlayer)
 {
     cout << "This is your target" << endl;
-    printTarget(player);
+    printTarget(player, currentPlayer);
     bool inputValid = false;
     string targetNickName;
     while (!inputValid)
     {
         try
         {
-            targetNickName = getTarget(player);
+            targetNickName = getTarget(player, currentPlayer);
         }
         catch (WrongChoice e)
         {
@@ -67,9 +67,9 @@ void SwapCard::callCard(PlayerCollection &player, GameState &state, Deck &deck)
     idxTarget = getInput();
     // swap(target, current, idxTarget, idxCurrent);
     pair<int, char> targetCard = player.getPlayer()[idxTargetNickName].getOwnedCard().getACard(idxTarget);
-    pair<int, char> currentCard = this->getOwnedCard().getACard(idxCurrent);
+    pair<int, char> currentCard = currentPlayer.getOwnedCard().getACard(idxCurrent);
     player.getPlayer()[idxTargetNickName].getOwnedCard().setACard(idxTarget, currentCard);
-    this->getOwnedCard().setACard(idxCurrent, targetCard);
+    currentPlayer.getOwnedCard().setACard(idxCurrent, targetCard);
 }
 
 string SwapCard::getChoice()
@@ -85,12 +85,12 @@ string SwapCard::getChoice()
     return choice;
 }
 
-void SwapCard::printTarget(PlayerCollection &player)
+void SwapCard::printTarget(PlayerCollection &player, PlayerAction& currentPlayer)
 {
     int n = 1;
     for (int i = 0; i < 7; i++)
     {
-        if (player.getPlayer()[i].getNickName() != this->nickName)
+        if (player.getPlayer()[i].getNickName() != currentPlayer.getNickName())
         {
             cout << n << ". " << player.getPlayer()[i].getNickName();
             n++;
@@ -98,12 +98,12 @@ void SwapCard::printTarget(PlayerCollection &player)
     }
 }
 
-string SwapCard::getTarget(PlayerCollection &player)
+string SwapCard::getTarget(PlayerCollection &player, PlayerAction& currentPlayer)
 {
     cout << "Please include your choice (nickname) : ";
     string choice;
     cin >> choice;
-    if (player.checkTarget(choice, this->nickName))
+    if (player.checkTarget(choice, currentPlayer.getNickName()))
     {
         return choice;
     }

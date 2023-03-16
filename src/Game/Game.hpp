@@ -4,6 +4,7 @@
 #include "../GameState/GameState.hpp"
 #include "../Player/PlayerCollection.hpp"
 #include "../Comparator/Comparator.hpp"
+#include <ctime>
 
 class Game {
     private:
@@ -25,7 +26,7 @@ class Game {
         void nextRound();
         void restartGame();
         vector<char> getBaseCardColor();
-        vector<string> getBaseAbility();
+        vector<string> getBaseAbility() const;
         bool endCurrentGame(vector<PlayerAction> players);
         void printGameResult(vector<PlayerAction> players);
         void getCommand(string& command);

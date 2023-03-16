@@ -47,7 +47,7 @@ int main()
     if (checker.size() > 1) {
         cout << "Found: " << checker.size() << " player that have the same combo" << endl;
         cout << "Combo: " << checker[0].getStrongestCombination().second << endl;
-        Comparator comparator;
+        Comparator<Combination> comparator;
         pair<string, string> winner = comparator.compare(checker);
         cout << "Winner: " << winner.first << "\nCombo: " << winner.second << endl;
     } else {

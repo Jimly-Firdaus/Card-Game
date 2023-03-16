@@ -35,6 +35,7 @@ int PlayerCollection::getTargetIdx(string targetNickName){
             return i;
         }
     }
+    return -1;
 }
 
 void PlayerCollection::printAllPlayer(){

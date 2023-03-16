@@ -65,7 +65,31 @@ struct HaveBeenUsed : public exception
 {
 	const char *what() const throw()
 	{
-		return "Card has been used!";
+		return "telah dimatikan sebelumnya";
+	}
+};
+
+struct WrongAbilityCard: public exception
+{
+	const char *what() const throw()
+	{
+		return "Eits, tidak bisa. Kamu tidak punya kartu Ability ";
+	}
+};
+
+struct LeftOne: public exception
+{
+	const char *what() const throw()
+	{
+		return "Sayangnya poin hadiah sudah bernilai 1. Poin hadiah tidak berubah.. Giliran dilanjut!";
+	}
+};
+
+struct AllTargetUsedAbilityCard: public exception
+{
+	const char* what() const throw()
+	{
+		return "Eits, ternyata semua pemain sudah memakai kartu kemampuan. Yah, kamu sendiri deh, kemampuanmu menjadi abilityless. Yah, penggunaan kartu ini sia-sia.";
 	}
 };
 

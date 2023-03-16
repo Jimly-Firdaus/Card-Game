@@ -3,10 +3,11 @@
 
 // #include "../Deck/Deck.hpp"
 #include "../GameState/GameState.hpp"
+// #include "../Ability/AbilityLess.hpp"
 // #include <ctime>
 // #include <cstdlib>
 // #include <bits/stdc++.h>
-#include <vector>
+// #include <vector>
 
 /*Class: Player : Kartu yang dimiliki, Poin Player, Action (Double, Next, Half, Ability)
 Attr: ownedCard, playerPoint,
@@ -24,13 +25,13 @@ protected:
 public:
     // Constructor
     Player();
-    void getCard(Deck& Deck);
-    void printPlayerOption();
-    int getPlayerPoint();
-    void setPlayerPoint(int playerPoint);
-    void setNickName(string nickName);
-    string getNickName();
-    Deck getOwnedCard();
+    void getCard(Deck& Deck); // done
+    void printPlayerOption(); // done
+    int getPlayerPoint(); // done
+    void setPlayerPoint(int playerPoint); // done
+    void setNickName(string nickName); // done
+    string getNickName(); // done
+    Deck getOwnedCard(); // done
     // Player(Deck &fullCard);        // Default Constructor
     // Player(Deck ownedCard, int playerPoint, string ability, string nickName, int idPlayer); // User-defined Constructor
     // // Setiap instantiate, menerima deck owned card yang dirandom secara langsung

@@ -24,9 +24,10 @@ void Game::startGame() {
             string choice;
             do {
                 cout << "Input File ? (y/n): ";
-                getline(cin, choice);
-                if (choice != "y" || choice != "n") cout << "\nPlease check your input!\n";
-            } while (choice != "y" || choice != "n");
+                cin >> choice;
+                if (choice != "y" && choice != "n") cout << "\nPlease check your input!\n";
+                // cout << "---" << choice << "---\n";
+            } while (choice != "y" && choice != "n");
             this->fileConfig = choice == "y";
 
             // Reinstantiate state & deck
@@ -45,6 +46,7 @@ void Game::startGame() {
                 // Get card config from txt
                 string filename;
                 getline(cin, filename);
+                cin.ignore();
                 vector<pair<int, char>> deckCards;
                 try {
                     auto temp = gameDeck.cardFromFile(filename);
@@ -62,9 +64,10 @@ void Game::startGame() {
                 PlayerAction player;
                 string nickname;    
                 do {
-                    cout << "Enter username: ";
+                    cout << "Enter username [" << i + 1 << "]: ";
                     getline(cin, nickname);
-                } while (validateUsername(players, nickname));
+                    cin.ignore();
+                } while (!validateUsername(players, nickname));
                 player.setNickName(nickname);
                 player.getCard(gameDeck);
                 players.push_back(player);
@@ -77,7 +80,7 @@ void Game::startGame() {
                 // if round 2 then distribute ability card
                 if(this->currentRound == 2){
                     for(auto player : players){
-                        player.getAbilityCard(getBaseAbility());
+                        player.getAbilityCard(this->baseAbility);
                     }
                 }
 
@@ -88,7 +91,7 @@ void Game::startGame() {
                     getCommand(command);
                     // turn player ke gamestate.getCurrentTurn() - 1
                     // player mechanism goes here
-
+                    players[gamestate.getCurrentTurn()-1].playerPlay(gameDeck, gamestate, players);
 
 
                     maxTurn++;
@@ -154,7 +157,7 @@ void Game::restartGame() {
     cout << "\t1. Ya\n";
     cout << "\t2. Tidak\n";
     getline(cin, input);
-    if (input != "1" || input != "2") {
+    if (input == "1" || input == "2") {
         if (input == "2") {
             endGame();
         }
@@ -169,14 +172,17 @@ vector<char> Game::getBaseCardColor() {
     return this->baseCardColor;
 }
 
-vector<string> Game::getBaseAbility() {
+vector<string> Game::getBaseAbility() const {
     return this->baseAbility;
 }
 
 bool Game::validateUsername(vector<PlayerAction> players, string newUsername) {
+    cout << newUsername << endl;
     for (auto player : players) {
         if (player.getNickName() == newUsername) {
-            cout << "\n Username already taken!\n";
+            cout << player.getNickName() << endl;
+            cout << newUsername << endl;
+            cout << "\nUsername already taken!\n";
             return false;
         }
     }
@@ -197,12 +203,12 @@ bool Game::endCurrentGame(vector<PlayerAction> players) {
 
 void Game::printGameResult(vector<PlayerAction> players) {
     Comparator<PlayerAction> comparator;
-    vector<PlayerAction> sortedByPoints = comparator.sortVector(players, false);
+    comparator.sortVector(players, false);
     int index = 0;
-    for (auto player : sortedByPoints) {
+    for (auto player : players) {
         cout << "\t" << index + 1 << ". " << player.getNickName() << " : " << player.getPlayerPoint() << endl;
     }
-    cout << "Winner: " << sortedByPoints[0].getNickName() << endl;
+    cout << "Winner: " << players[0].getNickName() << endl;
 }
 
 void Game::getCommand(string& command) {
@@ -210,6 +216,7 @@ void Game::getCommand(string& command) {
     bool validCommand = false;
     do{
         getline(cin, command);
+        cin.ignore();
         auto it = find(this->availableCommands.begin(), this->availableCommands.end(), command);
         if (it != this->availableCommands.end()) {
             validCommand = true;

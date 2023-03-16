@@ -5,11 +5,23 @@
 class AbilityLess : public Ability
 {
 public:
-    void callCard(PlayerCollection& player, GameState& state, Deck& deck);
+    void callCard(vector<PlayerAction>& player, GameState& state, Deck& deck, PlayerAction& currentPlayer);
     void getCardInfo();
     void setCardOff(PlayerAction& chosenPlayer);
-    string getInput(PlayerCollection& player);
-    void printTarget(PlayerCollection& player);
+    string getInput(vector<PlayerAction>& player, PlayerAction& currentPlayer);
+    void printTarget(vector<PlayerAction>& player, PlayerAction& currentPlayer);
+    int getTargetIdx(string targetNickName);
+    bool checkTarget(string nickNameTarget, string nickNameCurrent,vector<PlayerAction>& player);
 };
+
+
+
+// int PlayerCollection::getTargetIdx(string targetNickName){
+//     for(int i= 0; i<7; i++){
+//         if(this->player[i].getNickName() == targetNickName){
+//             return i;
+//         }
+//     }
+// }
 
 #endif

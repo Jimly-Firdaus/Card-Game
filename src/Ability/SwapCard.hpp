@@ -9,9 +9,9 @@ class SwapCard : public Ability{
         int getCard(string);
         int getInput();
         string getChoice();
-        string getTarget(PlayerCollection& player);
-        void callCard(PlayerCollection& player, GameState& state, Deck& deck);
-        void printTarget(PlayerCollection& player);
+        string getTarget(PlayerCollection& player, PlayerAction& currentPlayer);
+        void callCard(PlayerCollection& player, GameState& state, Deck& deck, PlayerAction& currentPlayer);
+        void printTarget(PlayerCollection& player, PlayerAction& currentPlayer);
 };
 
 #endif

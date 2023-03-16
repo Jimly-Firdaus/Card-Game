@@ -2,6 +2,7 @@
 #define COMPARATOR_HPP
 
 #include "Handler.hpp"
+#include "../player/playerAction.hpp"
 
 template <class T>
 class Comparator : public Handler {
@@ -11,7 +12,7 @@ class Comparator : public Handler {
          * @param asc 
          * @return * vector<T> 
          */
-        vector<T> sortVector(vector<T>, bool asc = true);
+        void sortVector(vector<T>&, bool asc);
         /**
          * Descending callback function for sortVector
          * @return true 
