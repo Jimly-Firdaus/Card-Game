@@ -47,7 +47,7 @@ pair<vector<pair<int, char>>, vector<string>> Deck::cardFromFile(string fileName
     {
         // Read from the txt file
         ifstream readFile;
-        string filePath = "../test/" + fileName + ".txt";
+        string filePath = "./test/" + fileName + ".txt";
         readFile.open(filePath.c_str(), ios::in);
         if (!readFile)
         {
