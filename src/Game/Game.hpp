@@ -2,7 +2,7 @@
 #define GAME_HPP
 
 #include "../GameState/GameState.hpp"
-#include "../Player/PlayerCollection.hpp"
+// #include "../Player/PlayerCollection.hpp"
 #include "../Comparator/Comparator.hpp"
 #include <ctime>
 
