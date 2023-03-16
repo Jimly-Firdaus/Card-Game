@@ -56,7 +56,7 @@ pair<vector<pair<int, char> >, vector<string> > Deck::cardFromFile(string fileNa
         pair<int, char> newElement;
         while (getline(readFile, textRead))
         {
-            if (idx < 14)
+            if (idx < 19)
             {
                 string el1 = "";
                 string el2 = "";
