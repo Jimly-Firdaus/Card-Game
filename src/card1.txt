@@ -1,0 +1,21 @@
+1 M
+5 H
+2 M
+9 K
+5 M
+6 M
+7 M
+13 B
+9 M
+10 M
+11 M
+1 B
+13 M
+2 B
+Swap
+Re-Roll
+Quarter
+Reverse
+Switch
+Quadruple
+Abilityless
