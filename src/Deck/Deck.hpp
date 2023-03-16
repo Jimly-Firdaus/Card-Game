@@ -73,9 +73,3 @@ private:
     vector<pair<int, char> > cards;
 };
 #endif
-
-/*
-Class: Deck : 52 Kartu, bagiKartu
-Attr: array of number + ability card
-Method: getCard (Husnia)
-*/

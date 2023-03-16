@@ -1,7 +1,5 @@
 #include "Deck.hpp"
 
-using namespace std;
-
 // Constructor
 // Default Constructor
 Deck::Deck() {}
@@ -167,7 +165,6 @@ bool Deck::validDeckCard(pair<vector<pair<int, char> >, vector<string> > result)
             vector<string>::iterator itr = find(ability.begin(), ability.end(), abilityList[i]);
             if (itr == ability.end())
             {
-                // cout << "cant find ability " << itr << endl;
                 valid = false;
             }
         }
@@ -227,9 +224,3 @@ void Deck::printCard()
         }
     }
 }
-
-/*
-Class: Deck : 52 Kartu, bagiKartu
-Attr: array of number + ability card
-Method: getCard (Husnia)
-*/
