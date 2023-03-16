@@ -13,6 +13,7 @@ void PlayerAction::getAbilityCard(vector<string>& AbilityCard){
 
 void PlayerAction::playerPlay(Deck& deck, GameState& state, vector<PlayerAction>& players){
     cout << "Turn: " << getNickName() << endl;
+    printPlayerInfo();
     cout << "Command: ";
     string command;
     cin >> command;
@@ -131,7 +132,7 @@ void PlayerAction::playerPlay(Deck& deck, GameState& state, vector<PlayerAction>
 // }
 
 void PlayerAction::DOUBLE(GameState& state){
-    int earlyReward = state.getRewardPoint();
+    long long earlyReward = state.getRewardPoint();
     state.doubleRewardPoint();
     cout << getNickName() << " melakukan DOUBLE! Poin hadiah naik dari " << earlyReward << " menjadi " << state.getRewardPoint() << "!" << endl;
 }
@@ -160,7 +161,7 @@ void PlayerAction::QUADRUPLE(GameState& state){
             HaveBeenUsed e;
             throw e;
         }else{
-            int earlyReward = state.getRewardPoint();
+            long long earlyReward = state.getRewardPoint();
             state.fourtimesRewardPoint();
             cout << getNickName() << " melakukan QUADRUPLE! Poin hadiah naik dari " << earlyReward << " menjadi " << state.getRewardPoint() << "!" << endl;
         }
@@ -408,7 +409,7 @@ int PlayerAction::getInput(int n){
 
 void PlayerAction::HALF(GameState& state){
     if(state.getRewardPoint()>1){
-        int earlyReward = state.getRewardPoint();
+        long long earlyReward = state.getRewardPoint();
         state.halfRewardPoint();
         cout << getNickName() << " melakukan HALF! Poin hadiah turun dari " << earlyReward << " menjadi " << state.getRewardPoint() << "!" << endl;
     }else{
@@ -424,7 +425,7 @@ void PlayerAction::QUARTER(GameState& state){
             throw e;
         }else{
             if(state.getRewardPoint()>1){
-                int earlyReward = state.getRewardPoint();
+                long long earlyReward = state.getRewardPoint();
                 state.quarterRewardPoint();
                 cout << getNickName() << " melakukan QUARTER! Poin hadiah turun dari " << earlyReward << " menjadi " << state.getRewardPoint() << "!" << endl;
             }else{
@@ -457,7 +458,7 @@ void PlayerAction::printPlayerInfo(){
     cout << "Point : " << this->playerPoint << endl;
     cout << "Card : " << endl;
     Player::getOwnedCard().printCard();
-    cout << "Ability Card : " << getAbility() << endl;
+    cout << "Ability Card : " << this->getAbility() << endl;
     // cout << "Description  : " << endl;
     // getAbilityInfo();
     // cout << endl;
