@@ -116,7 +116,7 @@ void PlayerAction::playerPlay(Deck& deck, GameState& state, vector<PlayerAction>
             }
         }
     }else{
-        cout << "Command Wrong" << endl;
+        cout << "Command Wrong\n\n" << endl;
         playerPlay(deck, state, players);
     }
 }
@@ -205,7 +205,7 @@ void PlayerAction::REVERSE(GameState& state){
 }
 
 void PlayerAction::NEXT(){
-    cout << "Giliran dilanjut ke pemain selanjutnya." << endl;
+    cout << "Giliran dilanjut ke pemain selanjutnya.\n" << endl;
 }
 
 void PlayerAction::SWAPCARD(vector<PlayerAction>& players, bool random){
