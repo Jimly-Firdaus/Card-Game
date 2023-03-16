@@ -27,11 +27,11 @@ class Combination
 public:
     // Ctor, cctor, cassign
     Combination(Deck tableCard, Deck playerCard, string nickname);
-    Combination(const Combination& other);
-    Combination& operator=(const Combination& other);
+    Combination(const Combination &other);
+    Combination &operator=(const Combination &other);
     // Getter
-    Deck getPlayerCard() const; // return current player card
-    Deck getTableCard() const; // return table card
+    Deck getPlayerCard() const;  // return current player card
+    Deck getTableCard() const;   // return table card
     string getOwnerCard() const; // return player name
     /**
      * Get the strongest combination deck

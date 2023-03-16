@@ -6,7 +6,6 @@
 #include <cstring>
 #include <string>
 #include <vector>
-// #include <array>
 #include <algorithm>
 #include <random>
 #include <utility>
@@ -19,24 +18,24 @@ class Deck
 {
 public:
     // Constructor
-    Deck();                               // Default Constructor
-    Deck(vector<pair<int, char> > cards); // User-defined Constructor
+    Deck();                              // Default Constructor
+    Deck(vector<pair<int, char>> cards); // User-defined Constructor
 
     // Assignment Operator
     Deck &operator=(const Deck &otherCard);
 
     // Getter
-    vector<pair<int, char> > getCards();
+    vector<pair<int, char>> getCards();
 
     // Setter
-    void setCards(vector<pair<int, char> > newCards);
+    void setCards(vector<pair<int, char>> newCards);
 
     // Getter A Card
     pair<int, char> getACard(int idx);
 
     void setACard(int idx, pair<int, char> card);
     // Generate Card From File
-    pair<vector<pair<int, char> >, vector<string> > cardFromFile(string fileName);
+    pair<vector<pair<int, char>>, vector<string>> cardFromFile(string fileName);
 
     /*
     14 baris pertama pada deck card berisi DeckCard dengan format :
@@ -52,7 +51,7 @@ public:
     */
 
     // Validasi Card From File
-    bool validDeckCard(pair<vector<pair<int, char> >, vector<string> > result);
+    bool validDeckCard(pair<vector<pair<int, char>>, vector<string>> result);
 
     // Shuffle Card
     void shuffleCard();
@@ -70,6 +69,6 @@ public:
     void printCard();
 
 private:
-    vector<pair<int, char> > cards;
+    vector<pair<int, char>> cards;
 };
 #endif

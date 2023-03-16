@@ -26,27 +26,32 @@ Combination::Combination(Deck tableCard, Deck playerCard, string nickname) : tab
     }
 }
 
-Combination::Combination(const Combination& other) {
+Combination::Combination(const Combination &other)
+{
     this->cardOwner = other.cardOwner;
     this->tableCard = other.tableCard;
     this->playerCard = other.playerCard;
     this->valueTable = other.valueTable;
     this->color = other.color;
     this->baseValue = other.baseValue;
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 4; i++)
+    {
         this->avail_chars[i] = other.avail_chars[i];
     }
 }
 
-Combination& Combination::operator=(const Combination& other) {
-    if (this != &other) {
+Combination &Combination::operator=(const Combination &other)
+{
+    if (this != &other)
+    {
         this->cardOwner = other.cardOwner;
         this->tableCard = other.tableCard;
         this->playerCard = other.playerCard;
         this->valueTable = other.valueTable;
         this->color = other.color;
         this->baseValue = other.baseValue;
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 4; i++)
+        {
             this->avail_chars[i] = other.avail_chars[i];
         }
     }
@@ -100,9 +105,12 @@ pair<bool, int> Combination::isFourKind()
 pair<bool, int> Combination::isFullHouse(bool checkTable)
 {
     vector<pair<int, char>> v;
-    if (!checkTable) {
+    if (!checkTable)
+    {
         v = mergeDeck(this->tableCard, playerCard);
-    } else {
+    }
+    else
+    {
         v = this->tableCard.getCards();
     }
     vector<pair<int, char>> filteredV = this->getNonSingle(v);
@@ -247,9 +255,12 @@ pair<int, char> Combination::findBiggest(vector<pair<int, char>> v, int number)
 pair<bool, int> Combination::isThreeKind(bool checkTable)
 {
     vector<pair<int, char>> v;
-    if (!checkTable) {
+    if (!checkTable)
+    {
         v = mergeDeck(this->tableCard, playerCard);
-    } else {
+    }
+    else
+    {
         v = this->tableCard.getCards();
     }
     vector<pair<int, char>> filteredV = this->getNonSingle(v);
@@ -290,9 +301,12 @@ pair<bool, vector<pair<int, char>>> Combination::isTwoPair(bool checkTable)
 pair<bool, float> Combination::isPair(bool checkTable)
 {
     vector<pair<int, char>> v;
-    if (!checkTable) {
+    if (!checkTable)
+    {
         v = mergeDeck(this->tableCard, playerCard);
-    } else {
+    }
+    else
+    {
         v = this->tableCard.getCards();
     }
     vector<pair<int, char>> filteredV = this->getNonSingle(v);
@@ -317,9 +331,12 @@ vector<pair<int, char>> Combination::findPair(bool checkTable)
     if (isPair(checkTable).first)
     {
         vector<pair<int, char>> v;
-        if (!checkTable) {
+        if (!checkTable)
+        {
             v = mergeDeck(this->tableCard, playerCard);
-        } else {
+        }
+        else
+        {
             v = this->tableCard.getCards();
         }
         temp = this->getNonSingle(v);
@@ -432,7 +449,7 @@ pair<int, char> Combination::getHighCard()
 {
     vector<pair<int, char>> v = playerCard.getCards();
     sort(v.begin(), v.end(), [&](const pair<int, char> &p1, const pair<int, char> &p2)
-        { return compare(p1, p2); });
+         { return compare(p1, p2); });
     return v[MAX_HAND_CARD - 1];
 }
 
@@ -466,34 +483,18 @@ pair<float, string> Combination::getStrongestCombination()
         result = {searchVal(fourKind.second, 'M') + FOURKIND_POINT, "Four of Kind"};
     if (straightFlush.first)
         result = {straightFlush.second + STRAIGHTFLUSH_POINT, "Straight Flush"};
-
-    /**
-     * case waktu ngebandingin sama player lain
-     * Untuk Straight Flush:
-     *      1. Kalau terbentuk di meja -> cari kombinasi lain (pair, two pair, three kind)
-     * Untuk Full House:
-     *      1. Kalau Polo nya sama tapi pairnya ga sama -> cari highest pair
-     *      2. Kalau Polo nya sama + pairnya sama -> cari highest kicker (kartu satu lagi yang ada di hand). Ini kalau Full Housenya dibentuk dengan salah satu dari kartu di hand
-     *      3. Kalau Polo nya sama + pairnya sama (Full House di table + gad player yang bs ngebentuk FullHouse di meja) -> cari kombinasi tertinggi dari current hand
-     * Untuk Flush:
-     *      1. Kalau Flushnya di table + ada yang punya warna yang sama (>2) -> cari yang bisa ngebentuk flush maximum (sama kayak straight, cari max yang bisa dibentuk)
-     *      2. Kalau Flushnya di table + gad yang punya warna yang sama -> cari kombinasi lain antara current hand + table cards
-     * Untuk Straight:
-     *      1. Kalau ada yang max nya sama -> bandingin colornya
-     * Untuk Three Kind:
-     *      1. Kalau ada pair sama di meja + ada 2 player yang bisa dapet three kind -> cari highest kicker atau cari yang bisa ngebentuk fullhouse (ini udah dicounter di full house)
-     * Pertimbangin kalau combo terkuatnya terbentuk di meja semua
-     */
-
     return result;
 }
 
-float Combination::getStrongestSelf() {
+float Combination::getStrongestSelf()
+{
     vector<pair<int, char>> playerCard = this->playerCard.getCards();
-    if (playerCard[0].first == playerCard[1].first) return searchVal(playerCard[0]) + searchVal(playerCard[1]);
-    else return searchVal(playerCard[0]) > searchVal(playerCard[1]) 
-        ? searchVal(playerCard[0]) 
-        : searchVal(playerCard[1]);
+    if (playerCard[0].first == playerCard[1].first)
+        return searchVal(playerCard[0]) + searchVal(playerCard[1]);
+    else
+        return searchVal(playerCard[0]) > searchVal(playerCard[1])
+                   ? searchVal(playerCard[0])
+                   : searchVal(playerCard[1]);
 }
 
 bool Combination::operator<(Combination &other)
@@ -511,14 +512,17 @@ bool Combination::operator==(Combination &other)
     return this->getStrongestCombination() == other.getStrongestCombination();
 }
 
-Deck Combination::getPlayerCard() const {
+Deck Combination::getPlayerCard() const
+{
     return this->playerCard;
 }
 
-Deck Combination::getTableCard() const {
+Deck Combination::getTableCard() const
+{
     return this->tableCard;
 }
 
-string Combination::getOwnerCard() const {
+string Combination::getOwnerCard() const
+{
     return this->cardOwner;
 }

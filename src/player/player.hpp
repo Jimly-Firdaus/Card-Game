@@ -12,9 +12,9 @@ protected:
 
 public:
     Player();
-    void getCard(Deck& Deck); 
-    long long getPlayerPoint(); 
-    void setPlayerPoint(long long playerPoint); 
+    void getCard(Deck &Deck);
+    long long getPlayerPoint();
+    void setPlayerPoint(long long playerPoint);
     void setNickName(string nickName);
     string getNickName();
     Deck getOwnedCard();

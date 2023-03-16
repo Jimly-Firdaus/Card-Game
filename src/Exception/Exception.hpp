@@ -44,7 +44,6 @@ struct FileNotFound : public exception
 	}
 };
 
-// Add your own exception here
 struct WrongChoice : public exception
 {
 	const char *what() const throw()
@@ -69,7 +68,7 @@ struct HaveBeenUsed : public exception
 	}
 };
 
-struct WrongAbilityCard: public exception
+struct WrongAbilityCard : public exception
 {
 	const char *what() const throw()
 	{
@@ -77,7 +76,7 @@ struct WrongAbilityCard: public exception
 	}
 };
 
-struct LeftOne: public exception
+struct LeftOne : public exception
 {
 	const char *what() const throw()
 	{
@@ -85,9 +84,9 @@ struct LeftOne: public exception
 	}
 };
 
-struct AllTargetUsedAbilityCard: public exception
+struct AllTargetUsedAbilityCard : public exception
 {
-	const char* what() const throw()
+	const char *what() const throw()
 	{
 		return "Eits, ternyata semua pemain sudah memakai kartu kemampuan. Yah, kamu sendiri deh, kemampuanmu menjadi abilityless. Yah, penggunaan kartu ini sia-sia.";
 	}
@@ -95,7 +94,7 @@ struct AllTargetUsedAbilityCard: public exception
 
 struct WrongInput : public exception
 {
-	const char* what() const throw()
+	const char *what() const throw()
 	{
 		return "Wrong input";
 	}

@@ -1,6 +1,4 @@
 #include "GameState.hpp"
-// #include <iostream>
-// using namespace std;
 #include <cmath>
 
 int GameState::totalTurn = 0;
@@ -248,22 +246,24 @@ void GameState::showPlayerOrder()
     }
 }
 
-void GameState::reset() {
+void GameState::reset()
+{
     this->rewardPoint = 64;
-    // cout << "SEGGGGGGGVVVV reset table cardd" << endl;
+
     // Empty Table Card
     this->tableCard.getCards().clear();
-    // cout << "SEGGGGGGGVVVV reset" << endl;
-    for (int i = 0; i < PLAYERORDER_LENGTH; i++) {
+
+    for (int i = 0; i < PLAYERORDER_LENGTH; i++)
+    {
         this->playerOrder[i] = 0;
     }
-    // cout << "SEGGGGGGGVVVV after -- reset" << endl;
 
     this->currentTurn = 1;
     this->reverseStatus = false;
     this->reverseStatusChange = false;
 }
 
-Deck GameState::getTableCard() {
+Deck GameState::getTableCard()
+{
     return this->tableCard;
 }

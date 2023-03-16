@@ -5,7 +5,7 @@
 Deck::Deck() {}
 
 // User-defined Constructor
-Deck::Deck(vector<pair<int, char> > Cards)
+Deck::Deck(vector<pair<int, char>> Cards)
 {
     this->cards = Cards;
 }
@@ -18,13 +18,13 @@ Deck &Deck::operator=(const Deck &otherCard)
 }
 
 // Getter
-vector<pair<int, char> > Deck::getCards()
+vector<pair<int, char>> Deck::getCards()
 {
     return cards;
 }
 
 // Setter
-void Deck::setCards(vector<pair<int, char> > newCards)
+void Deck::setCards(vector<pair<int, char>> newCards)
 {
     cards = newCards;
 }
@@ -36,11 +36,11 @@ pair<int, char> Deck::getACard(int idx)
 }
 
 // Generate Card From File
-pair<vector<pair<int, char> >, vector<string> > Deck::cardFromFile(string fileName)
+pair<vector<pair<int, char>>, vector<string>> Deck::cardFromFile(string fileName)
 {
     string textRead, cardColor, cardNumber;
-    pair<vector<pair<int, char> >, vector<string> > result;
-    vector<pair<int, char> > deck;
+    pair<vector<pair<int, char>>, vector<string>> result;
+    vector<pair<int, char>> deck;
     vector<string> ability;
     int idx = 0;
     do
@@ -49,7 +49,8 @@ pair<vector<pair<int, char> >, vector<string> > Deck::cardFromFile(string fileNa
         ifstream readFile;
         string filePath = "../test/" + fileName + ".txt";
         readFile.open(filePath.c_str(), ios::in);
-        if (!readFile) {
+        if (!readFile)
+        {
             FileNotFound e;
             throw e;
         }
@@ -98,7 +99,7 @@ pair<vector<pair<int, char> >, vector<string> > Deck::cardFromFile(string fileNa
         {
             for (int j = 0; j < 4; j++)
             {
-                vector<pair<int, char> >::iterator itr = find(deck.begin(), deck.end(), make_pair(i, color[j]));
+                vector<pair<int, char>>::iterator itr = find(deck.begin(), deck.end(), make_pair(i, color[j]));
                 if (itr == deck.end()) // Card not found
                 {
                     newElement = make_pair(i, color[j]);
@@ -113,9 +114,9 @@ pair<vector<pair<int, char> >, vector<string> > Deck::cardFromFile(string fileNa
 }
 
 // Validasi Card From File
-bool Deck::validDeckCard(pair<vector<pair<int, char> >, vector<string> > result)
+bool Deck::validDeckCard(pair<vector<pair<int, char>>, vector<string>> result)
 {
-    vector<pair<int, char> > deck = result.first;
+    vector<pair<int, char>> deck = result.first;
     vector<string> ability = result.second;
     bool valid = true;
     int i, j;
@@ -150,7 +151,7 @@ bool Deck::validDeckCard(pair<vector<pair<int, char> >, vector<string> > result)
         {
             for (j = 0; j < 4 && valid; j++)
             {
-                vector<pair<int, char> >::iterator itr = find(deck.begin(), deck.end(), make_pair(i, color[j]));
+                vector<pair<int, char>>::iterator itr = find(deck.begin(), deck.end(), make_pair(i, color[j]));
                 if (itr == deck.end())
                 {
                     cout << "Cant find card <" << i << "," << color[j] << ">" << endl;
@@ -200,7 +201,7 @@ Deck &Deck::operator+(const pair<int, char> &otherCard)
 // Throw A Card
 Deck &Deck::operator-(const pair<int, char> &otherCard)
 {
-    vector<pair<int, char> >::iterator itr = cards.begin();
+    vector<pair<int, char>>::iterator itr = cards.begin();
     itr = find(cards.begin(), cards.end(), otherCard);
     if (itr != cards.end())
     {
@@ -225,6 +226,7 @@ void Deck::printCard()
     }
 }
 
-void Deck::setACard(int idx, pair<int, char> card){
+void Deck::setACard(int idx, pair<int, char> card)
+{
     this->cards[idx] = card;
 }

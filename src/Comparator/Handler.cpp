@@ -128,8 +128,8 @@ pair<string, string> Handler::fullHouseHandler(vector<Combination> arrOfPlayerCo
             pair<int, char> firstCard = combination.getPlayerCard().getCards()[0];
             pair<int, char> secondCard = combination.getPlayerCard().getCards()[1];
             pair<int, char> playerPoloCard = firstCard.first == poloCard
-                ? firstCard
-                : secondCard;
+                                                 ? firstCard
+                                                 : secondCard;
             float playerPoloVal = combination.searchVal(playerPoloCard);
             if (max < playerPoloVal)
             {
@@ -240,8 +240,8 @@ pair<string, string> Handler::threeKindHandler(vector<Combination> arrOfPlayerCo
             pair<int, char> secondCard = combination.getPlayerCard().getCards()[1];
             float max2;
             max2 = firstCard.first == threeKindCard
-                ? combination.searchVal(secondCard)
-                : combination.searchVal(firstCard);
+                       ? combination.searchVal(secondCard)
+                       : combination.searchVal(firstCard);
             if (max < max2)
             {
                 max = max2;
@@ -265,8 +265,8 @@ pair<string, string> Handler::twoPairHandler(vector<Combination> arrOfPlayerComb
 
     // check whether the hand can make a pair with singleCard
     bool pairable = arrOfPlayerCombination[0].getPlayerCard().getCards()[0].first == singleCard.first
-        ? true
-        : arrOfPlayerCombination[0].getPlayerCard().getCards()[1].first == singleCard.first;
+                        ? true
+                        : arrOfPlayerCombination[0].getPlayerCard().getCards()[1].first == singleCard.first;
     float max = 0;
     int index = 0;
     int winIndex = 0;
@@ -278,14 +278,14 @@ pair<string, string> Handler::twoPairHandler(vector<Combination> arrOfPlayerComb
         if (pairable)
         {
             max2 = firstCard.first == singleCard.first
-                ? combination.searchVal(firstCard)
-                : combination.searchVal(secondCard);
+                       ? combination.searchVal(firstCard)
+                       : combination.searchVal(secondCard);
         }
         else
         {
             max2 = combination.searchVal(firstCard) > combination.searchVal(secondCard)
-                ? combination.searchVal(firstCard)
-                : combination.searchVal(secondCard);
+                       ? combination.searchVal(firstCard)
+                       : combination.searchVal(secondCard);
         }
         if (max < max2)
         {
@@ -302,8 +302,8 @@ pair<string, string> Handler::pairHandler(vector<Combination> arrOfPlayerCombina
     vector<pair<int, char>> pairCard = arrOfPlayerCombination[0].findPair(); // get all the pairs
     int pairNum = pairCard[0].first;
     bool containPair = arrOfPlayerCombination[0].getPlayerCard().getCards()[0].first == pairNum
-        ? true
-        : arrOfPlayerCombination[0].getPlayerCard().getCards()[1].first == pairNum;
+                           ? true
+                           : arrOfPlayerCombination[0].getPlayerCard().getCards()[1].first == pairNum;
     float max = 0;
     int index = 0;
     int winIndex = 0;
@@ -315,16 +315,16 @@ pair<string, string> Handler::pairHandler(vector<Combination> arrOfPlayerCombina
         if (containPair)
         {
             // if there are hand that can produce pair
-            max2 = firstCard.first == pairNum 
-                ? combination.searchVal(secondCard) 
-                : combination.searchVal(firstCard);
+            max2 = firstCard.first == pairNum
+                       ? combination.searchVal(secondCard)
+                       : combination.searchVal(firstCard);
         }
         else
         {
             // if no hand can produce pair
             max2 = combination.searchVal(firstCard) > combination.searchVal(secondCard)
-                ? combination.searchVal(firstCard)
-                : combination.searchVal(secondCard);
+                       ? combination.searchVal(firstCard)
+                       : combination.searchVal(secondCard);
         }
         if (max < max2)
         {
@@ -402,8 +402,8 @@ pair<string, string> Handler::getPossibleOfOne(vector<Combination> arrOfPlayerCo
                     if (firstCard.first != secondCard.first)
                     {
                         max2 = firstCard.first == singleCard.first
-                            ? combination.searchVal(firstCard) + combination.searchVal(singleCard)
-                            : combination.searchVal(secondCard) + combination.searchVal(singleCard);
+                                   ? combination.searchVal(firstCard) + combination.searchVal(singleCard)
+                                   : combination.searchVal(secondCard) + combination.searchVal(singleCard);
                     }
                     else
                     {
@@ -417,8 +417,8 @@ pair<string, string> Handler::getPossibleOfOne(vector<Combination> arrOfPlayerCo
                     index++;
                 }
                 return c2.size() == 1
-                    ? make_pair(c2[0].getOwnerCard(), "Pair kicker")
-                    : make_pair(c2[winIndex].getOwnerCard(), "Pair kicker");
+                           ? make_pair(c2[0].getOwnerCard(), "Pair kicker")
+                           : make_pair(c2[winIndex].getOwnerCard(), "Pair kicker");
             }
             else
             {
@@ -430,8 +430,8 @@ pair<string, string> Handler::getPossibleOfOne(vector<Combination> arrOfPlayerCo
                     pair<int, char> firstCard = combination.getPlayerCard().getCards()[0];
                     pair<int, char> secondCard = combination.getPlayerCard().getCards()[1];
                     float max2 = firstCard.first > secondCard.first
-                        ? combination.searchVal(firstCard)
-                        : combination.searchVal(secondCard);
+                                     ? combination.searchVal(firstCard)
+                                     : combination.searchVal(secondCard);
                     if (max < max2)
                     {
                         max = max2;
@@ -462,44 +462,3 @@ pair<string, string> Handler::getPossibleOfOne(vector<Combination> arrOfPlayerCo
         return {arrOfPlayerCombination[winIndex].getOwnerCard(), "High Card kicker"};
     }
 }
-
-// FOUR KIND CASE:
-// table : 6 6 6 6 2
-// p1 : 1 3
-// p2 : 1 2
-
-// PAIR CASE:
-// table : 6 2 1 3 5
-// p1 : 6 8
-// p2 : 6 8
-// p3 : 6 8
-
-// table : 6 6 1 3 5
-// p1 : 9 8
-// p2 : 9 8
-// p3 : 9 8
-// ini cari dlu pairnya apa, trus bandingin playerCard yang bukan card pair
-
-// TWO PAIR CASE:
-// table : 1 2 8 9 5
-// p1 : 1 2
-// p2 : 1 2
-// p3 : 1 2
-
-// atau
-// table : 1 2 7 9 2
-// p1 : 1 8
-// p2 : 1 3
-// p3 : 1 4
-
-// atau
-// table : 1 2 1 9 2
-// p1 : 8 7
-// p2 : 8 7
-// p3 : 8 7
-
-// atau
-// table : 5 5 3 3 2
-// p1 : 2 7
-// p2 : 2 7
-// p3 : 2 7
