@@ -15,7 +15,21 @@ void Game::startGame() {
     {
         // Player collection + game state instantiation here
         vector<PlayerAction> players;
-        
+        // Set up player
+        for(int i= 0; i< 7; i++){
+            PlayerAction player;
+            string nickname;    
+            do {
+                cout << "Enter username [" << i + 1 << "]: ";
+                // getline(cin, nickname);
+                cin >> nickname;
+                cin.ignore();
+            } while (!validateUsername(players, nickname));
+            player.setNickName(nickname);
+            // player.getCard(gameDeck);
+            players.push_back(player);
+        }
+        GameState gamestate;
         bool foundWinner = false;
         // game loop
         while (!foundWinner)
@@ -31,7 +45,7 @@ void Game::startGame() {
             this->fileConfig = choice == "y";
 
             // Reinstantiate state & deck
-            GameState gamestate;
+            
             Deck gameDeck;
             if (!this->fileConfig) {
                 // Refill & Reshuffle deck 
@@ -45,7 +59,8 @@ void Game::startGame() {
             } else {
                 // Get card config from txt
                 string filename;
-                getline(cin, filename);
+                // getline(cin, filename);
+                cin >> filename;
                 cin.ignore();
                 vector<pair<int, char>> deckCards;
                 try {
@@ -59,45 +74,45 @@ void Game::startGame() {
                 gameDeck = deckCards;
             }
             
-            // Set up player
-            for(int i= 0; i< 7; i++){
-                PlayerAction player;
-                string nickname;    
-                do {
-                    cout << "Enter username [" << i + 1 << "]: ";
-                    getline(cin, nickname);
-                    cin.ignore();
-                } while (!validateUsername(players, nickname));
-                player.setNickName(nickname);
+            for (auto& player : players) {
                 player.getCard(gameDeck);
-                players.push_back(player);
             }
+            
             // Round loop
             resetRound();
-            while (this->currentRound != 7)
+            while (this->currentRound < 7)
             {
-                gamestate.addTableCard(gameDeck);
                 // if round 2 then distribute ability card
-                if(this->currentRound == 2){
-                    for(auto player : players){
+                if(this->currentRound == 1){
+                    for(auto& player : players){
                         player.getAbilityCard(this->baseAbility);
+                        
                     }
                 }
-
+                if (this->currentRound >= 1) {
+                    gamestate.addTableCard(gameDeck);
+                }
                 // play loop
                 int maxTurn = 0;
                 while (maxTurn < 7) {
-                    string command;
-                    getCommand(command);
-                    // turn player ke gamestate.getCurrentTurn() - 1
-                    // player mechanism goes here
+                    cout << "Table card: \n";
+                    gamestate.getTableCard().printCard();
+                    cout << "\nCurrent Player Ability: " << players[gamestate.getCurrentTurn()-1].getAbility();
+                    cout << endl;
+                    cout << "Urutan sekarang: ";
+                    gamestate.showPlayerOrder();
+                    cout << endl;
+                    cout << "Reward Point: " << gamestate.getRewardPoint();
+                    cout << endl;
+                    // cout << "Current Player Card: ";
                     players[gamestate.getCurrentTurn()-1].playerPlay(gameDeck, gamestate, players);
-
-
+                    gamestate.nextPlayerOrder();
                     maxTurn++;
                 }
-                
+                cout << "--------Round: " << this->currentRound << endl;
+                cout << "HERE" << endl;
                 if (this->currentRound == 6) {
+                    bool haveWinner = endCurrentGame(players);
                     vector<Combination> playersCombination;
                     for (auto player : players) {
                         Combination c(gamestate.getTableCard(), player.getOwnedCard(), player.getNickName());
@@ -105,19 +120,18 @@ void Game::startGame() {
                     }
                     Comparator<Combination> comparator;
                     pair<string, string> result = comparator.compare(playersCombination);
-                    for (auto player : players) {
+                    for (auto& player : players) {
                         if (player.getNickName() == result.first) {
                             player.setPlayerPoint(gamestate.getRewardPoint());
                         }
                     }
                     cout << result.first << " win this game with " << result.second << endl;
                 }
+                cout << "FINISHED ROUND : " << this->currentRound;
                 nextRound();
             }
             if (endCurrentGame(players)) {
-                break;
-            } else {
-                gamestate.reset();
+                foundWinner = true;
             }
         }
         // Found Winner 
@@ -156,7 +170,8 @@ void Game::restartGame() {
     cout << "Restart? :\n";
     cout << "\t1. Ya\n";
     cout << "\t2. Tidak\n";
-    getline(cin, input);
+    // getline(cin, input);
+    cin >> input;
     if (input == "1" || input == "2") {
         if (input == "2") {
             endGame();
@@ -177,11 +192,11 @@ vector<string> Game::getBaseAbility() const {
 }
 
 bool Game::validateUsername(vector<PlayerAction> players, string newUsername) {
-    cout << newUsername << endl;
+    // cout << newUsername << endl;
     for (auto player : players) {
         if (player.getNickName() == newUsername) {
-            cout << player.getNickName() << endl;
-            cout << newUsername << endl;
+            // cout << player.getNickName() << endl;
+            // cout << newUsername << endl;
             cout << "\nUsername already taken!\n";
             return false;
         }
@@ -215,7 +230,9 @@ void Game::getCommand(string& command) {
     int counter = 0;
     bool validCommand = false;
     do{
-        getline(cin, command);
+        cout << "Command: ";
+        // getline(cin, command);
+        cin >> command;
         cin.ignore();
         auto it = find(this->availableCommands.begin(), this->availableCommands.end(), command);
         if (it != this->availableCommands.end()) {
