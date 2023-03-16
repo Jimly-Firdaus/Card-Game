@@ -3,13 +3,14 @@
 
 #define vector Vector
 #include <iostream>
+#include <cstring>
 #include <string>
 #include <vector>
-#include <array>
 #include <algorithm>
 #include <random>
 #include <utility>
 #include <fstream>
+#include "../Exception/Exception.hpp"
 
 using namespace std;
 
@@ -17,36 +18,40 @@ class Deck
 {
 public:
     // Constructor
-    Deck();                               // Default Constructor
-    Deck(vector<pair<int, char> > cards); // User-defined Constructor
+    Deck();                              // Default Constructor
+    Deck(vector<pair<int, char>> cards); // User-defined Constructor
 
     // Assignment Operator
     Deck &operator=(const Deck &otherCard);
 
     // Getter
-    vector<pair<int, char> > getCards();
+    vector<pair<int, char>> getCards();
 
     // Setter
-    void setCards(vector<pair<int, char> > newCards);
+    void setCards(vector<pair<int, char>> newCards);
 
+    // Getter A Card
+    pair<int, char> getACard(int idx);
+
+    void setACard(int idx, pair<int, char> card);
     // Generate Card From File
-    vector<pair<int, char> > cardFromFile(string filePath);
+    pair<vector<pair<int, char>>, vector<string>> cardFromFile(string fileName);
+
     /*
-    52 baris pertama pada deck card berisi DeckCard dengan format :
+    14 baris pertama pada deck card berisi DeckCard dengan format :
     C<space>N
         C berisi character M/B/K/H yang mewakili warna tiap kartu
         N berisi integer 1-13 yang mewakili nomor kartu
 
     7 Baris berikutnya berisi list AbilityCard dengan format :
-    C
-        C berisi character inisial tiap ability card
-        Nilai integer pada ability card akan diset 0
+    S
+        C berisi string inisial tiap ability card
 
     Note : Karena deck card dan ability card masih jadi 1 vector, maka diimplementasinya nanti harus di split
     */
 
     // Validasi Card From File
-    // bool validDeckCard(); Ini di state:Input Validation?
+    bool validDeckCard(pair<vector<pair<int, char>>, vector<string>> result);
 
     // Shuffle Card
     void shuffleCard();
@@ -64,6 +69,6 @@ public:
     void printCard();
 
 private:
-    vector<pair<int, char> > cards;
+    vector<pair<int, char>> cards;
 };
 #endif
